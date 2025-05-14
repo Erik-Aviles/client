@@ -12,37 +12,37 @@ export const orderPeriod = [
   {
     period: "Ordendes del dia",
     sales: "13000",
-    color: "bg-orange-500",
+    color: "lila",
     icon: <Layers />,
   },
   {
     period: "Ordendes de ayer",
     sales: "12000",
-    color: "bg-green-600",
+    color: "azulSuave",
     icon: <Layers />,
   },
   {
     period: "Esta semana",
     sales: "14000",
-    color: "bg-purple-600",
+    color: "rojoSuave",
     icon: <Layers />,
   },
   {
     period: "Este mes",
     sales: "15000",
-    color: "bg-yellow-600",
+    color: "verdeOscuro",
     icon: <Layers />,
   },
   {
     period: "Mes pasado",
     sales: "17000",
-    color: "bg-blue-600",
+    color: "verdeClaro",
     icon: <Layers />,
   },
   {
     period: "Todas",
     sales: "205000",
-    color: "bg-pink-600",
+    color: "amarillo",
     icon: <Layers />,
   },
 ];

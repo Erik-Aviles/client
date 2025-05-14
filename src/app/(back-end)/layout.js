@@ -1,14 +1,31 @@
+"use client";
 
-import Navbar from "@/components/backend/Navbar";
-import Sidebar from "@/components/backend/Sidebar";
+import Navbar from "@/components/backoffice/Navbar";
+import Sidebar from "@/components/backoffice/Sidebar";
+import useActions from "@/hooks/useActions";
 
 export default function Layout({ children }) {
+  const { showSiderbarCatalogue, toggleShowSiderbarCatalogue } = useActions();
+
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="w-full">
-        <Navbar />
-        <main className="ml-52 p-8 bg-slate-100 dark:bg-slate-900 text-slate-50 min-h-screen mt-16">{children}</main>
+    <div className="overflow-hidden">
+      <Sidebar
+        showSiderbarCatalogue={showSiderbarCatalogue}
+        toggleShowSiderbarCatalogue={toggleShowSiderbarCatalogue}
+      />
+     <div
+        className="h-full flex flex-col transition-all duration-500 ease-in-out"
+      >
+
+      <Navbar
+        toggleShowSiderbarCatalogue={toggleShowSiderbarCatalogue}
+        showSiderbarCatalogue={showSiderbarCatalogue}
+      />
+      <main
+        className={`pt-24 min-h-screen p-8 overflow-y-auto bg-slate-100 dark:bg-slate-900 dark:text-slate-50 transition-all duration-500 ${showSiderbarCatalogue ? "sm:ml-64" : " sm:ml-0 "} `}
+      >
+        {children}
+      </main>
       </div>
     </div>
   );

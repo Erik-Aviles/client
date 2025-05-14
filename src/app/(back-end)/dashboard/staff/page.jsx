@@ -1,9 +1,10 @@
+import Heading from "@/components/backoffice/styledComponent/Heading";
 import React from "react";
 
 export default function page() {
   return (
     <div>
-      <h2>Staff</h2>
+      <Heading title="Nuestro personal" />
     </div>
   );
 }
