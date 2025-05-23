@@ -6,6 +6,7 @@ import SelectInput from "@/components/FormInputs/SelectInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInput from "@/components/FormInputs/TextInput";
+import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
 import { markets } from "@/utils/general/markets";
@@ -20,19 +21,30 @@ export default function NewCategory({ initialData = {}, isUpdate = false }) {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
-    defaultValues: initialData,
+    defaultValues: {
+      isActive: true,
+    },
   });
+  const isActive = watch("isActive");
 
   async function onSubmit(data) {
-    /* {id, title, slug, description, image} */
-    setLoading(true);
+    /* {
+      id, 
+      title, 
+      slug, 
+      description, 
+      imageUrl, 
+      marketIds,
+      isActive
+    } */
     const slug = generateSlug(data.title);
     data.slug = slug;
     data.imageUrl = imageUrl;
     console.log(data);
-    makePostRequest(setLoading, "api/categories", data, "Category", reset);
+    makePostRequest(setLoading, "api/categories", data, "Categoría", reset);
     setImageUrl("");
   }
   return (
@@ -45,21 +57,28 @@ export default function NewCategory({ initialData = {}, isUpdate = false }) {
         className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg p-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
       >
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+          <ToggleInput
+            label="Estado de la categoría"
+            name="isActive"
+            isActive={isActive}
+            trueTitle="Activo"
+            falseTitle="Inactivo"
+            register={register}
+          />
           <TextInput
-            label="Nombre"
+            label="Nombre de categoría"
             name="title"
             register={register}
             errors={errors}
             className="w-full"
           />
           <SelectInput
-            label="selecciona un mercado"
+            label="seleccionar mercado"
             name="marketIds"
             register={register}
             errors={errors}
             className="w-full"
             options={markets}
-            multiple={false}
           />
           <TextareaInput
             label="Descripción "

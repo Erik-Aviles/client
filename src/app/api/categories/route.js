@@ -2,12 +2,15 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { title, description, imageUrl, slug } = await request.json();
+    const { title, slug, description, imageUrl, marketIds, isActive } =
+      await request.json();
     const newCategory = {
       title,
       slug,
       description,
       imageUrl,
+      marketIds,
+      isActive,
     };
     console.log("Nueva categoría creada:", newCategory);
     return NextResponse.json(newCategory, { status: 201 });

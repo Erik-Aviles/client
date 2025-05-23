@@ -17,6 +17,7 @@ export async function POST(request) {
       categoryDefault,
       farmerIds,
       imageUrl,
+      isActive,
     } = await request.json();
 
     const newProduct = {
@@ -34,6 +35,7 @@ export async function POST(request) {
       categoryDefault,
       farmerIds,
       imageUrl,
+      isActive,
     };
     console.log("Nuevo producto creado:", newProduct);
     return NextResponse.json(newProduct, { status: 201 });

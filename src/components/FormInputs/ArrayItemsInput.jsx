@@ -7,6 +7,7 @@ export default function ArrayItemsInput({
   itemTitle = "elemento",
   items,
   setItems,
+  className="sm:col-span-2"
 }) {
   const [item, setItem] = useState("");
   const [showItemsForm, setShowItemsForm] = useState(false);
@@ -25,7 +26,7 @@ export default function ArrayItemsInput({
     setItems(newItem);
   }
   return (
-    <div className="sm:col-span-2 flex flex-col gap-4">
+    <div className={`flex flex-col gap-4 ${className}`}>
       {showItemsForm ? (
         <div className="flex gap-2 items-center ">
           <div className="relative w-full">

@@ -43,7 +43,7 @@ export default function ImageInput({
         <UploadDropzone
           appearance={{
             container:
-              " rounded-lg bg-white dark:bg-slate-700 border dark:border-slate-500 px-0 ",
+              " rounded-lg bg-white dark:bg-slate-700 border dark:border-slate-500 !px-0 ",
             allowedContent: "text-slate-500 ",
             label: " text-slate-500 ",
             button: "bg-green-500",

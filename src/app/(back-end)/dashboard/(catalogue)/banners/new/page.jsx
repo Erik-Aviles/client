@@ -1,78 +1,56 @@
 "use client";
 
 import FormHeader from "@/components/backoffice/FormHeader";
+import ImageInput from "@/components/FormInputs/ImageInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
+import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest } from "@/lib/apiRequest";
-import { generateCouponCode } from "@/lib/generateCode";
-import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function NewCoupon({ initialData = {}, isUpdate = false }) {
+export default function NewBanner({ initialData = {}, isUpdate = false }) {
+  const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const {
     register,
-    handleSubmit,
-    watch,
     reset,
-    setValue,
+    watch,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
       isActive: true,
     },
   });
-
-  const title = watch("title");
-  const expiryDate = watch("expiryDate");
   const isActive = watch("isActive");
   console.log(isActive);
-
-  const couponCodeGenerated = useMemo(() => {
-    if (
-      title &&
-      typeof title === "string" &&
-      title.trim() !== "" &&
-      expiryDate !== ""
-    ) {
-      return generateCouponCode(title, expiryDate);
-    }
-    return "";
-  }, [title, expiryDate]);
-
-  useEffect(() => {
-    if (couponCodeGenerated) {
-      setValue("couponCode", couponCodeGenerated);
-    }
-  }, [couponCodeGenerated, setValue]);
 
   async function onSubmit(data) {
     /* {
       id, 
       title, 
-      code, 
-      expiryDate, 
-      isActive
+      link, 
+      imageUrl, 
+      isActive,
     } */
+    data.imageUrl = imageUrl;
     console.log(data);
-    makePostRequest(setLoading, "api/coupons", data, "Cupon", reset);
-    router.back();
+    makePostRequest(setLoading, "api/banners", data, "Banner", reset);
+    setImageUrl("");
   }
-
   return (
     <div>
-      <FormHeader title={isUpdate ? "Actualizar cupones" : "Nuevo cupon"} />
+      <FormHeader title={isUpdate ? "Actualizar Banner" : "Nuevo Banner"} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg p-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
       >
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
           <ToggleInput
-            label="Estado del cupón"
+            label="Estado del banner"
             name="isActive"
             isActive={isActive}
             trueTitle="Activo"
@@ -80,35 +58,33 @@ export default function NewCoupon({ initialData = {}, isUpdate = false }) {
             register={register}
           />
           <TextInput
-            label="Nombre de la campaña"
+            label="Titulo del banner"
             name="title"
             register={register}
             errors={errors}
-            className="w-full"
-          />
-
-          <TextInput
-            label="Fecha de expiración"
-            name="expiryDate"
-            register={register}
-            errors={errors}
-            type="date"
-            className="w-full"
           />
           <TextInput
-            label="Código de la campaña"
-            name="couponCode"
+            label="Enlace del banner"
+            name="link"
+            type="url"
             register={register}
             errors={errors}
-            readOnly={true}
-            className="w-full"
+          />
+          <ImageInput
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+            endpoint="bannerImageUploader"
+            label="Imagen del banner"
           />
         </div>
 
         <div className="sm:col-span-2 flex gap-3 justify-end py-4">
+          <button className="inline-flex items-center px-3 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
+            Cancelar
+          </button>
           <SubmitButton
             isLoading={loading}
-            buttonTitle={isUpdate ? "Actualizar" : "Crear cupón"}
+            buttonTitle={isUpdate ? "Actualizar" : "Crear banner"}
             buttonLoading={"Creando..."}
           />
         </div>

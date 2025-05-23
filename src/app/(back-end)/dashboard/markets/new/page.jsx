@@ -1,78 +1,60 @@
 "use client";
 
 import FormHeader from "@/components/backoffice/FormHeader";
+import ImageInput from "@/components/FormInputs/ImageInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
+import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest } from "@/lib/apiRequest";
-import { generateCouponCode } from "@/lib/generateCode";
-import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { generateSlug } from "@/lib/generateSlug";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function NewCoupon({ initialData = {}, isUpdate = false }) {
+export default function NewMarket({ initialData = {}, isUpdate = false }) {
+  const [logoUrl, setLogoUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const {
     register,
-    handleSubmit,
-    watch,
     reset,
-    setValue,
+    watch,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
       isActive: true,
     },
   });
-
-  const title = watch("title");
-  const expiryDate = watch("expiryDate");
   const isActive = watch("isActive");
-  console.log(isActive);
-
-  const couponCodeGenerated = useMemo(() => {
-    if (
-      title &&
-      typeof title === "string" &&
-      title.trim() !== "" &&
-      expiryDate !== ""
-    ) {
-      return generateCouponCode(title, expiryDate);
-    }
-    return "";
-  }, [title, expiryDate]);
-
-  useEffect(() => {
-    if (couponCodeGenerated) {
-      setValue("couponCode", couponCodeGenerated);
-    }
-  }, [couponCodeGenerated, setValue]);
 
   async function onSubmit(data) {
     /* {
       id, 
       title, 
-      code, 
-      expiryDate, 
-      isActive
+      motto,
+      slug,
+      logoUrl, 
+      description,
+      isActive,
     } */
+    const slug = generateSlug(data.title);
+    data.slug = slug;
+    data.logoUrl = logoUrl;
     console.log(data);
-    makePostRequest(setLoading, "api/coupons", data, "Cupon", reset);
-    router.back();
+    makePostRequest(setLoading, "api/markets", data, "Mercado", reset);
+    setLogoUrl("");
   }
-
   return (
     <div>
-      <FormHeader title={isUpdate ? "Actualizar cupones" : "Nuevo cupon"} />
+      <FormHeader title={isUpdate ? "Actualizar Mercado" : "Nuevo Mercado"} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg p-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
       >
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
           <ToggleInput
-            label="Estado del cupón"
+            label="Estado del Mercado"
             name="isActive"
             isActive={isActive}
             trueTitle="Activo"
@@ -80,35 +62,38 @@ export default function NewCoupon({ initialData = {}, isUpdate = false }) {
             register={register}
           />
           <TextInput
-            label="Nombre de la campaña"
+            label="Nombre del mercado"
             name="title"
             register={register}
             errors={errors}
-            className="w-full"
-          />
-
-          <TextInput
-            label="Fecha de expiración"
-            name="expiryDate"
-            register={register}
-            errors={errors}
-            type="date"
-            className="w-full"
           />
           <TextInput
-            label="Código de la campaña"
-            name="couponCode"
+            label="Lema del mercado"
+            name="motto"
             register={register}
             errors={errors}
-            readOnly={true}
-            className="w-full"
+          />
+          <TextareaInput
+            label="Descripción el mercado"
+            name="description"
+            register={register}
+            errors={errors}
+          />
+          <ImageInput
+            imageUrl={logoUrl}
+            setImageUrl={setLogoUrl}
+            endpoint="marketLogoImageUploader"
+            label="Logo del mercado"
           />
         </div>
 
         <div className="sm:col-span-2 flex gap-3 justify-end py-4">
+          <button className="inline-flex items-center px-3 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
+            Cancelar
+          </button>
           <SubmitButton
             isLoading={loading}
-            buttonTitle={isUpdate ? "Actualizar" : "Crear cupón"}
+            buttonTitle={isUpdate ? "Actualizar" : "Crear mercado"}
             buttonLoading={"Creando..."}
           />
         </div>

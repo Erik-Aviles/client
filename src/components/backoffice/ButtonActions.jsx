@@ -7,6 +7,7 @@ export default function ButtonActions({ title, href }) {
     <div className="flex items-center flex-wrap sm:flex-nowrap gap-3 justify-between text-slate-800 border border-border dark:bg-slate-700 rounded-lg p-4">
       <div className="flex items-center gap-2">
         <button
+          title={`Exportar ${title}`}
           type="button"
           className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 hover:border-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-xs px-3 py-2.5 text-center inline-flex gap-2 items-center dark:focus:ring-gray-600 dark:bg-gray-900 dark:border-gray-400 dark:text-white dark:hover:bg-gray-800"
         >
@@ -14,6 +15,7 @@ export default function ButtonActions({ title, href }) {
           <span className="hidden lg:inline">{"Exportar"}</span>
         </button>
         <button
+          title={`Importar ${title}`}
           type="button"
           className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 hover:border-gray-500  focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-xs px-3 py-2.5 text-center inline-flex gap-2 items-center dark:focus:ring-gray-600 dark:bg-gray-900 dark:border-gray-400 dark:text-white dark:hover:bg-gray-700"
         >
@@ -24,6 +26,7 @@ export default function ButtonActions({ title, href }) {
 
       <div className="flex items-center gap-2">
         <button
+          title={`Editar ${title}`}
           type="button"
           className="capitalize text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-bg-green-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-green-bg-green/50 "
         >
@@ -31,6 +34,7 @@ export default function ButtonActions({ title, href }) {
           <span className="hidden lg:inline">{"Editar " + title}</span>
         </button>
         <button
+          title={`Eliminar ${title}`}
           type="button"
           className="capitalize text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-bg-red-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-red-bg-red/50 "
         >
@@ -38,6 +42,7 @@ export default function ButtonActions({ title, href }) {
           <span className="hidden lg:inline">{"Eliminar " + title}</span>
         </button>
         <Link
+          title={`Agregar ${title}`}
           href={href}
           className="capitalize text-white bg-amber-400 hover:bg-amber-400/90 focus:ring-4 focus:ring-amber-bg-amber-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-amber-bg-amber-400/50 "
         >
