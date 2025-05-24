@@ -1,0 +1,169 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// TABLAS
+
+/* {id, title, code, expiryDate, isActive,} */
+model Coupon {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  couponCode String
+  expiryDate DateTime
+  isActive  Boolean @default(true)
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/* {id, title, link, imageUrl, isActive} */
+model Banner {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  link String
+  imageUrl String
+  isActive  Boolean @default(true)
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/* {id, title, slug, description, imageUrl, marketIds,isActive} */
+model Category {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  slug String @unique
+  description String?
+  imageUrl String?
+  
+  products  Product[]  
+  trainings  Training[]  
+
+  marketIds String[] @db.ObjectId
+  markets   Market[]   @relation(fields: [marketIds], references: [id])
+
+  isActive  Boolean @default(true)
+
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/* {id, title, sku, slug, barcode, description, price, salePrice, quantity, tags, discount, categoryId, categoryDefault, SupplierId, imageUrl, isActive,} */
+model Product {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  sku String?
+  slug String @unique
+  barcode String?
+  description String?
+  price Float
+  salePrice Float
+  quantity Int?
+  tags String[]
+  discount Float?
+  imageUrl String?
+  isActive  Boolean @default(true)
+
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId String @db.ObjectId
+
+  supplier   Supplier  @relation(fields: [supplierId], references: [id])
+  supplierId String @db.ObjectId
+
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/* {id, title, motto, slug, logoUrl, description, isActive,} */
+model Market {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String 
+  motto String?
+  slug String @unique
+  logoUrl String
+  description String?
+  isActive  Boolean @default(true)
+
+  categoryIds String[]   @db.ObjectId
+  categories  Category[] @relation(fields: [categoryIds], references: [id])
+
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/* {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,} */
+model Staff {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  idDocument String
+  codeUser String
+  role Role @default(person)
+  password String
+  email String
+  phone String
+  address String?
+  dob String?
+  notes String?
+  workScope String?
+  imageUrl String?
+  isActive  Boolean @default(true)
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/* {id, name, idDocument, codeSupplier, phone, email, role, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,} */
+model Supplier {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  idDocument String
+  codeSupplier String
+  phone String
+  email String
+  role Role @default(user)
+  address String?
+  contactPerson String?
+  contactPersonPhone String?
+  paymentTerms String?
+  notes String?
+  isActive  Boolean @default(true)
+
+  products  Product[]  
+
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/* {id, title, expertId, categoryId, slug, description, content, imageUrl, isActive} */
+model Training {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  expertId String
+  slug String
+  description String
+  content String
+  imageUrl String?
+  isActive  Boolean @default(true)
+
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId String @db.ObjectId
+
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  user
+  supplier
+  admin
+  person
+}

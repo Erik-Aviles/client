@@ -1,3 +1,4 @@
+import db from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -18,21 +19,23 @@ export async function POST(request) {
       isActive,
     } = await request.json();
 
-    const newStaff = {
-      name,
-      idDocument,
-      codeStaff,
-      role,
-      password,
-      email,
-      phone,
-      address,
-      dob,
-      notes,
-      workScope,
-      imageUrl,
-      isActive,
-    };
+    const newStaff = await db.staff.create({
+      data: {
+        name,
+        idDocument,
+        codeStaff,
+        role,
+        password,
+        email,
+        phone,
+        address,
+        dob,
+        notes,
+        workScope,
+        imageUrl,
+        isActive,
+      },
+    });
     console.log("Nuevo personal creado:", newStaff);
     return NextResponse.json(newStaff, { status: 201 });
   } catch (error) {

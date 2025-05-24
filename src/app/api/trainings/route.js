@@ -1,3 +1,4 @@
+import db from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -12,16 +13,18 @@ export async function POST(request) {
       imageUrl,
       isActive,
     } = await request.json();
-    const newTraining = {
-      title,
-      expertId,
-      categoryId,
-      slug,
-      description,
-      content,
-      imageUrl,
-      isActive,
-    };
+    const newTraining = await db.training.create({
+      data: {
+        title,
+        expertId,
+        categoryId,
+        slug,
+        description,
+        content,
+        imageUrl,
+        isActive,
+      },
+    });
     console.log("Nueva capacitación creada:", newTraining);
     return NextResponse.json(newTraining, { status: 201 });
   } catch (error) {

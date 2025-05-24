@@ -12,7 +12,7 @@ import { makePostRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
 import { categories } from "@/utils/general/categories";
 import { discounts } from "@/utils/general/discounts";
-import { farmers } from "@/utils/general/farmers";
+import { suppliers } from "@/utils/general/suppliers";
 import { tagsData } from "@/utils/general/tagsData";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -37,24 +37,7 @@ export default function NewProduct({ initialData = {}, isUpdate = false }) {
   console.log(isActive);
 
   async function onSubmit(data) {
-    /* {
-    id, 
-    title, 
-    sku, 
-    slug, 
-    barcode,
-    description, 
-    price, 
-    salePrice,
-    quantity, 
-    tags, 
-    discount,
-    category, 
-    categoryDefault, 
-    farmer, 
-    imageUrl,
-    isActive,
-    } */
+    /* {id, title, sku, slug, barcode, description, price, salePrice, quantity, tags, discount, imageUrl, isActive, categoryId, supplierId} */
     const slug = generateSlug(data.title);
     data.slug = slug;
     data.imageUrl = imageUrl;
@@ -116,11 +99,11 @@ export default function NewProduct({ initialData = {}, isUpdate = false }) {
 
           <SelectInput
             label="selecciona un proveedor"
-            name="farmerIds"
+            name="supplierId"
             register={register}
             errors={errors}
             className="w-full"
-            options={farmers}
+            options={suppliers}
             multiple={false}
           />
 
@@ -149,6 +132,7 @@ export default function NewProduct({ initialData = {}, isUpdate = false }) {
             register={register}
             errors={errors}
             className="w-full"
+            isRequired={false}
           />
 
           <SelectInput
@@ -167,13 +151,14 @@ export default function NewProduct({ initialData = {}, isUpdate = false }) {
             name="description"
             register={register}
             errors={errors}
+            isRequired={false}
           />
 
           {/* Tags */}
           <ArrayItemsInput
-            itemTitle="etiqueta"
-            items={tags}
             setItems={setTags}
+            items={tags}
+            itemTitle="etiqueta"
           />
 
           <ImageInput

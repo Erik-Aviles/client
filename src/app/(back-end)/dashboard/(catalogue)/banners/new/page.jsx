@@ -3,17 +3,23 @@
 import FormHeader from "@/components/backoffice/FormHeader";
 import ImageInput from "@/components/FormInputs/ImageInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
-import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest } from "@/lib/apiRequest";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewBanner({ initialData = {}, isUpdate = false }) {
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const datapath = "banners";
+  const router = useRouter();
 
+  function redirect() {
+    router.push(`/dashboard/${datapath}`);
+  }
+  
   const {
     register,
     reset,
@@ -26,19 +32,19 @@ export default function NewBanner({ initialData = {}, isUpdate = false }) {
     },
   });
   const isActive = watch("isActive");
-  console.log(isActive);
 
   async function onSubmit(data) {
-    /* {
-      id, 
-      title, 
-      link, 
-      imageUrl, 
-      isActive,
-    } */
+    /* {id, title, link, imageUrl, isActive,} */
     data.imageUrl = imageUrl;
     console.log(data);
-    makePostRequest(setLoading, "api/banners", data, "Banner", reset);
+    makePostRequest(
+      setLoading,
+      `api/${datapath}`,
+      data,
+      "Banner",
+      reset,
+      redirect
+    );
     setImageUrl("");
   }
   return (

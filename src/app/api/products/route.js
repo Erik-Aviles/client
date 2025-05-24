@@ -1,3 +1,4 @@
+import db from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -13,30 +14,30 @@ export async function POST(request) {
       quantity,
       tags,
       taxes,
-      categoryId,
-      categoryDefault,
-      farmerIds,
       imageUrl,
       isActive,
+      categoryId,
+      supplierId,
     } = await request.json();
 
-    const newProduct = {
-      title,
-      sku,
-      slug,
-      barcode,
-      description,
-      price,
-      salePrice,
-      quantity,
-      tags,
-      taxes,
-      categoryId,
-      categoryDefault,
-      farmerIds,
-      imageUrl,
-      isActive,
-    };
+    const newProduct = await db.product.create({
+      data: {
+        title,
+        sku,
+        slug,
+        barcode,
+        description,
+        price,
+        salePrice,
+        quantity,
+        tags,
+        taxes,
+        imageUrl,
+        isActive,
+        categoryId,
+        supplierId,
+      },
+    });
     console.log("Nuevo producto creado:", newProduct);
     return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {

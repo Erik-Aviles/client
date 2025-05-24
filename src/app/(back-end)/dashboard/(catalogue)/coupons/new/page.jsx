@@ -6,14 +6,19 @@ import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest } from "@/lib/apiRequest";
 import { generateCouponCode } from "@/lib/generateCode";
+import { parseISODate } from "@/lib/parseISODate";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewCoupon({ initialData = {}, isUpdate = false }) {
   const [loading, setLoading] = useState(false);
+  const datapath = "coupons";
   const router = useRouter();
 
+  function redirect() {
+    router.push(`/dashboard/${datapath}`);
+  }
   const {
     register,
     handleSubmit,
@@ -26,7 +31,6 @@ export default function NewCoupon({ initialData = {}, isUpdate = false }) {
       isActive: true,
     },
   });
-
   const title = watch("title");
   const expiryDate = watch("expiryDate");
   const isActive = watch("isActive");
@@ -54,13 +58,21 @@ export default function NewCoupon({ initialData = {}, isUpdate = false }) {
     /* {
       id, 
       title, 
-      code, 
+      couponCode, 
       expiryDate, 
-      isActive
+      isActive,
     } */
+    const formattedExpiryDate = parseISODate(expiryDate);
+    data.expiryDate = formattedExpiryDate;
     console.log(data);
-    makePostRequest(setLoading, "api/coupons", data, "Cupon", reset);
-    router.back();
+    makePostRequest(
+      setLoading,
+      `api/${datapath}`,
+      data,
+      "Cupon",
+      reset,
+      redirect
+    );
   }
 
   return (
@@ -109,7 +121,7 @@ export default function NewCoupon({ initialData = {}, isUpdate = false }) {
           <SubmitButton
             isLoading={loading}
             buttonTitle={isUpdate ? "Actualizar" : "Crear cupón"}
-            buttonLoading={"Creando..."}
+            buttonLoading={"Creando cupón..."}
           />
         </div>
       </form>

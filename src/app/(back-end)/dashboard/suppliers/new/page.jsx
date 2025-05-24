@@ -15,7 +15,12 @@ import { useForm } from "react-hook-form";
 export default function NewSupplier({ initialData = {}, isUpdate = false }) {
   const [loading, setLoading] = useState(false);
   const nameCompany = companyData.name;
+  const datapath = "suppliers";
   const router = useRouter();
+
+  function redirect() {
+    router.push(`/dashboard/${datapath}`);
+  }
 
   const {
     register,
@@ -53,22 +58,9 @@ export default function NewSupplier({ initialData = {}, isUpdate = false }) {
   }, [supplierCodeGenerated, setValue]);
 
   async function onSubmit(data) {
-    /* {
-      id, 
-      name, 
-      idDocument,
-      codeSupplier,
-      phone, 
-      email, 
-      address,
-      contactPerson,
-      contactPersonPhone,
-      paymentTerms,
-      notes,
-      isActive,
-    } */
+    /* {id, name, idDocument, codeSupplier, phone, email, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,} */
     console.log(data);
-    makePostRequest(setLoading, "api/suppliers", data, "Proveedor", reset);
+    makePostRequest(setLoading, `api/${datapath}`, data, "Proveedor", reset, redirect);
     router.back();
   }
 
@@ -134,6 +126,7 @@ export default function NewSupplier({ initialData = {}, isUpdate = false }) {
             register={register}
             errors={errors}
             className="w-full"
+            isRequired={false}
           />
           <TextInput
             label="Nombre del contacto"
@@ -141,6 +134,7 @@ export default function NewSupplier({ initialData = {}, isUpdate = false }) {
             register={register}
             errors={errors}
             className="w-full"
+            isRequired={false}
           />
           <TextInput
             label="Teléfono del contacto"
@@ -149,6 +143,7 @@ export default function NewSupplier({ initialData = {}, isUpdate = false }) {
             register={register}
             errors={errors}
             className="w-full"
+            isRequired={false}
           />
 
           <TextareaInput

@@ -2,18 +2,27 @@
 
 import FormHeader from "@/components/backoffice/FormHeader";
 import ImageInput from "@/components/FormInputs/ImageInput";
+import SelectInput from "@/components/FormInputs/SelectInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
+import { categories } from "@/utils/general/categories";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewMarket({ initialData = {}, isUpdate = false }) {
   const [logoUrl, setLogoUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const datapath = "markets";
+  const router = useRouter();
+
+  function redirect() {
+    router.push(`/dashboard/${datapath}`);
+  }
 
   const {
     register,
@@ -29,20 +38,19 @@ export default function NewMarket({ initialData = {}, isUpdate = false }) {
   const isActive = watch("isActive");
 
   async function onSubmit(data) {
-    /* {
-      id, 
-      title, 
-      motto,
-      slug,
-      logoUrl, 
-      description,
-      isActive,
-    } */
+    /* {id, title, motto, slug, logoUrl, description, categoryIds, isActive,} */
     const slug = generateSlug(data.title);
     data.slug = slug;
     data.logoUrl = logoUrl;
     console.log(data);
-    makePostRequest(setLoading, "api/markets", data, "Mercado", reset);
+    makePostRequest(
+      setLoading,
+      `api/${datapath}`,
+      data,
+      "Mercado",
+      reset,
+      redirect
+    );
     setLogoUrl("");
   }
   return (
@@ -66,18 +74,31 @@ export default function NewMarket({ initialData = {}, isUpdate = false }) {
             name="title"
             register={register}
             errors={errors}
+            className="w-full"
+          />
+          <SelectInput
+            label="seleccionar categorias"
+            name="categoryIds"
+            register={register}
+            errors={errors}
+            className="w-full"
+            options={categories}
+            multiple={true}
           />
           <TextInput
             label="Lema del mercado"
             name="motto"
             register={register}
             errors={errors}
+            isRequired={false}
           />
+
           <TextareaInput
             label="Descripción el mercado"
             name="description"
             register={register}
             errors={errors}
+            isRequired={false}
           />
           <ImageInput
             imageUrl={logoUrl}

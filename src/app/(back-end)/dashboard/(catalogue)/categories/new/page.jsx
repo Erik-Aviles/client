@@ -10,12 +10,19 @@ import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
 import { markets } from "@/utils/general/markets";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewCategory({ initialData = {}, isUpdate = false }) {
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const datapath = "categories";
+  const router = useRouter();
+
+  function redirect() {
+    router.push(`/dashboard/${datapath}`);
+  }
 
   const {
     register,
@@ -31,22 +38,22 @@ export default function NewCategory({ initialData = {}, isUpdate = false }) {
   const isActive = watch("isActive");
 
   async function onSubmit(data) {
-    /* {
-      id, 
-      title, 
-      slug, 
-      description, 
-      imageUrl, 
-      marketIds,
-      isActive
-    } */
+    /* {id, title, slug, description, imageUrl, marketIds, isActive} */
     const slug = generateSlug(data.title);
     data.slug = slug;
     data.imageUrl = imageUrl;
     console.log(data);
-    makePostRequest(setLoading, "api/categories", data, "Categoría", reset);
+    makePostRequest(
+      setLoading,
+      `api/${datapath}`,
+      data,
+      "Categoría",
+      reset,
+      redirect
+    );
     setImageUrl("");
   }
+  
   return (
     <div>
       <FormHeader
@@ -70,15 +77,6 @@ export default function NewCategory({ initialData = {}, isUpdate = false }) {
             name="title"
             register={register}
             errors={errors}
-            className="w-full"
-          />
-          <SelectInput
-            label="seleccionar mercado"
-            name="marketIds"
-            register={register}
-            errors={errors}
-            className="w-full"
-            options={markets}
           />
           <TextareaInput
             label="Descripción "
@@ -86,7 +84,6 @@ export default function NewCategory({ initialData = {}, isUpdate = false }) {
             register={register}
             errors={errors}
           />
-
           <ImageInput
             imageUrl={imageUrl}
             setImageUrl={setImageUrl}

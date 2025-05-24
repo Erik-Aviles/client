@@ -17,8 +17,13 @@ import { useForm } from "react-hook-form";
 export default function NewStaff({ initialData = {}, isUpdate = false }) {
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const nameCompany = companyData?.name;
+  const datapath = "staffs";
   const router = useRouter();
-  const nameCompany = companyData.name;
+
+  function redirect() {
+    router.push(`/dashboard/${datapath}`);
+  }
 
   const {
     register,
@@ -58,26 +63,17 @@ export default function NewStaff({ initialData = {}, isUpdate = false }) {
   }, [staffCodeGenerated, setValue]);
 
   async function onSubmit(data) {
-    /* {
-      id, 
-      name,
-      idDocument,
-      codeUser,
-      role,
-      password,
-      email,
-      phone,
-      address,
-      dob,
-      notes,
-      workScope,
-      imageUrl,
-      isActive,
-    } */
+    /* {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,} */
     data.imageUrl = imageUrl;
     console.log(data);
-    makePostRequest(setLoading, "api/staffs", data, "Colaborador", reset);
-    router.back();
+    makePostRequest(
+      setLoading,
+      `api/${datapath}`,
+      data,
+      "Colaborador",
+      reset,
+      redirect
+    );
   }
 
   return (

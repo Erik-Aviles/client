@@ -1,7 +1,7 @@
 export function generateCouponCode(item1, item2) {
-  const formattedItem1 = item1?.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  const formattedItem1 = item1?.replace(/[^a-zA-Z0-9]/g, "").toUpperCase() || "ITEM";
 
-  let formattedItem2;
+  let formattedItem2 = "000000"; // valor por defecto
 
   if (/^\d{4}-\d{2}-\d{2}$/.test(item2)) {
     const [year, month, day] = item2.split("-").map(Number);
@@ -9,15 +9,16 @@ export function generateCouponCode(item1, item2) {
       formattedItem2 = `${year.toString().slice(-2)}${month
         .toString()
         .padStart(2, "0")}${day.toString().padStart(2, "0")}`;
-      isValidDate = true;
     }
   }
+
   const randomSuffix = Math.floor(Math.random() * 10000)
     .toString()
     .padStart(4, "0");
 
   return `${formattedItem1}-${formattedItem2}@${randomSuffix}`;
 }
+
 
 export function generatePersonCode(
   nameCompany,

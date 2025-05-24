@@ -1,3 +1,4 @@
+import db from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -16,19 +17,21 @@ export async function POST(request) {
       isActive,
     } = await request.json();
 
-    const newSupplier = {
-      name,
-      idDocument,
-      codeSupplier,
-      phone,
-      email,
-      address,
-      contactPerson,
-      contactPersonPhone,
-      paymentTerms,
-      notes,
-      isActive,
-    };
+    const newSupplier = await db.supplier.create({
+      data: {
+        name,
+        idDocument,
+        codeSupplier,
+        phone,
+        email,
+        address,
+        contactPerson,
+        contactPersonPhone,
+        paymentTerms,
+        notes,
+        isActive,
+      },
+    });
     console.log("Nuevo proveedor creado:", newSupplier);
     return NextResponse.json(newSupplier, { status: 201 });
   } catch (error) {
