@@ -1,6 +1,7 @@
 "use client";
 
 import FormHeader from "@/components/backoffice/FormHeader";
+import ImageInput from "@/components/FormInputs/ImageInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInput from "@/components/FormInputs/TextInput";
@@ -13,6 +14,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewSupplier({ initialData = {}, isUpdate = false }) {
+  const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const nameCompany = companyData.name;
   const datapath = "suppliers";
@@ -37,6 +39,7 @@ export default function NewSupplier({ initialData = {}, isUpdate = false }) {
 
   const name = watch("name");
   const idDocument = watch("idDocument");
+  const role = watch("role");
   const isActive = watch("isActive");
 
   const supplierCodeGenerated = useMemo(() => {
@@ -58,10 +61,18 @@ export default function NewSupplier({ initialData = {}, isUpdate = false }) {
   }, [supplierCodeGenerated, setValue]);
 
   async function onSubmit(data) {
-    /* {id, name, idDocument, codeSupplier, phone, email, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,} */
+    /* {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,} */
+    data.profileImageUrl = imageUrl;
     console.log(data);
-    makePostRequest(setLoading, `api/${datapath}`, data, "Proveedor", reset, redirect);
-    router.back();
+    makePostRequest(
+      setLoading,
+      `api/${datapath}`,
+      data,
+      role,
+      reset,
+      redirect
+    );
+    setImageUrl("");
   }
 
   return (
@@ -159,6 +170,12 @@ export default function NewSupplier({ initialData = {}, isUpdate = false }) {
             register={register}
             errors={errors}
             isRequired={false}
+          />
+          <ImageInput
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+            endpoint="supplierImageUploader"
+            label="Foto del proveedor"
           />
         </div>
 

@@ -98,8 +98,8 @@ export default function NewCategory({ initialData = {}, isUpdate = false }) {
           </button>
           <SubmitButton
             isLoading={loading}
-            buttonTitle={isUpdate ? "Actualizar" : "Crear"}
-            buttonLoading={"Creando..."}
+            buttonTitle={isUpdate ? "Actualizar" : "Crear categoría"}
+            buttonLoading={"Creando categoría..."}
           />
         </div>
       </form>

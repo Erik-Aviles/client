@@ -77,8 +77,8 @@ model Product {
   category   Category  @relation(fields: [categoryId], references: [id])
   categoryId String @db.ObjectId
 
-  supplier   Supplier  @relation(fields: [supplierId], references: [id])
-  supplierId String @db.ObjectId
+  user   User @relation(fields: [userId], references: [id])
+  userId String  @db.ObjectId 
 
 	createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -107,7 +107,7 @@ model Staff {
   name String
   idDocument String
   codeUser String
-  role Role @default(person)
+  role UserRole @default(MODERATOR)
   password String
   email String
   phone String
@@ -121,27 +121,6 @@ model Staff {
   updatedAt DateTime @updatedAt
 }
 
-/* {id, name, idDocument, codeSupplier, phone, email, role, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,} */
-model Supplier {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  idDocument String
-  codeSupplier String
-  phone String
-  email String
-  role Role @default(user)
-  address String?
-  contactPerson String?
-  contactPersonPhone String?
-  paymentTerms String?
-  notes String?
-  isActive  Boolean @default(true)
-
-  products  Product[]  
-
-	createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 
 /* {id, title, expertId, categoryId, slug, description, content, imageUrl, isActive} */
 model Training {
@@ -161,9 +140,54 @@ model Training {
   updatedAt DateTime @updatedAt
 }
 
-enum Role {
-  user
-  supplier
-  admin
-  person
+//USER => ADMIN, USER, SUPPLIER, CUSTOMER, MODERATOR
+enum UserRole {
+  ADMIN
+  USER
+  SUPPLIER
+  CUSTOMER
+  MODERATOR
 }
+
+/* {id, name, email, emailVerified, role, isActive,} */
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  role            UserRole @default(USER)        
+  supplierProfile SupplierProfile?  
+       
+  products  Product[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+/* {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, role, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,} */
+model SupplierProfile {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  idDocument String
+  codeSupplier String
+  phone String
+  profileImageUrl String?
+  email String
+  role UserRole @default(SUPPLIER) 
+  address String?
+  contactPerson String?
+  contactPersonPhone String?
+  paymentTerms String?
+  notes String?
+  isActive  Boolean @default(true)
+
+
+  user   User @relation(fields: [userId], references: [id])
+  userId String  @unique 
+
+	createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+

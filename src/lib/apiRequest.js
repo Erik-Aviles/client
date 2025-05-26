@@ -21,7 +21,7 @@ export async function makePostRequest(
 
     if (response.ok) {
       setLoading(false);
-      toast.success(`${resourceName} creado con éxito`);
+      toast.success(`Nuevo ${resourceName} creado exitosamente`);
       reset();
       redirect();
     } else {

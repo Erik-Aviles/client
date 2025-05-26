@@ -160,7 +160,7 @@ exports.Prisma.ProductScalarFieldEnum = {
   imageUrl: 'imageUrl',
   isActive: 'isActive',
   categoryId: 'categoryId',
-  supplierId: 'supplierId',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -197,24 +197,6 @@ exports.Prisma.StaffScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.SupplierScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  idDocument: 'idDocument',
-  codeSupplier: 'codeSupplier',
-  phone: 'phone',
-  email: 'email',
-  role: 'role',
-  address: 'address',
-  contactPerson: 'contactPerson',
-  contactPersonPhone: 'contactPersonPhone',
-  paymentTerms: 'paymentTerms',
-  notes: 'notes',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.TrainingScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -229,6 +211,36 @@ exports.Prisma.TrainingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  emailVerified: 'emailVerified',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SupplierProfileScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  idDocument: 'idDocument',
+  codeSupplier: 'codeSupplier',
+  phone: 'phone',
+  profileImageUrl: 'profileImageUrl',
+  email: 'email',
+  role: 'role',
+  address: 'address',
+  contactPerson: 'contactPerson',
+  contactPersonPhone: 'contactPersonPhone',
+  paymentTerms: 'paymentTerms',
+  notes: 'notes',
+  isActive: 'isActive',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -238,11 +250,11 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-exports.Role = exports.$Enums.Role = {
-  user: 'user',
-  supplier: 'supplier',
-  admin: 'admin',
-  person: 'person'
+exports.UserRole = exports.$Enums.UserRole = {
+  ADMIN: 'ADMIN',
+  SUPPLIER: 'SUPPLIER',
+  USER: 'USER',
+  MODERATOR: 'MODERATOR'
 };
 
 exports.Prisma.ModelName = {
@@ -252,8 +264,9 @@ exports.Prisma.ModelName = {
   Product: 'Product',
   Market: 'Market',
   Staff: 'Staff',
-  Supplier: 'Supplier',
-  Training: 'Training'
+  Training: 'Training',
+  User: 'User',
+  SupplierProfile: 'SupplierProfile'
 };
 
 /**

@@ -41,6 +41,12 @@ export const ourFileRouter = {
       console.log("file ufsUrl", file.ufsUrl, metadata);
       return { uploadedBy: "betimes" };
     }),
+  supplierImageUploader: f({ image: { maxFileSize: "1MB" } })
+    // Set permissions and file types for this FileRoute
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("file ufsUrl", file.ufsUrl, metadata);
+      return { uploadedBy: "betimes" };
+    }),
   trainingImageUploader: f({ image: { maxFileSize: "1MB" } })
     // Set permissions and file types for this FileRoute
     .onUploadComplete(async ({ metadata, file }) => {
