@@ -65,22 +65,24 @@ model Category {
 }
 
 /**
- * {id, title, sku, slug, barcode, description, price, salePrice, quantity, tags, discount, categoryId, categoryDefault, SupplierId, imageUrl, isActive,}
+ * {id, title, sku, slug, code, barcode, description, price, salePrice, quantity, stock, tags, hasDiscount, imageUrl, isActive, categoryId, userId,}
  */
 model Product {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   sku         String?
   slug        String   @unique
+  code        String   @unique
   barcode     String?
   description String?
   price       Float
-  salePrice   Float
+  salePrice   Float?
   quantity    Int?
+  stock       Int?
   tags        String[]
-  discount    Float?
   imageUrl    String?
   isActive    Boolean  @default(true)
+  hasDiscount Boolean  @default(true)
 
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String   @db.ObjectId
@@ -134,12 +136,11 @@ model Staff {
 }
 
 /**
- * {id, title, expertId, categoryId, slug, description, content, imageUrl, isActive}
+ * {id, title, categoryId, slug, description, content, imageUrl, isActive}
  */
 model Training {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  expertId    String
   slug        String
   description String
   content     String
@@ -153,26 +154,31 @@ model Training {
   updatedAt DateTime @updatedAt
 }
 
+//USER => ADMIN, USER, SUPPLIER, CUSTOMER, MODERATOR
 enum UserRole {
   ADMIN
-  SUPPLIER
   USER
+  SUPPLIER
+  CUSTOMER
   MODERATOR
 }
 
-//USER => ADMIN, SUPPLIER, CUSTOMER, AGENTE
-
+/**
+ * {id, name, email, password, emailVerified, role, isActive,}
+ */
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  products      Product[]
-
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  password        String?
+  email           String?          @unique
+  emailVerified   DateTime?
   role            UserRole         @default(USER)
   supplierProfile SupplierProfile?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 /**
@@ -193,6 +199,7 @@ model SupplierProfile {
   paymentTerms       String?
   notes              String?
   isActive           Boolean  @default(true)
+  products           String[]
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique

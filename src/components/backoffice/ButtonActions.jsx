@@ -44,7 +44,7 @@ export default function ButtonActions({ title, href }) {
         <Link
           title={`Agregar ${title}`}
           href={href}
-          className="capitalize text-white bg-amber-400 hover:bg-amber-400/90 focus:ring-4 focus:ring-amber-bg-amber-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-amber-bg-amber-400/50 "
+          className="capitalize text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-bg-blue-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-blue-bg-blue-400/50 "
         >
           <Plus />
           <span className="hidden lg:inline">{"Agregar " + title}</span>

@@ -1,5 +1,5 @@
 import ButtonActions from "@/components/backoffice/ButtonActions";
-import Search from "@/components/backoffice/Search";
+import SearchForm from "@/components/backoffice/SearchForm";
 import Heading from "@/components/backoffice/styledComponent/Heading";
 import SubTitle2 from "@/components/backoffice/styledComponent/SubTitle2";
 import React from "react";
@@ -9,7 +9,7 @@ export default function Supplier() {
     <div className="flex flex-col gap-4">
       <Heading title="Proveedores" className="" />
       <ButtonActions title="proveedores" href="/dashboard/suppliers/new" />
-      <Search placeholder="Buscar proveedor por nombre..." />
+      <SearchForm placeholder="Buscar proveedor por nombre..." />
       <div className="overflow-hidden border border-border dark:bg-slate-700 rounded-lg p-4">
        <SubTitle2 title="Tabla" />
        

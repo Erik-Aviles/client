@@ -10,6 +10,7 @@ import {
   createTheme,
   mantineHtmlProps,
 } from "@mantine/core";
+import { ThemeModeScript } from "flowbite-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +33,10 @@ const theme = createTheme({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark" {...mantineHtmlProps}>
+    <html lang="en" className="dark" {...mantineHtmlProps} suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
+        <ThemeModeScript /> 
       </head>
       <body
         className={` ${geistSans.variable} ${geistMono.variable} antialiased`}

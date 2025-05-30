@@ -9,9 +9,9 @@ export async function GET(request) {
 
     return NextResponse.json(suppliers, { status: 200 });
   } catch (error) {
-    console.error("Error al obtener los datos de los proveedores:", error);
+    console.error("Error al obtener los datos del proveedor:", error);
     return NextResponse.json(
-      { message: "No se pudieron obtener los datos de los proveedores", error },
+      { message: "No se pudieron obtener los datos del proveedor", error },
       { status: 500 }
     );
   }
@@ -19,41 +19,28 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const {
-      name,
-      idDocument,
-      codeSupplier,
-      phone,
-      profileImageUrl,
-      email,
-      role,
-      address,
-      contactPerson,
-      contactPersonPhone,
-      paymentTerms,
-      notes,
-      isActive,
-    } = await request.json();
-
-    const newSupplier = await db.supplierProfile.create({
+    const supplierData = await request.json();
+    const newSupplierProfile = await db.supplierProfile.create({
       data: {
-        name,
-        idDocument,
-        codeSupplier,
-        phone,
-        profileImageUrl,
-        email,
-        role,
-        address,
-        contactPerson,
-        contactPersonPhone,
-        paymentTerms,
-        notes,
-        isActive,
+        name: supplierData.name,
+        idDocument: supplierData.idDocument,
+        codeSupplier: supplierData.codeSupplier,
+        phone: supplierData.phone,
+        profileImageUrl: supplierData.profileImageUrl,
+        email: supplierData.email,
+        role: supplierData.role,
+        address: supplierData.address,
+        contactPerson: supplierData.contactPerson,
+        contactPersonPhone: supplierData.contactPersonPhone,
+        paymentTerms: supplierData.paymentTerms,
+        notes: supplierData.notes,
+        products: supplierData.products,
+        isActive: supplierData.isActive,
+        userId: supplierData.userId,
       },
     });
-    console.log("Nuevo proveedor creado:", newSupplier);
-    return NextResponse.json(newSupplier, { status: 201 });
+    console.log("Nuevo proveedor creado:", newSupplierProfile);
+    return NextResponse.json(newSupplierProfile, { status: 201 });
   } catch (error) {
     console.error("Error al registrar el proveedor:", error);
     return NextResponse.json(

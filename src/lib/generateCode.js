@@ -1,5 +1,6 @@
-export function generateCouponCode(item1, item2) {
-  const formattedItem1 = item1?.replace(/[^a-zA-Z0-9]/g, "").toUpperCase() || "ITEM";
+function generateCouponCode(item1, item2) {
+  const formattedItem1 =
+    item1?.replace(/[^a-zA-Z0-9]/g, "").toUpperCase() || "ITEM";
 
   let formattedItem2 = "000000"; // valor por defecto
 
@@ -19,8 +20,7 @@ export function generateCouponCode(item1, item2) {
   return `${formattedItem1}-${formattedItem2}@${randomSuffix}`;
 }
 
-
-export function generatePersonCode(
+function generatePersonCode(
   nameCompany,
   namePerson,
   idDocument,
@@ -64,3 +64,29 @@ export function generatePersonCode(
 
   return `${formattedCompany}-${formattedRole}${formattedPerson}${randomSuffix}${formattedId}`;
 }
+
+function generateUniqueProductCode(nameCompany, productName, numberLength = 4) {
+  if (!productName || !nameCompany) return "";
+
+  const formattedCompany = nameCompany
+    .split(" ")
+    .filter(Boolean)
+    .map((word) =>
+      word
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .toUpperCase()
+        .slice(0, 1)
+    )
+    .join("");
+
+  let prefix = productName.trim().slice(0, 3).toUpperCase();
+  if (prefix.length < 3) prefix = prefix.padEnd(3, "X");
+
+  const randomNumber = Math.floor(Math.random() * Math.pow(10, numberLength))
+    .toString()
+    .padStart(numberLength, "0");
+
+  return `${formattedCompany}${prefix}${randomNumber}`;
+}
+
+export { generatePersonCode, generateCouponCode, generateUniqueProductCode };

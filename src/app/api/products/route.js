@@ -1,5 +1,10 @@
 import db from "@/lib/db";
+import { generateUniqueProductCode } from "@/lib/generateCode";
+import { parseNumberOrNull } from "@/lib/parseNumberOrNull";
+import { companyData } from "@/utils/general/companyData";
 import { NextResponse } from "next/server";
+
+const nameCompany = companyData?.name;
 
 export async function GET(request) {
   try {
@@ -19,53 +24,68 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const {
-      title,
-      sku,
-      slug,
-      barcode,
-      description,
-      price,
-      salePrice,
-      quantity,
-      tags,
-      taxes,
-      imageUrl,
-      isActive,
-      categoryId,
-      supplierId,
-    } = await request.json();
+    const productsData = await request.json();
+    const { slug, title } = productsData;
 
-     const existingProduct = await db.product.findUnique({
+    const existingSlug = await db.product.findUnique({
       where: { slug },
     });
 
-    if (existingProduct) {
+    if (existingSlug) {
       return NextResponse.json(
         { data: null, message: "Ya existe un producto con este slug" },
         { status: 409 }
       );
     }
 
+    const quantity = parseNumberOrNull(productsData?.quantity);
+    const stock = parseNumberOrNull(productsData?.stock);
+    const price = parseNumberOrNull(productsData?.price);
+    const salePrice = parseNumberOrNull(productsData?.salePrice);
+
+    let generatedCode = "";
+    let isUnique = false;
+    let attempts = 0;
+    while (!isUnique && attempts < 5) {
+      generatedCode = generateUniqueProductCode(nameCompany, title);
+      const existingCode = await db.product.findUnique({
+        where: { code: generatedCode },
+      });
+      if (!existingCode) {
+        isUnique = true;
+      } else {
+        attempts++;
+      }
+    }
+
+    if (!isUnique) {
+      return NextResponse.json(
+        { message: "No se pudo generar un código único" },
+        { status: 500 }
+      );
+    }
+
     const newProduct = await db.product.create({
       data: {
-        title,
-        sku,
-        slug,
-        barcode,
-        description,
+        title: productsData.title,
+        sku: productsData.sku,
+        slug: productsData.slug,
+        barcode: productsData.barcode,
+        description: productsData.description,
+        tags: productsData.tags,
+        imageUrl: productsData.imageUrl,
+        isActive: productsData.isActive,
+        hasDiscount: productsData.hasDiscount,
+        categoryId: productsData.categoryId,
+        code: generatedCode,
+        quantity,
+        stock,
         price,
         salePrice,
-        quantity,
-        tags,
-        taxes,
-        imageUrl,
-        isActive,
-        categoryId,
-        supplierId,
+        userId: productsData?.supplierId,
       },
     });
-    console.log("Nuevo producto creado:", newProduct);
+    console.log("Nuevo producto: ", newProduct);
     return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {
     console.error("Error al registrar el producto:", error);

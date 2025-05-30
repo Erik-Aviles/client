@@ -25,7 +25,7 @@ export default function TextInput({
           id={name}
           defaultValue={defaultValue}
           autoComplete={name}
-          className="block w-full bg-white border border-border rounded-lg p-3 focus:ring-amber-400 focus:border-amber-400 dark:bg-slate-700  dark:placeholder-slate-500 dark:text-white dark:focus:ring-amber-400 dark:focus:border-amber-400"
+          className="block w-full bg-white border border-border rounded-lg py-2 focus:ring-amber-400 focus:border-amber-400 dark:bg-slate-700  dark:placeholder-slate-500 dark:text-white dark:focus:ring-amber-400 dark:focus:border-amber-400"
           placeholder={`${label.toLowerCase()}`}
           readOnly={readOnly}
         />

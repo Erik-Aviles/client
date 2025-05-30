@@ -150,15 +150,17 @@ exports.Prisma.ProductScalarFieldEnum = {
   title: 'title',
   sku: 'sku',
   slug: 'slug',
+  code: 'code',
   barcode: 'barcode',
   description: 'description',
   price: 'price',
   salePrice: 'salePrice',
   quantity: 'quantity',
+  stock: 'stock',
   tags: 'tags',
-  discount: 'discount',
   imageUrl: 'imageUrl',
   isActive: 'isActive',
+  hasDiscount: 'hasDiscount',
   categoryId: 'categoryId',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -200,7 +202,6 @@ exports.Prisma.StaffScalarFieldEnum = {
 exports.Prisma.TrainingScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  expertId: 'expertId',
   slug: 'slug',
   description: 'description',
   content: 'content',
@@ -214,6 +215,7 @@ exports.Prisma.TrainingScalarFieldEnum = {
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  password: 'password',
   email: 'email',
   emailVerified: 'emailVerified',
   role: 'role',
@@ -236,6 +238,7 @@ exports.Prisma.SupplierProfileScalarFieldEnum = {
   paymentTerms: 'paymentTerms',
   notes: 'notes',
   isActive: 'isActive',
+  products: 'products',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -252,8 +255,9 @@ exports.Prisma.QueryMode = {
 };
 exports.UserRole = exports.$Enums.UserRole = {
   ADMIN: 'ADMIN',
-  SUPPLIER: 'SUPPLIER',
   USER: 'USER',
+  SUPPLIER: 'SUPPLIER',
+  CUSTOMER: 'CUSTOMER',
   MODERATOR: 'MODERATOR'
 };
 

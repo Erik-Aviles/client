@@ -1,6 +1,7 @@
 "use client";
 
 import FormHeader from "@/components/backoffice/FormHeader";
+import NewSupplierForm from "@/components/backoffice/NewSupplierForm";
 import ImageInput from "@/components/FormInputs/ImageInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
@@ -14,179 +15,12 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewSupplier({ initialData = {}, isUpdate = false }) {
-  const [imageUrl, setImageUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const nameCompany = companyData.name;
-  const datapath = "suppliers";
-  const router = useRouter();
-
-  function redirect() {
-    router.push(`/dashboard/${datapath}`);
-  }
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      isActive: true,
-    },
-  });
-
-  const name = watch("name");
-  const idDocument = watch("idDocument");
-  const role = watch("role");
-  const isActive = watch("isActive");
-
-  const supplierCodeGenerated = useMemo(() => {
-    if (
-      name &&
-      typeof name === "string" &&
-      name.trim() !== "" &&
-      idDocument !== ""
-    ) {
-      return generatePersonCode(nameCompany, name, idDocument, "proveedor");
-    }
-    return "";
-  }, [name, idDocument]);
-
-  useEffect(() => {
-    if (supplierCodeGenerated) {
-      setValue("codeSupplier", supplierCodeGenerated);
-    }
-  }, [supplierCodeGenerated, setValue]);
-
-  async function onSubmit(data) {
-    /* {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,} */
-    data.profileImageUrl = imageUrl;
-    console.log(data);
-    makePostRequest(
-      setLoading,
-      `api/${datapath}`,
-      data,
-      role,
-      reset,
-      redirect
-    );
-    setImageUrl("");
-  }
-
   return (
     <div>
       <FormHeader
         title={isUpdate ? "Actualizar Proveedor" : "Nuevo proveedor"}
       />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg p-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
-      >
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-          <ToggleInput
-            label="Estado del proveedor"
-            name="isActive"
-            isActive={isActive}
-            trueTitle="Activo"
-            falseTitle="Inactivo"
-            register={register}
-          />
-          <TextInput
-            label="Nombre completo"
-            name="name"
-            register={register}
-            errors={errors}
-            className="w-full"
-          />
-          <TextInput
-            label="Documento de identificación"
-            name="idDocument"
-            register={register}
-            errors={errors}
-            className="w-full"
-          />
-          <TextInput
-            label="Código (se genera automáticamente)"
-            name="codeSupplier"
-            register={register}
-            errors={errors}
-            readOnly={true}
-            className="w-full"
-          />
-          <TextInput
-            label="Teléfono del proveedor"
-            name="phone"
-            type="tel"
-            register={register}
-            errors={errors}
-            className="w-full"
-          />
-          <TextInput
-            label="Correo"
-            name="email"
-            type="email"
-            register={register}
-            errors={errors}
-            className="w-full"
-          />
-          <TextInput
-            label="Dirección"
-            name="address"
-            register={register}
-            errors={errors}
-            className="w-full"
-            isRequired={false}
-          />
-          <TextInput
-            label="Nombre del contacto"
-            name="contactPerson"
-            register={register}
-            errors={errors}
-            className="w-full"
-            isRequired={false}
-          />
-          <TextInput
-            label="Teléfono del contacto"
-            name="contactPersonPhone"
-            type="tel"
-            register={register}
-            errors={errors}
-            className="w-full"
-            isRequired={false}
-          />
-
-          <TextareaInput
-            label="Condiciones de pago"
-            name="paymentTerms"
-            register={register}
-            errors={errors}
-            isRequired={false}
-          />
-          <TextareaInput
-            label="Notas"
-            name="notes"
-            register={register}
-            errors={errors}
-            isRequired={false}
-          />
-          <ImageInput
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-            endpoint="supplierImageUploader"
-            label="Foto del proveedor"
-          />
-        </div>
-
-        <div className="sm:col-span-2 flex gap-3 justify-end py-4">
-          <SubmitButton
-            isLoading={loading}
-            buttonTitle={isUpdate ? "Actualizar" : "Crear"}
-            buttonLoading={"Creando proveedor..."}
-          />
-        </div>
-      </form>
+      <NewSupplierForm initialData={initialData} isUpdate={isUpdate} />
     </div>
   );
 }

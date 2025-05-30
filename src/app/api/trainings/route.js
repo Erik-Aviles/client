@@ -21,7 +21,6 @@ export async function POST(request) {
   try {
     const {
       title,
-      expertId,
       categoryId,
       slug,
       description,
@@ -32,7 +31,6 @@ export async function POST(request) {
     const newTraining = await db.training.create({
       data: {
         title,
-        expertId,
         categoryId,
         slug,
         description,
