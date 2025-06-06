@@ -1,4 +1,4 @@
-export const companyData = { name: "Betimes Company" };
+export const companyData = { name: "Betimes Company", logo: "/logo.png" };
 export const userRole = [
   { id: 1, title: "rol 1" },
   { id: 2, title: "rol 2" },

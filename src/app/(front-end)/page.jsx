@@ -1,12 +1,23 @@
+import CategoryList from "@/components/frontend/CategoryList";
+import CommunityTraining from "@/components/frontend/CommunityTraining";
+import Hero from "@/components/frontend/Hero";
+import MarketList from "@/components/frontend/MarketList";
+import { categories } from "@/utils/general/categories";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center flex-col min-h-screen ">
-      <h2 className="text-4xl font-bold text-blue-600">
-        ¡Bienvenido a mi tienda!
-      </h2>
-      <Link className="my-4 underline" href="/register-supplier" >Convertirse en proveedor</Link>
+    <div className="min-h-screen ">
+      <Hero />
+      <MarketList />
+      {categories.map((category) => {
+        return <CategoryList key={category?.id} category={category?.title} />;
+      })}
+      <CommunityTraining />
+
+      <Link className="my-4 underline" href="/register-supplier">
+        Convertirse en proveedor
+      </Link>
     </div>
   );
 }

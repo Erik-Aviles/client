@@ -22,7 +22,7 @@ export default function HelpModal() {
     <>
       <button
         onClick={() => setOpenModal(true)}
-        className="flex items-center space-x-1 hover:scale-110 active:scale-100 duration-200 text-amber-400 hover:text-amber-500 dark:text-amber-400  dark:hover:text-slate-50 bg-transparent"
+        className="flex items-center text-sm space-x-1 hover:scale-110 active:scale-100 transition-all duration-300 dark:text-slate-50  text-amber-600 hover:text-amber-500 bg-transparent"
       >
         <HelpCircle />
         <span className="hidden sm:block">Ayuda</span>
