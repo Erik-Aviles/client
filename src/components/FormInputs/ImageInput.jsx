@@ -58,8 +58,12 @@ export default function ImageInput({
           }}
           onUploadError={(error) => {
             // Do something with the error.
-            toast.error("Fallo en la carga, Intenta de nuevo");
-            console.log(`ERROR! ${error.message}`, error);
+            if (error.message.includes("File too large")) {
+              toast.error("El archivo excede el tamaño máximo permitido de 1MB");
+            } else {
+              toast.error("Fallo en la carga, Intenta de nuevo");
+              console.log(`ERROR! ${error.message}`, error);
+            }
           }}
         />
       )}

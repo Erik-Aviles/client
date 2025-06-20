@@ -1,13 +1,14 @@
 "use client";
 
-import { categories } from "@/utils/general/categories";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import defaultImage from "../../../public/banners/defaultImage.png";
+import HoverTooltip from "./HoverTooltip";
 
-export default function TrainingCarousel() {
+export default function TrainingCarousel({ training }) {
   const responsive = {
     desktopxl: {
       breakpoint: { max: 3000, min: 1024 },
@@ -30,58 +31,65 @@ export default function TrainingCarousel() {
       slidesToSlide: 1,
     },
   };
+
+  const loremIp =
+    "Lorem defauld ipsum dolor sit amet consectetur adipisicing elit. Similique recusandae eius natus impedit, numquam tenetur minima deleniti ad tempore temporibus, iste beatae, voluptatibus ipsum laudantium unde totam consequatur laboriosam dolorem.";
+
   return (
     <Carousel
-      swipeable={false}
+      swipeable={true}
       draggable={true}
       showDots={true}
       responsive={responsive}
       ssr={true}
       infinite={true}
       autoPlay={true}
-      autoPlaySpeed={3000}
+      autoPlaySpeed={4000}
       keyBoardControl={true}
       customTransition="all .5"
       transitionDuration={500}
       containerClass="carousel-container"
-      dotListClass="custom-dot-list-style "
+      dotListClass="custom-dot-list-style"
       itemClass="py-8 px-2"
     >
-      {categories.map((item, i) => {
-        return (
-          <div
-            className="flex flex-col border items-center gap-2 dark:bg-slate-900 shadow-lg transition-shadow duration-500 overflow-hidden "
-            key={i}
-          >
-            <div className="">
-              <Image
-                src={"/banners/banner2.png"}
-                alt={item?.title}
-                width={556}
-                height={556}
-                className="w-full"
-              />
-            </div>
-            <div className="flex flex-col flex-grow gap-2 overflow-hidden text-sm transition-all duration-300 px-3 pb-3 ">
-              <h2 className="text-slate-800 dark:text-slate-200 font-semibold capitalize">
+      {training.map((item, i) => (
+        <article
+          key={i}
+          className="bg-white dark:bg-slate-900 shadow transition-transform duration-300 hover:shadow-xl"
+        >
+          <div className="w-full aspect-video relative">
+            <Image
+              src={item?.imageUrl || defaultImage}
+              alt={item?.title || "Imagen de la capacitación"}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            />
+          </div>
+          <div className="p-4 flex flex-col gap-2">
+            <div className="relative group capitalize">
+              <h2
+                className={`font-bold transition-all duration-300  dark:text-slate-200 text-lg text-slate-800 line-clamp-1 capitalize `}
+              >
                 {item?.title}
               </h2>
-              <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-4">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Dolorem, placeat eos. Id aperiam dolorem necessitatibus atque ea
-                culpa molestias cumque eos ex nemo cupiditate architecto, ad,
-                qui voluptatibus laudantium animi!
-              </p>
-              <Link
-                className="block px-2 py-1 text-slate-100 text-center bg-blue-700 hover:bg-blue-500 hover:text-white duration-500 transition-all"
-                href={"#"}
-              >
-                Leer más
-              </Link>
+              <HoverTooltip title={item?.title} />
             </div>
+            <div className="relative group capitalize">
+              <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-4">
+                {item?.description || loremIp}
+              </p>
+              <HoverTooltip title={item?.description} className="-top-2"/>
+            </div>
+            <Link
+              href="#"
+              className="mt-2 inline-block text-center bg-blue-700 hover:bg-blue-500 text-white px-3 py-1 transition"
+            >
+              Leer más
+            </Link>
           </div>
-        );
-      })}
+        </article>
+      ))}
     </Carousel>
   );
 }

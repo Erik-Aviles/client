@@ -1,13 +1,14 @@
 "use client";
 
-import { categories } from "@/utils/general/categories";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Carousel from "react-multi-carousel";
+import defaultImage from "../../../public/categories/defaultImage.png";
 import "react-multi-carousel/lib/styles.css";
+import HoverTooltipTitle from "./HoverTooltip";
 
-export default function MarketCarousel() {
+export default function MarketCarousel({ markets }) {
   const responsive = {
     desktopxl: {
       breakpoint: { max: 3000, min: 1024 },
@@ -43,16 +44,17 @@ export default function MarketCarousel() {
       responsive={responsive}
       ssr={true}
       infinite={true}
-      // autoPlay={true}
+      autoPlay={true}
       autoPlaySpeed={2000}
       keyBoardControl={true}
       customTransition="all .5"
       transitionDuration={500}
       containerClass="carousel-container"
+      removeArrowOnDeviceType={["tablet", "mobilesm", "mobile"]}
       dotListClass="custom-dot-list-style "
       itemClass="py-8 px-1"
     >
-      {categories.map((item, i) => {
+      {markets?.map((item, i) => {
         return (
           <div className="flex justify-center items-center " key={i}>
             <Link
@@ -60,14 +62,16 @@ export default function MarketCarousel() {
               className="bg-white flex flex-col items-center justify-end gap-2 dark:bg-slate-800 border h-[166.13px] w-[140px] md:min-w-[165px] rounded-lg shadow-lg hover:shadow-lg transition-shadow duration-500"
             >
               <Image
-                src={item?.imageUrl}
+                src={item?.logoUrl || defaultImage}
                 alt={item?.title}
                 width={100}
                 height={100}
                 className="p-4"
               />
-              <div className="basis-1/5 w-full rounded-b-lg flex items-center justify-center overflow-hidden text-sm font-medium text-slate-50 bg-amber-600   border border-amber-600 hover:bg-amber-500 hover:border-transparent   focus:outline-none focus:ring-amber-600 transition-all duration-300">
-                <h2 className="text-white uppercase font-semibold text-xs ">
+              <div className="basis-1/5 w-full rounded-b-lg flex items-center justify-center bg-amber-600 border border-amber-600 hover:bg-amber-500 hover:border-transparent focus:outline-none focus:ring-amber-600 ">
+                <h2
+                  className="text-white text-xs font-medium uppercase transition-all duration-300"
+                >
                   {item?.title}
                 </h2>
               </div>

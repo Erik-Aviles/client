@@ -1,4 +1,13 @@
-export const companyData = { name: "Betimes Company", logo: "/logo.png" };
+export const companyData = {
+  name: "Betimes Company",
+  logo: "/logo.png",
+  socialMedia: [
+    { title: "facebook", href: "#" },
+    { title: "instagram", href: "#" },
+    { title: "tiktok", href: "#" },
+    { title: "twitter", href: "#" },
+  ],
+};
 export const userRole = [
   { id: 1, title: "rol 1" },
   { id: 2, title: "rol 2" },

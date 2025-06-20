@@ -2,8 +2,14 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import "react-multi-carousel/lib/styles.css";
 import TrainingCarousel from "./TrainingCarousel";
+import { getData } from "@/lib/getData";
 
-export default function CommunityTraining() {
+
+export default async function CommunityTraining() {
+  const training = await getData('trainings');
+  if (!training || training.length === 0) {
+    return null; 
+  } 
   return (
     <div className="border overflow-y-auto dark:text-white mb-6">
       <div className="flex items-center justify-between py-2 px-3 border-b font-semibold text-slate-50 bg-black dark:bg-slate-900  overflow-y-auto">
@@ -18,7 +24,7 @@ export default function CommunityTraining() {
         </Link>
       </div>
       <div className="pb-4 px-2  dark:bg-slate-700 ">
-        <TrainingCarousel />
+        <TrainingCarousel training={training}/>
       </div>
     </div>
   );

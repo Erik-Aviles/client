@@ -19,7 +19,7 @@ export default function UserDropdown() {
         <span className="sr-only">Abrir el menu del usuario</span>
         <Image
           className=""
-          src="/betimes.png"
+          src="/logo.png"
           alt="user photo"
           width={28}
           height={28}

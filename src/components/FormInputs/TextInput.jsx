@@ -8,6 +8,8 @@ export default function TextInput({
   className = "sm:col-span-2",
   defaultValue = "",
   readOnly = false,
+  placeholder,
+  classNameInput = "focus:ring-amber-400 focus:border-amber-400 dark:bg-slate-700  dark:placeholder-slate-500 dark:text-white dark:focus:ring-amber-400 dark:focus:border-amber-400 border-border py-2",
 }) {
   return (
     <div className={className}>
@@ -19,14 +21,14 @@ export default function TextInput({
       </label>
       <div className="mt-2">
         <input
-         {...register(`${name}`, { required: isRequired })}
+          {...register(`${name}`, { required: isRequired })}
           type={type}
           name={name}
           id={name}
           defaultValue={defaultValue}
           autoComplete={name}
-          className="block w-full bg-white border border-border rounded-lg py-2 focus:ring-amber-400 focus:border-amber-400 dark:bg-slate-700  dark:placeholder-slate-500 dark:text-white dark:focus:ring-amber-400 dark:focus:border-amber-400"
-          placeholder={`${label.toLowerCase()}`}
+          className={`block w-full bg-white border rounded-lg  transition-all duration-300  ${classNameInput}`}
+          placeholder={placeholder || `${label.toLowerCase()}`}
           readOnly={readOnly}
         />
         {errors[`${name}`] && (

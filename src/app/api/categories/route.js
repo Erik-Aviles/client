@@ -5,6 +5,7 @@ export async function GET(request) {
   try {
     const categories = await db.category.findMany({
       orderBy: { createdAt: "desc" },
+      include: { products: true, trainings: true },
     });
 
     return NextResponse.json(categories, { status: 200 });

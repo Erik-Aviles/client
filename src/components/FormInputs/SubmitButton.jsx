@@ -5,7 +5,8 @@ export default function SubmitButton({
   isLoading = false,
   buttonTitle,
   buttonLoading,
-  className,
+  withIcon = true,
+  className = "gap-2 px-3 py-2 bg-amber-400 rounded-lg focus:ring-4  focus:ring-amber-600 hover:bg-amber-500",
 }) {
   return (
     <>
@@ -13,7 +14,7 @@ export default function SubmitButton({
         <button
           disabled
           type="button"
-          className={`inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-center text-white bg-amber-400 rounded-lg focus:ring-4  focus:ring-amber-600 hover:bg-amber-500 ${className}`}
+          className={`inline-flex items-center justify-center font-medium text-center transition-all duration-200 text-white ${className}`}
         >
           <svg
             aria-hidden="true"
@@ -32,14 +33,15 @@ export default function SubmitButton({
               fill="currentColor"
             />
           </svg>
+
           {buttonLoading ? buttonLoading : "Cargando..."}
         </button>
       ) : (
         <button
           type="submit"
-          className={`inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-center text-amber-700 bg-amber-400 rounded-lg focus:ring-4  focus:ring-amber-600 hover:bg-amber-500 ${className}`}
+          className={`inline-flex items-center justify-center font-medium text-center transition-all duration-200 text-white ${className}`}
         >
-          <Plus className="w-4 h-4 " />
+          {withIcon && <Plus className="w-4 h-4 " />}
           <span>{buttonTitle}</span>
         </button>
       )}
