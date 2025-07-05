@@ -18,7 +18,7 @@ export default async function page() {
 
   return (
     <div className="h-[calc(100vh-40px)] flex flex-col">
-      <div className="px-4">
+      <div className="px-4 md:px-6">
         <Heading title="productos" />
         <ButtonActions title="producto" href="/dashboard/products/new" />
       </div>

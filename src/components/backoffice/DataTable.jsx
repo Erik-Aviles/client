@@ -90,7 +90,7 @@ export function DataTable({
     selectedRowsCount === 1 ? "fila seleccionada" : "filas seleccionadas";
 
   return (
-    <div className="flex-1 flex flex-col h-full px-4 relative">
+    <div className="flex-1 flex flex-col h-full px-4 md:px-6 ">
       {/* FILTROS Y VISIBILIDAD */}
       <div className="dark:bg-slate-900 flex items-center gap-3 pb-4">
         <SearchForm
@@ -129,10 +129,10 @@ export function DataTable({
       </div>
 
       {/* TABLA */}
-      <div className="flex-1 overflow-auto pr-1">
-        <div className="h-[calc(100vh-320.67px)] sm:h-[calc(100vh-298.67px)]">
-          <div className="w-max overflow-auto pb-4">
-            <Table className="w-[calc(100vw-40px)] border darK:bg-slate-800 relative">
+      <div className="flex-1 overflow-auto">
+        <div className="h-[calc(100vh-298.67px)]">
+          <div className="w-max overflow-auto pb-2">
+            <Table className="w-[calc(100vw-60px)] border dark:bg-slate-800 rounded-lg overflow-hidden">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
@@ -188,7 +188,7 @@ export function DataTable({
       </div>
 
       {/* PAGINACION y SELECCION */}
-      <div className="sticky bottom-0 z-10 dark:bg-slate-900 flex-shrink-0 border-t">
+      <div className="dark:bg-slate-900 flex-shrink-0 border-t">
         <div className="flex flex-col md:gap-2 md:flex-row md:items-center justify-between py-2">
           <div className="text-sm text-muted-foreground whitespace-nowrap">
             {selectedRowsCount} {selectedText}
