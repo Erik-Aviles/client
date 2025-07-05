@@ -10,15 +10,15 @@ export default function NotificationDropdown() {
   const dropdownRef = useRef(null);
 
   return (
-    <div className="relative py-3">
+    <div className="relative ">
       <button
         onClick={() => setIsOpen(!isOpen)}
         type="button"
-        className="relative inline-flex items-center p-3 text-sm font-medium text-center hover:scale-110 active:scale-100 duration-200 dark:hover:text-slate-50 bg-transparent"
+        className="relative flex items-center justify-center w-7 h-7 text-sm font-medium hover:scale-110 active:scale-100 duration-200 dark:hover:text-slate-50 bg-transparent"
       >
         <Bell />
         <span className="sr-only">Notifications</span>
-        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full top-0 end-0 dark:border-white">
+        <div className="top-0 -end-1.5 absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full dark:border-white">
           20
         </div>
       </button>

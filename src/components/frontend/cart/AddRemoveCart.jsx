@@ -30,30 +30,30 @@ const AddRemoveCart = ({
         <button
           onClick={handleRemove}
           disabled={count === 0}
-          className="flex justify-center border rounded py-1.5 font-bold text-amber-500 dark:text-white dark:bg-slate-800 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 transition disabled:opacity-50"
+          className="flex justify-center border rounded p-1.5 font-semibold text-amber-500 dark:text-white dark:bg-slate-800 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 transition-all duration-300 disabled:opacity-50"
         >
-          <Minus className="w-4 h-4" />
+          <Minus className="w-3 h-3" />
         </button>
         <span className="px-2 text-lg text-black dark:text-white text-center">
           {count}
         </span>
         <button
           onClick={handleAdd}
-          className="flex justify-center  border rounded py-1.5 text-sm font-bold text-amber-500 dark:text-white dark:bg-slate-800 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 transition"
+          className="flex justify-center  border rounded p-1.5 text-sm font-bold text-amber-500 dark:text-white dark:bg-slate-800 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 transition-all duration-300 disabled:opacity-50"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-3 h-3" />
         </button>
       </div>
 
       {/* Botón Agregar / Actualizar */}
       {count > 0 && (
-        <button className="flex items-center justify-center text-xs gap-1 px-3 py-1.5 rounded-sm w-auto sm:w-full bg-lime-500 text-lime-800 transition">
+        <button className="flex items-center  justify-center font-semibold text-xs  p-1.5 rounded-sm w-auto sm:w-full bg-lime-500 hover:bg-lime-500/70 text-lime-800  transition-all duration-300">
           <CheckCheck className="w-4 h-4" />
         </button>
       )}
 
       {count === 0 && (
-        <button className="flex items-center font-semibold justify-center text-xs gap-1 px-3 py-1.5 rounded-sm w-auto  sm:w-full bg-black text-white dark:border hover:bg-black/70  transition ">
+        <button className="flex items-center justify-center gap-1 font-semibold  text-xs p-1.5 rounded-sm w-auto sm:w-full bg-black dark:bg-amber-600  text-white  hover:bg-black/70 dark:hover:bg-amber-600/70 transition-all duration-300">
           Agregar
         </button>
       )}

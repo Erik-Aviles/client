@@ -9,7 +9,7 @@ export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const user = userData[0];
   return (
-    <div className="relative py-5">
+    <div className="relative ">
       {/* Botón de usuario */}
       <button
         onClick={() => setIsOpen(!isOpen)}

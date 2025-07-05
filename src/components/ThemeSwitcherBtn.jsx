@@ -22,7 +22,7 @@ export function ThemeSwitcherBtn() {
 
   return (
     <button
-      className="hover:scale-110 active:scale-100 transition-all duration-300 text-amber-600 dark:text-slate-50 hover:text-amber-500 dark:hover:text-slate-50 "
+      className="w-7 h-7 hover:scale-110 active:scale-100 transition-all duration-300 text-amber-600 dark:text-slate-50 hover:text-amber-500 dark:hover:text-slate-50 "
       onClick={toggleColorSchemeInpu}
     >
       {theme === "dark" ? <Sun /> : <Moon /> }

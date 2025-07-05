@@ -37,6 +37,7 @@ export default function Advs() {
           height={200}
           alt="Hero Image"
           className="w-full h-auto rounded-lg"
+          unoptimized
         />
       </article>
     </>

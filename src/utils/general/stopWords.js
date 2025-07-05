@@ -1,0 +1,17 @@
+export const stopWords = [
+  "el",
+  "la",
+  "las",
+  "los",
+  "de",
+  "y",
+  "a",
+  "en",
+  "con",
+  "para",
+  "un",
+  "una",
+  "uno",
+  "unas",
+  "unos",
+];

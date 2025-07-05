@@ -6,7 +6,7 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import defaultImage from "../../../public/products/defaultImage.png";
 import "react-multi-carousel/lib/styles.css";
-import AddRemoveCart from "./AddRemoveCart";
+import AddRemoveCart from "./cart/AddRemoveCart";
 import HoverTooltip from "./HoverTooltip";
 
 export default function CategoryCarousel({ products }) {
@@ -63,15 +63,18 @@ export default function CategoryCarousel({ products }) {
               className="w-full aspect-video relative bg-white overflow-hidden"
             >
               <Image
-                src={item?.imageUrl || defaultImage}
-                alt={item?.title}
+                src={
+                  item?.imageUrl && item.imageUrl.trim() !== ""
+                    ? item.imageUrl
+                    : defaultImage
+                }
+                alt={item?.title || "Imagen del producto"}
                 fill
                 className="object-contain transition-all duration-300 hover:scale-110"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                priority
               />
             </Link>
-            <div className="py-2 px-4 dark:border flex flex-col gap-1.5 flex-1">
+            <div className="py-2 px-4 dark:border rounded-lg flex flex-col gap-1.5 flex-1">
               <div className="dark:text-white text-sm font-semibold">
                 ${item?.price}
               </div>
@@ -90,7 +93,7 @@ export default function CategoryCarousel({ products }) {
                 <HoverTooltip title={item?.description} className="-top-2" />
               </div>
 
-              <div className="mt-auto pt-2">
+              <div className="mt-auto ">
                 <AddRemoveCart />
               </div>
             </div>
