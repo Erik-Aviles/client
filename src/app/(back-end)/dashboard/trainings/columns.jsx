@@ -1,12 +1,15 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import ImageColumns from "@/components/backoffice/data-table-columns/ImageColumns";
+import { AllDatesColumn } from "@/components/backoffice/data-table-columns/DateColumns";
 import BooleanColumns from "@/components/backoffice/data-table-columns/BooleanColumns";
 import ActionsColumns from "@/components/backoffice/data-table-columns/ActionsColumns";
-import ImageColumns from "@/components/backoffice/data-table-columns/ImageColumns";
 import { SortableColumn } from "@/components/backoffice/data-table-columns/SortableColumn";
-import { AllDatesColumn } from "@/components/backoffice/data-table-columns/DateColumns";
-import { TitleColumn } from "@/components/backoffice/data-table-columns/TextColumn";
+import {
+  TextLongColumn,
+  TitleColumn,
+} from "@/components/backoffice/data-table-columns/TextColumn";
 
 export const columns = [
   {
@@ -18,14 +21,14 @@ export const columns = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label="Seleccionar todo"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label="Seleccionar fila"
       />
     ),
     enableSorting: false,
@@ -38,8 +41,13 @@ export const columns = [
   },
   {
     accessorKey: "imageUrl",
-    header: "Imagen",
+    header: "Logo empresarial",
     cell: ({ row }) => <ImageColumns row={row} imageTitle="imageUrl" />,
+  },
+  {
+    accessorKey: "description",
+    header: "Descripción",
+    cell: ({ row }) => <TextLongColumn row={row} column="description" />,
   },
   {
     accessorKey: "createdAt",
@@ -48,12 +56,16 @@ export const columns = [
   },
   {
     accessorKey: "isActive",
-    header: ({ column }) => <SortableColumn column={column} title="¿Activo?" />,
+    header: ({ column }) => <SortableColumn column={column} title="Activo" />,
     cell: ({ row }) => <BooleanColumns row={row} />,
+  },
+  {
+    accessorKey: "categoryId",
+    header: "Categorias",
   },
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsColumns row={row} endpoint="categories" />,
+    cell: ({ row }) => <ActionsColumns row={row} />,
   },
 ];

@@ -1,34 +1,31 @@
-import ButtonActions from "@/components/backoffice/ButtonActions";
-import SearchForm from "@/components/backoffice/SearchForm";
+import { DataTable } from "@/components/backoffice/date-table-components/DataTable";
 import Heading from "@/components/backoffice/styledComponent/Heading";
-import SubTitle2 from "@/components/backoffice/styledComponent/SubTitle2";
+import { getData } from "@/lib/getData";
 import React from "react";
+import { columns } from "./columns";
 
-export default function page() {
+export default async function page() {
+  const data = await getData("markets");
+  const initialColumnVisibility = {
+    motto: false,
+    categoryIds: false,
+  };
+  const fieldsToSearch = ["title", "id"];
   return (
-    <div className="flex flex-col gap-4">
-      <Heading title="Mercados" />
-      <ButtonActions title="mercado" href="/dashboard/markets/new" />
-      <SearchForm placeholder="Buscar mercado por nombre..." />
-      <div className="overflow-hidden border border-border dark:bg-slate-700 rounded-lg p-4">
-        <SubTitle2 title="Tabla" />
-
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Nombre
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Descripcion
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+    <div className="h-[calc(100vh-40px)] flex flex-col gap-3">
+      <div className="px-4 md:px-6">
+        <Heading title="Mercados" />
+      </div>
+      <div className="flex-1">
+        <DataTable
+          columns={columns}
+          data={data}
+          initialColumnVisibility={initialColumnVisibility}
+          fieldsToSearch={fieldsToSearch}
+          inputPlaceholder="Buscar mercado por nombre..."
+          addLink="dashboard/markets"
+          title="mercado"
+        />
       </div>
     </div>
   );

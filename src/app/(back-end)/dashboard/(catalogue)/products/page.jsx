@@ -4,7 +4,7 @@ import Heading from "@/components/backoffice/styledComponent/Heading";
 import React from "react";
 import { getData } from "@/lib/getData";
 import { columns } from "./columns";
-import { DataTable } from "@/components/backoffice/DataTable";
+import { DataTable } from "@/components/backoffice/date-table-components/DataTable";
 
 export default async function page() {
   const data = await getData("products");
@@ -17,10 +17,9 @@ export default async function page() {
   const fieldsToSearch = ["title", "code", "id"];
 
   return (
-    <div className="h-[calc(100vh-40px)] flex flex-col">
+    <div className="h-[calc(100vh-40px)] flex flex-col gap-3">
       <div className="px-4 md:px-6">
         <Heading title="productos" />
-        <ButtonActions title="producto" href="/dashboard/products/new" />
       </div>
       <div className="flex-1">
         <DataTable
@@ -28,7 +27,9 @@ export default async function page() {
           data={data}
           initialColumnVisibility={initialColumnVisibility}
           fieldsToSearch={fieldsToSearch}
-          InputPlaceholder="Buscar producto por título, codigo o ID"
+          inputPlaceholder="Buscar producto por título, codigo o ID"
+          addLink="dashboard/products"
+          title="productos"
         />
       </div>
     </div>

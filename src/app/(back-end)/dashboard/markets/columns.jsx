@@ -1,12 +1,16 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import BooleanColumns from "@/components/backoffice/data-table-columns/BooleanColumns";
-import ActionsColumns from "@/components/backoffice/data-table-columns/ActionsColumns";
 import ImageColumns from "@/components/backoffice/data-table-columns/ImageColumns";
-import { SortableColumn } from "@/components/backoffice/data-table-columns/SortableColumn";
 import { AllDatesColumn } from "@/components/backoffice/data-table-columns/DateColumns";
-import { TitleColumn } from "@/components/backoffice/data-table-columns/TextColumn";
+import BooleanColumns from "@/components/backoffice/data-table-columns/BooleanColumns";
+import MapColumns from "@/components/backoffice/data-table-columns/MapColumns";
+import ActionsColumns from "@/components/backoffice/data-table-columns/ActionsColumns";
+import { SortableColumn } from "@/components/backoffice/data-table-columns/SortableColumn";
+import {
+  TextLongColumn,
+  TitleColumn,
+} from "@/components/backoffice/data-table-columns/TextColumn";
 
 export const columns = [
   {
@@ -18,14 +22,14 @@ export const columns = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label="Seleccionar todo"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label="Seleccionar fila"
       />
     ),
     enableSorting: false,
@@ -37,9 +41,19 @@ export const columns = [
     cell: ({ row }) => <TitleColumn row={row} column="title" />,
   },
   {
-    accessorKey: "imageUrl",
-    header: "Imagen",
-    cell: ({ row }) => <ImageColumns row={row} imageTitle="imageUrl" />,
+    accessorKey: "motto",
+    header: "Lema",
+    cell: ({ row }) => <TextLongColumn row={row} column="motto" />,
+  },
+  {
+    accessorKey: "logoUrl",
+    header: "Logo empresarial",
+    cell: ({ row }) => <ImageColumns row={row} imageTitle="logoUrl" />,
+  },
+  {
+    accessorKey: "description",
+    header: "Descripción",
+    cell: ({ row }) => <TextLongColumn row={row} column="description" />,
   },
   {
     accessorKey: "createdAt",
@@ -48,12 +62,17 @@ export const columns = [
   },
   {
     accessorKey: "isActive",
-    header: ({ column }) => <SortableColumn column={column} title="¿Activo?" />,
+    header: ({ column }) => <SortableColumn column={column} title="Activo" />,
     cell: ({ row }) => <BooleanColumns row={row} />,
+  },
+  {
+    accessorKey: "categoryIds",
+    header: "Categorias",
+    cell: ({ row }) => <MapColumns row={row} column="categoryIds" />,
   },
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsColumns row={row} endpoint="categories" />,
+    cell: ({ row }) => <ActionsColumns row={row} />,
   },
 ];

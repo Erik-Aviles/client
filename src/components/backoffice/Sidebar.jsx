@@ -31,7 +31,7 @@ export default function Sidebar({
 
   return (
     <div
-      className={`mt-0 space-y-3  transition-all fomt duration-500 ease-in-out z-20 bg-slate-50 dark:bg-slate-700  h-screen text-slate-500 dark:text-slate-100 fixed left-0 top-0 bottom-0 ${sidebarWidth}`}
+      className={`mt-0 space-y-3  transition-all fomt duration-300 ease-in-out z-20 bg-slate-50 dark:bg-slate-700  text-slate-500 dark:text-slate-100 fixed left-0 top-0 bottom-0 ${sidebarWidth}`}
     >
       <div className="overflow-y-auto h-screen">
         <div
