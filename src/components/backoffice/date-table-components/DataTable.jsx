@@ -65,7 +65,7 @@ export function DataTable({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getGlobalFilterFn: createGlobalFilterFn(fieldsToSearch),
+    globalFilterFn: createGlobalFilterFn(fieldsToSearch),
   });
 
   return (

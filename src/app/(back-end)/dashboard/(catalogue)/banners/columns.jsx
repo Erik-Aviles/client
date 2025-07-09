@@ -54,6 +54,8 @@ export const columns = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsColumns row={row} endpoint="categories" />,
+    cell: ({ row }) => (
+      <ActionsColumns row={row} endpoint="banners" title="title" />
+    ),
   },
 ];

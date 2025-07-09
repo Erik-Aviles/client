@@ -16,128 +16,140 @@ datasource db {
 
 // TABLAS
 
-/* {id, title, code, expiryDate, isActive,} */
+/**
+ * {id, title, code, expiryDate, isActive,}
+ */
 model Coupon {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
   couponCode String
   expiryDate DateTime
-  isActive  Boolean @default(true)
-	createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
-/* {id, title, link, imageUrl, isActive} */
+/**
+ * {id, title, link, imageUrl, isActive}
+ */
 model Banner {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  link String
-  imageUrl String
-  isActive  Boolean @default(true)
-	createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  link      String
+  imageUrl  String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-/* {id, title, slug, description, imageUrl, marketIds,isActive} */
+/**
+ * {id, title, slug, description, imageUrl, marketIds,isActive}
+ */
 model Category {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  slug String @unique
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String  @unique
   description String?
-  imageUrl String?
-  
-  products  Product[]  
-  trainings  Training[]  
+  imageUrl    String?
+  isActive    Boolean @default(true)
+
+  products  Product[]
+  trainings Training[]
 
   marketIds String[] @db.ObjectId
-  markets   Market[]   @relation(fields: [marketIds], references: [id])
+  markets   Market[] @relation(fields: [marketIds], references: [id])
 
-  isActive  Boolean @default(true)
-
-	createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-/* {id, title, sku, slug, code, barcode, description, price, salePrice, quantity, stock, tags, hasDiscount, imageUrl, isActive, categoryId, userId,} */
+/**
+ * {id, title, sku, slug, code, barcode, description, price, salePrice, quantity, stock, tags, hasDiscount, imageUrl, isActive, categoryId, userId,}
+ */
 model Product {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  sku String?
-  slug String @unique
-  code String @unique
-  barcode String?
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  sku         String?
+  slug        String   @unique
+  code        String   @unique
+  barcode     String?
   description String?
-  price Float
-  salePrice Float?
-  quantity Int?
-  stock Int?
-  tags String[]
-  imageUrl String?
-  isActive  Boolean @default(true)
-  hasDiscount  Boolean @default(true)
+  price       Float
+  salePrice   Float?
+  quantity    Int?
+  stock       Int?
+  tags        String[]
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  hasDiscount Boolean  @default(true)
 
-  category   Category  @relation(fields: [categoryId], references: [id])
-  categoryId String @db.ObjectId
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId String    @db.ObjectId
 
-  user   User @relation(fields: [userId], references: [id])
-  userId String  @db.ObjectId 
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @db.ObjectId
 
-	createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-/* {id, title, motto, slug, logoUrl, description, isActive,} */
+/**
+ * {id, title, motto, slug, logoUrl, description, isActive,}
+ */
 model Market {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String 
-  motto String?
-  slug String @unique
-  logoUrl String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  motto       String?
+  slug        String  @unique
+  logoUrl     String
   description String?
-  isActive  Boolean @default(true)
+  isActive    Boolean @default(true)
 
   categoryIds String[]   @db.ObjectId
   categories  Category[] @relation(fields: [categoryIds], references: [id])
 
-	createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-/* {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,} */
+/**
+ * {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,}
+ */
 model Staff {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
   idDocument String
-  codeUser String
-  role UserRole @default(MODERATOR)
-  password String
-  email String
-  phone String
-  address String?
-  dob String?
-  notes String?
-  workScope String?
-  imageUrl String?
-  isActive  Boolean @default(true)
-	createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  codeUser   String
+  role       UserRole @default(MODERATOR)
+  password   String
+  email      String
+  phone      String
+  address    String?
+  dob        String?
+  notes      String?
+  workScope  String?
+  imageUrl   String?
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
-
-/* {id, title, categoryId, slug, description, content, imageUrl, isActive} */
+/**
+ * {id, title, categoryId, slug, description, content, imageUrl, isActive}
+ */
 model Training {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  slug String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String
   description String
-  content String
-  imageUrl String?
-  isActive  Boolean @default(true)
+  content     String
+  imageUrl    String?
+  isActive    Boolean @default(true)
 
-  category   Category  @relation(fields: [categoryId], references: [id])
-  categoryId String @db.ObjectId
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String    @db.ObjectId
 
-	createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
@@ -150,46 +162,47 @@ enum UserRole {
   MODERATOR
 }
 
-/* {id, name, email, password, emailVerified, role, isActive,} */
+/**
+ * {id, name, email, password, emailVerified, role, isActive,}
+ */
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
   name            String?
   password        String?
-  email           String?   @unique
+  email           String?          @unique
   emailVerified   DateTime?
-  role            UserRole @default(USER)        
-  supplierProfile SupplierProfile?  
-       
-  products  Product[]
+  role            UserRole         @default(USER)
+  supplierProfile SupplierProfile?
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-}
+  products Product[]
 
-/* {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, role, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,} */
-model SupplierProfile {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  idDocument String
-  codeSupplier String
-  phone String
-  profileImageUrl String?
-  email String
-  role UserRole @default(SUPPLIER) 
-  address String?
-  contactPerson String?
-  contactPersonPhone String?
-  paymentTerms String?
-  notes String?
-  isActive  Boolean @default(true)
-  products String[]
-
-  user   User @relation(fields: [userId], references: [id])
-  userId String  @unique 
-
-	createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+/**
+ * {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, role, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,}
+ */
+model SupplierProfile {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  idDocument         String
+  codeSupplier       String
+  phone              String
+  profileImageUrl    String?
+  email              String
+  role               UserRole @default(SUPPLIER)
+  address            String?
+  contactPerson      String?
+  contactPersonPhone String?
+  paymentTerms       String?
+  notes              String?
+  isActive           Boolean  @default(true)
+  products           String[]
 
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique @db.ObjectId
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

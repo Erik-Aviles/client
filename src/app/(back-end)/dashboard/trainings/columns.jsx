@@ -61,11 +61,17 @@ export const columns = [
   },
   {
     accessorKey: "categoryId",
-    header: "Categorias",
+    header: "Categoria",
+    cell: ({ row }) => {
+      const category = row.getValue("categoryId");
+      return <small>{category}</small>;
+    },
   },
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsColumns row={row} />,
+    cell: ({ row }) => (
+      <ActionsColumns row={row} endpoint="trainings" title="title" />
+    ),
   },
 ];

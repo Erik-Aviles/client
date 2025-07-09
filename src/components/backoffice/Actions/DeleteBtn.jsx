@@ -2,14 +2,14 @@
 
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { LoadingIcon } from "@/components/Icons/Loading";
+import { capitalizeFirstWord, cropText } from "@/utils/formats/normalized";
 
-export default function DeleteBtn({ id, endpoint = "#" }) {
-  console.log({ id, endpoint });
+export default function DeleteBtn({ id, endpoint, title }) {
+  console.log({ id, endpoint, title });
   const [loading, setLoading] = useState(false);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const router = useRouter();
@@ -27,14 +27,19 @@ export default function DeleteBtn({ id, endpoint = "#" }) {
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await fetch(`${baseUrl}/api/${endpoint}?id=${id}`, {
+        const res = await fetch(`${baseUrl}/api/${endpoint}/${id}`, {
           method: "DELETE",
         });
         console.log(res);
         if (res.ok) {
           router.refresh();
           setLoading(false);
-          toast.success("Eliminado con éxito");
+          toast.success(
+            `${cropText(
+              capitalizeFirstWord(title),
+              40
+            )}, fue liminado con éxito"`
+          );
         }
       } else {
         setLoading(false);
@@ -55,9 +60,9 @@ export default function DeleteBtn({ id, endpoint = "#" }) {
       ) : (
         <button
           onClick={handleDelete}
-          className="px-2 font-medium text-red-600 hover:text-red-800 hover:dark:text-red-500 flex items-center space-x-1"
+          className="font-medium text-red-600 hover:text-red-800 hover:dark:text-red-500 flex items-center space-x-2"
         >
-          <Trash2 className="w-4 h-4" />
+          <Trash2 className="w-4 h-4 text-red-600 hover:text-red-800 hover:dark:text-red-500" />
           <span>Eliminar</span>
         </button>
       )}

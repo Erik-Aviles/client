@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Copy, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import DeleteBtn from "../Actions/DeleteBtn";
 
-export default function ActionsColumns({ row, endpoint }) {
+export default function ActionsColumns({ row, endpoint, title }) {
+  const showTitle = row.getValue(title);
   const id = row.original.id;
   return (
     <DropdownMenu>
@@ -28,7 +29,9 @@ export default function ActionsColumns({ row, endpoint }) {
           <Pencil className="w-2 h-2 " /> Editar
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-           <DeleteBtn id={id} endpoint={endpoint} />
+        <DropdownMenuItem>
+          <DeleteBtn id={id} endpoint={endpoint} title={showTitle} />
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

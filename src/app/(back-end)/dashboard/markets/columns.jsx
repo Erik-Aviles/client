@@ -73,6 +73,8 @@ export const columns = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsColumns row={row} />,
+    cell: ({ row }) => (
+      <ActionsColumns row={row} endpoint="markets" title="title" />
+    ),
   },
 ];

@@ -3,9 +3,9 @@ import { stopWords } from "../general/stopWords";
 export function normalizeText(text) {
   return text
     ?.toString()
-    .normalize("NFD") 
-    .replace(/[\u0300-\u036f]/g, "") 
-    .toLowerCase(); 
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
 }
 
 export function removePluralEnding(word) {
@@ -19,7 +19,17 @@ export function removePluralEnding(word) {
 export function removeStopWords(text) {
   return text
     .split(" ")
-    .filter(word => !stopWords.includes(word.toLowerCase()))
+    .filter((word) => !stopWords.includes(word.toLowerCase()))
     .join(" ");
 }
 
+export function capitalizeFirstWord(text) {
+  if (!text) return "";
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
+
+
+export function cropText(text, limit = 50) {
+  if (!text) return "";
+  return text.length > limit ? text.slice(0, limit) + "..." : text;
+}

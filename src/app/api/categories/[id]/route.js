@@ -17,3 +17,32 @@ export async function GET(request, { params: { id } }) {
     );
   }
 }
+
+export async function DELETE(request, { params: { id } }) {
+  try {
+    const existingCategory = await db.category.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return NextResponse.json(
+        {
+          data: null,
+          message: "Categoria no encontrada",
+        },
+        { status: 404 }
+      );
+    }
+    const deleteCategory = await db.category.delete({
+      where: { id },
+    });
+
+    return NextResponse.json(deleteCategory, { status: 200 });
+  } catch (error) {
+    console.error("Error al eliminar la categoria por Id:", error);
+    return NextResponse.json(
+      { message: "Fallo al eliminar la categoria", error },
+      { status: 500 }
+    );
+  }
+}

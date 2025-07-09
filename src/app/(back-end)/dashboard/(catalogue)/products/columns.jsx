@@ -6,7 +6,7 @@ import BooleanColumns from "@/components/backoffice/data-table-columns/BooleanCo
 import ActionsColumns from "@/components/backoffice/data-table-columns/ActionsColumns";
 import { SortableColumn } from "@/components/backoffice/data-table-columns/SortableColumn";
 import { AllDatesColumn } from "@/components/backoffice/data-table-columns/DateColumns";
-import { TitleColumn } from "@/components/backoffice/data-table-columns/TextColumn";
+import { TextLongColumn, TitleColumn } from "@/components/backoffice/data-table-columns/TextColumn";
 
 export const columns = [
   {
@@ -93,7 +93,7 @@ export const columns = [
       }).format(salePrice);
 
       return (
-        <div className="font-medium whitespace-nowrap ">
+        <div className="font-medium whitespace-nowrap">
           {salePrice ? formatted : ""}
         </div>
       );
@@ -102,14 +102,7 @@ export const columns = [
   {
     accessorKey: "description",
     header: "Descripción",
-    cell: ({ row }) => {
-      const description = row.getValue("description");
-      return (
-        <div className="min-w-48 max-w-80">
-          <small>{description}</small>
-        </div>
-      );
-    },
+    cell: ({ row }) => <TextLongColumn row={row} column="description" />,
   },
   {
     accessorKey: "hasDiscount",
@@ -137,6 +130,8 @@ export const columns = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsColumns row={row} />,
+    cell: ({ row }) => (
+      <ActionsColumns row={row} endpoint="products" title="title" />
+    ),
   },
 ];

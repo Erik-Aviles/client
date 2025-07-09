@@ -15,47 +15,56 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 /**
  * Model Coupon
- * {id, title, code, expiryDate, isActive,}
+ * *
+ *  * {id, title, code, expiryDate, isActive,}
  */
 export type Coupon = $Result.DefaultSelection<Prisma.$CouponPayload>
 /**
  * Model Banner
- * {id, title, link, imageUrl, isActive}
+ * *
+ *  * {id, title, link, imageUrl, isActive}
  */
 export type Banner = $Result.DefaultSelection<Prisma.$BannerPayload>
 /**
  * Model Category
- * {id, title, slug, description, imageUrl, marketIds,isActive}
+ * *
+ *  * {id, title, slug, description, imageUrl, marketIds,isActive}
  */
 export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>
 /**
  * Model Product
- * {id, title, sku, slug, code, barcode, description, price, salePrice, quantity, stock, tags, hasDiscount, imageUrl, isActive, categoryId, userId,}
+ * *
+ *  * {id, title, sku, slug, code, barcode, description, price, salePrice, quantity, stock, tags, hasDiscount, imageUrl, isActive, categoryId, userId,}
  */
 export type Product = $Result.DefaultSelection<Prisma.$ProductPayload>
 /**
  * Model Market
- * {id, title, motto, slug, logoUrl, description, isActive,}
+ * *
+ *  * {id, title, motto, slug, logoUrl, description, isActive,}
  */
 export type Market = $Result.DefaultSelection<Prisma.$MarketPayload>
 /**
  * Model Staff
- * {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,}
+ * *
+ *  * {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,}
  */
 export type Staff = $Result.DefaultSelection<Prisma.$StaffPayload>
 /**
  * Model Training
- * {id, title, categoryId, slug, description, content, imageUrl, isActive}
+ * *
+ *  * {id, title, categoryId, slug, description, content, imageUrl, isActive}
  */
 export type Training = $Result.DefaultSelection<Prisma.$TrainingPayload>
 /**
  * Model User
- * {id, name, email, password, emailVerified, role, isActive,}
+ * *
+ *  * {id, name, email, password, emailVerified, role, isActive,}
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
  * Model SupplierProfile
- * {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, role, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,}
+ * *
+ *  * {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, role, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,}
  */
 export type SupplierProfile = $Result.DefaultSelection<Prisma.$SupplierProfilePayload>
 
@@ -3627,8 +3636,8 @@ export namespace Prisma {
     slug: number
     description: number
     imageUrl: number
-    marketIds: number
     isActive: number
+    marketIds: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3663,8 +3672,8 @@ export namespace Prisma {
     slug?: true
     description?: true
     imageUrl?: true
-    marketIds?: true
     isActive?: true
+    marketIds?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3748,8 +3757,8 @@ export namespace Prisma {
     slug: string
     description: string | null
     imageUrl: string | null
-    marketIds: string[]
     isActive: boolean
+    marketIds: string[]
     createdAt: Date
     updatedAt: Date
     _count: CategoryCountAggregateOutputType | null
@@ -3777,8 +3786,8 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     imageUrl?: boolean
-    marketIds?: boolean
     isActive?: boolean
+    marketIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     products?: boolean | Category$productsArgs<ExtArgs>
@@ -3795,13 +3804,13 @@ export namespace Prisma {
     slug?: boolean
     description?: boolean
     imageUrl?: boolean
-    marketIds?: boolean
     isActive?: boolean
+    marketIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "description" | "imageUrl" | "marketIds" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
+  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "description" | "imageUrl" | "isActive" | "marketIds" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     products?: boolean | Category$productsArgs<ExtArgs>
     trainings?: boolean | Category$trainingsArgs<ExtArgs>
@@ -3822,8 +3831,8 @@ export namespace Prisma {
       slug: string
       description: string | null
       imageUrl: string | null
-      marketIds: string[]
       isActive: boolean
+      marketIds: string[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["category"]>
@@ -4226,8 +4235,8 @@ export namespace Prisma {
     readonly slug: FieldRef<"Category", 'String'>
     readonly description: FieldRef<"Category", 'String'>
     readonly imageUrl: FieldRef<"Category", 'String'>
-    readonly marketIds: FieldRef<"Category", 'String[]'>
     readonly isActive: FieldRef<"Category", 'Boolean'>
+    readonly marketIds: FieldRef<"Category", 'String[]'>
     readonly createdAt: FieldRef<"Category", 'DateTime'>
     readonly updatedAt: FieldRef<"Category", 'DateTime'>
   }
@@ -5008,7 +5017,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    category?: boolean | Product$categoryArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
@@ -5038,14 +5047,14 @@ export namespace Prisma {
 
   export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "sku" | "slug" | "code" | "barcode" | "description" | "price" | "salePrice" | "quantity" | "stock" | "tags" | "imageUrl" | "isActive" | "hasDiscount" | "categoryId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    category?: boolean | Product$categoryArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $ProductPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Product"
     objects: {
-      category: Prisma.$CategoryPayload<ExtArgs>
+      category: Prisma.$CategoryPayload<ExtArgs> | null
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5431,7 +5440,7 @@ export namespace Prisma {
    */
   export interface Prisma__ProductClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    category<T extends Product$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Product$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5848,6 +5857,25 @@ export namespace Prisma {
      * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
      */
     options?: InputJsonValue
+  }
+
+  /**
+   * Product.category
+   */
+  export type Product$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
   }
 
   /**
@@ -8182,7 +8210,7 @@ export namespace Prisma {
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    category?: boolean | Training$categoryArgs<ExtArgs>
   }, ExtArgs["result"]["training"]>
 
 
@@ -8202,13 +8230,13 @@ export namespace Prisma {
 
   export type TrainingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "description" | "content" | "imageUrl" | "isActive" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["training"]>
   export type TrainingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    category?: boolean | Training$categoryArgs<ExtArgs>
   }
 
   export type $TrainingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Training"
     objects: {
-      category: Prisma.$CategoryPayload<ExtArgs>
+      category: Prisma.$CategoryPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8584,7 +8612,7 @@ export namespace Prisma {
    */
   export interface Prisma__TrainingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    category<T extends Training$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Training$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8991,6 +9019,25 @@ export namespace Prisma {
      * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
      */
     options?: InputJsonValue
+  }
+
+  /**
+   * Training.category
+   */
+  export type Training$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
   }
 
   /**
@@ -11227,8 +11274,8 @@ export namespace Prisma {
     slug: 'slug',
     description: 'description',
     imageUrl: 'imageUrl',
-    marketIds: 'marketIds',
     isActive: 'isActive',
+    marketIds: 'marketIds',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -11587,8 +11634,8 @@ export namespace Prisma {
     slug?: StringFilter<"Category"> | string
     description?: StringNullableFilter<"Category"> | string | null
     imageUrl?: StringNullableFilter<"Category"> | string | null
-    marketIds?: StringNullableListFilter<"Category">
     isActive?: BoolFilter<"Category"> | boolean
+    marketIds?: StringNullableListFilter<"Category">
     createdAt?: DateTimeFilter<"Category"> | Date | string
     updatedAt?: DateTimeFilter<"Category"> | Date | string
     products?: ProductListRelationFilter
@@ -11602,8 +11649,8 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
-    marketIds?: SortOrder
     isActive?: SortOrder
+    marketIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     products?: ProductOrderByRelationAggregateInput
@@ -11620,8 +11667,8 @@ export namespace Prisma {
     title?: StringFilter<"Category"> | string
     description?: StringNullableFilter<"Category"> | string | null
     imageUrl?: StringNullableFilter<"Category"> | string | null
-    marketIds?: StringNullableListFilter<"Category">
     isActive?: BoolFilter<"Category"> | boolean
+    marketIds?: StringNullableListFilter<"Category">
     createdAt?: DateTimeFilter<"Category"> | Date | string
     updatedAt?: DateTimeFilter<"Category"> | Date | string
     products?: ProductListRelationFilter
@@ -11635,8 +11682,8 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
-    marketIds?: SortOrder
     isActive?: SortOrder
+    marketIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CategoryCountOrderByAggregateInput
@@ -11653,8 +11700,8 @@ export namespace Prisma {
     slug?: StringWithAggregatesFilter<"Category"> | string
     description?: StringNullableWithAggregatesFilter<"Category"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"Category"> | string | null
-    marketIds?: StringNullableListFilter<"Category">
     isActive?: BoolWithAggregatesFilter<"Category"> | boolean
+    marketIds?: StringNullableListFilter<"Category">
     createdAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
   }
@@ -11682,7 +11729,7 @@ export namespace Prisma {
     userId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -11733,7 +11780,7 @@ export namespace Prisma {
     userId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "slug" | "code">
 
@@ -11990,7 +12037,7 @@ export namespace Prisma {
     categoryId?: StringFilter<"Training"> | string
     createdAt?: DateTimeFilter<"Training"> | Date | string
     updatedAt?: DateTimeFilter<"Training"> | Date | string
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
   }
 
   export type TrainingOrderByWithRelationInput = {
@@ -12021,7 +12068,7 @@ export namespace Prisma {
     categoryId?: StringFilter<"Training"> | string
     createdAt?: DateTimeFilter<"Training"> | Date | string
     updatedAt?: DateTimeFilter<"Training"> | Date | string
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
   }, "id">
 
   export type TrainingOrderByWithAggregationInput = {
@@ -12401,8 +12448,8 @@ export namespace Prisma {
     slug: string
     description?: string | null
     imageUrl?: string | null
-    marketIds?: CategoryCreatemarketIdsInput | string[]
     isActive?: boolean
+    marketIds?: CategoryCreatemarketIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     products?: ProductUncheckedCreateNestedManyWithoutCategoryInput
@@ -12428,8 +12475,8 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    marketIds?: CategoryUpdatemarketIdsInput | string[]
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    marketIds?: CategoryUpdatemarketIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     products?: ProductUncheckedUpdateManyWithoutCategoryNestedInput
@@ -12443,8 +12490,8 @@ export namespace Prisma {
     slug: string
     description?: string | null
     imageUrl?: string | null
-    marketIds?: CategoryCreatemarketIdsInput | string[]
     isActive?: boolean
+    marketIds?: CategoryCreatemarketIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12464,8 +12511,8 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    marketIds?: CategoryUpdatemarketIdsInput | string[]
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    marketIds?: CategoryUpdatemarketIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12488,7 +12535,7 @@ export namespace Prisma {
     hasDiscount?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    category: CategoryCreateNestedOneWithoutProductsInput
+    category?: CategoryCreateNestedOneWithoutProductsInput
     user: UserCreateNestedOneWithoutProductsInput
   }
 
@@ -12531,7 +12578,7 @@ export namespace Prisma {
     hasDiscount?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
+    category?: CategoryUpdateOneWithoutProductsNestedInput
     user?: UserUpdateOneRequiredWithoutProductsNestedInput
   }
 
@@ -12845,7 +12892,7 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    category: CategoryCreateNestedOneWithoutTrainingsInput
+    category?: CategoryCreateNestedOneWithoutTrainingsInput
   }
 
   export type TrainingUncheckedCreateInput = {
@@ -12870,7 +12917,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneRequiredWithoutTrainingsNestedInput
+    category?: CategoryUpdateOneWithoutTrainingsNestedInput
   }
 
   export type TrainingUncheckedUpdateInput = {
@@ -13335,8 +13382,8 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
-    marketIds?: SortOrder
     isActive?: SortOrder
+    marketIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13417,9 +13464,9 @@ export namespace Prisma {
     isSet?: boolean
   }
 
-  export type CategoryScalarRelationFilter = {
-    is?: CategoryWhereInput
-    isNot?: CategoryWhereInput
+  export type CategoryNullableScalarRelationFilter = {
+    is?: CategoryWhereInput | null
+    isNot?: CategoryWhereInput | null
   }
 
   export type UserScalarRelationFilter = {
@@ -14036,10 +14083,12 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type CategoryUpdateOneRequiredWithoutProductsNestedInput = {
+  export type CategoryUpdateOneWithoutProductsNestedInput = {
     create?: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutProductsInput
     upsert?: CategoryUpsertWithoutProductsInput
+    disconnect?: boolean
+    delete?: CategoryWhereInput | boolean
     connect?: CategoryWhereUniqueInput
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutProductsInput, CategoryUpdateWithoutProductsInput>, CategoryUncheckedUpdateWithoutProductsInput>
   }
@@ -14109,10 +14158,12 @@ export namespace Prisma {
     connect?: CategoryWhereUniqueInput
   }
 
-  export type CategoryUpdateOneRequiredWithoutTrainingsNestedInput = {
+  export type CategoryUpdateOneWithoutTrainingsNestedInput = {
     create?: XOR<CategoryCreateWithoutTrainingsInput, CategoryUncheckedCreateWithoutTrainingsInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutTrainingsInput
     upsert?: CategoryUpsertWithoutTrainingsInput
+    disconnect?: boolean
+    delete?: CategoryWhereInput | boolean
     connect?: CategoryWhereUniqueInput
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutTrainingsInput, CategoryUpdateWithoutTrainingsInput>, CategoryUncheckedUpdateWithoutTrainingsInput>
   }
@@ -14699,8 +14750,8 @@ export namespace Prisma {
     slug: string
     description?: string | null
     imageUrl?: string | null
-    marketIds?: CategoryCreatemarketIdsInput | string[]
     isActive?: boolean
+    marketIds?: CategoryCreatemarketIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     trainings?: TrainingUncheckedCreateNestedManyWithoutCategoryInput
@@ -14769,8 +14820,8 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    marketIds?: CategoryUpdatemarketIdsInput | string[]
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    marketIds?: CategoryUpdatemarketIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trainings?: TrainingUncheckedUpdateManyWithoutCategoryNestedInput
@@ -14829,8 +14880,8 @@ export namespace Prisma {
     slug: string
     description?: string | null
     imageUrl?: string | null
-    marketIds?: CategoryCreatemarketIdsInput | string[]
     isActive?: boolean
+    marketIds?: CategoryCreatemarketIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     products?: ProductUncheckedCreateNestedManyWithoutCategoryInput
@@ -14867,8 +14918,8 @@ export namespace Prisma {
     slug?: StringFilter<"Category"> | string
     description?: StringNullableFilter<"Category"> | string | null
     imageUrl?: StringNullableFilter<"Category"> | string | null
-    marketIds?: StringNullableListFilter<"Category">
     isActive?: BoolFilter<"Category"> | boolean
+    marketIds?: StringNullableListFilter<"Category">
     createdAt?: DateTimeFilter<"Category"> | Date | string
     updatedAt?: DateTimeFilter<"Category"> | Date | string
   }
@@ -14892,8 +14943,8 @@ export namespace Prisma {
     slug: string
     description?: string | null
     imageUrl?: string | null
-    marketIds?: CategoryCreatemarketIdsInput | string[]
     isActive?: boolean
+    marketIds?: CategoryCreatemarketIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     products?: ProductUncheckedCreateNestedManyWithoutCategoryInput
@@ -14933,8 +14984,8 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    marketIds?: CategoryUpdatemarketIdsInput | string[]
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    marketIds?: CategoryUpdatemarketIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     products?: ProductUncheckedUpdateManyWithoutCategoryNestedInput
@@ -15004,7 +15055,7 @@ export namespace Prisma {
     hasDiscount?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    category: CategoryCreateNestedOneWithoutProductsInput
+    category?: CategoryCreateNestedOneWithoutProductsInput
   }
 
   export type ProductUncheckedCreateWithoutUserInput = {
@@ -15342,8 +15393,8 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    marketIds?: CategoryUpdatemarketIdsInput | string[]
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    marketIds?: CategoryUpdatemarketIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     products?: ProductUncheckedUpdateManyWithoutCategoryNestedInput
@@ -15355,8 +15406,8 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    marketIds?: CategoryUpdatemarketIdsInput | string[]
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    marketIds?: CategoryUpdatemarketIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15399,7 +15450,7 @@ export namespace Prisma {
     hasDiscount?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
+    category?: CategoryUpdateOneWithoutProductsNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutUserInput = {

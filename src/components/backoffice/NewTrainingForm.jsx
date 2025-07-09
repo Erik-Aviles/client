@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-
 // Cargar solo en cliente para evitar SSR
 const RichTextEditorInput = dynamic(
   () => import("../FormInputs/RichTextEditorInput"),
@@ -68,76 +67,77 @@ export default function NewTrainingForm({ categories, isUpdate = false }) {
   }
 
   return (
-    <div>
+    <div className="h-[calc(100vh-40px)] flex flex-col">
       <FormHeader
         title={isUpdate ? "Actualizar Capacitación" : "Nueva Capacitación"}
       />
+      <div className="flex-1 overflow-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg p-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
+        >
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+            <ToggleInput
+              label="Estado de la Capacitación"
+              name="isActive"
+              isActive={isActive}
+              trueTitle="Activo"
+              falseTitle="Inactivo"
+              register={register}
+            />
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg p-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
-      >
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-          <ToggleInput
-            label="Estado de la Capacitación"
-            name="isActive"
-            isActive={isActive}
-            trueTitle="Activo"
-            falseTitle="Inactivo"
-            register={register}
-          />
+            <TextInput
+              label="Título la capacitación"
+              name="title"
+              register={register}
+              errors={errors}
+              className="w-full"
+            />
+            <SelectInput
+              label="seleccionar categoria"
+              name="categoryId"
+              register={register}
+              errors={errors}
+              className="w-full"
+              options={categories}
+            />
+            <TextareaInput
+              label="Descripción de la Capacitación"
+              name="description"
+              register={register}
+              errors={errors}
+            />
 
-          <TextInput
-            label="Título la capacitación"
-            name="title"
-            register={register}
-            errors={errors}
-            className="w-full"
-          />
-          <SelectInput
-            label="seleccionar categoria"
-            name="categoryId"
-            register={register}
-            errors={errors}
-            className="w-full"
-            options={categories}
-          />
-          <TextareaInput
-            label="Descripción de la Capacitación"
-            name="description"
-            register={register}
-            errors={errors}
-          />
+            <ImageInput
+              imageUrl={imageUrl}
+              setImageUrl={setImageUrl}
+              endpoint="trainingImageUploader"
+              label="Imagen de la capacitación"
+            />
+            {/* content editor 
+            <RichTextEditorInput
+              label="Contenido de la capacitación"
+              content={content}
+              onChange={setContent}
+              placeholder="Escribe tu capacitación"
+            />*/}
+          </div>
 
-          <ImageInput
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-            endpoint="trainingImageUploader"
-            label="Imagen de la capacitación"
-          />
-          {/* content editor */}
-          <RichTextEditorInput
-            label="Contenido de la capacitación"
-            content={content}
-            onChange={setContent}
-            placeholder="Escribe tu capacitación"
-          />
-        </div>
-
-        <div className="sm:col-span-2 flex gap-3 justify-end py-4">
-          <button
-            type="button"
-            className="inline-flex items-center px-3 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800"
-          >
-            Cancelar
-          </button>
-          <SubmitButton
-            isLoading={loading}
-            buttonTitle={isUpdate ? "Actualizar" : "Crear Capacitación"}
-            buttonLoading={"Creando capacitación..."}
-          />
-        </div>
-      </form>
+          <div className="sm:col-span-2 flex gap-3 justify-end py-4">
+            <button
+              type="button"
+              className="inline-flex items-center px-3 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800"
+            >
+              Cancelar
+            </button>
+            <SubmitButton
+              isLoading={loading}
+              buttonTitle={isUpdate ? "Actualizar" : "Crear Capacitación"}
+              buttonLoading={"Creando capacitación..."}
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
