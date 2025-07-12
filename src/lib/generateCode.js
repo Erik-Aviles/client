@@ -1,3 +1,12 @@
+function stableHash(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash % 10000).toString().padStart(4, "0");
+}
+
 function generateCouponCode(item1, item2) {
   const formattedItem1 =
     item1?.replace(/[^a-zA-Z0-9]/g, "").toUpperCase() || "ITEM";
@@ -13,11 +22,9 @@ function generateCouponCode(item1, item2) {
     }
   }
 
-  const randomSuffix = Math.floor(Math.random() * 10000)
-    .toString()
-    .padStart(4, "0");
+  const suffix = stableHash(`${formattedItem1}${formattedItem2}`);
 
-  return `${formattedItem1}-${formattedItem2}@${randomSuffix}`;
+  return `${formattedItem1}-${formattedItem2}@${suffix}`;
 }
 
 function generatePersonCode(

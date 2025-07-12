@@ -43,7 +43,9 @@ export const columns = [
   {
     accessorKey: "imageUrl",
     header: "Imagen",
-    cell: ({ row }) => <ImageColumns row={row} imageTitle="imageUrl" />,
+    cell: ({ row }) => (
+      <ImageColumns row={row} imageTitle="imageUrl" title="title" />
+    ),
   },
   {
     accessorKey: "description",

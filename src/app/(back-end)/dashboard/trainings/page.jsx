@@ -1,8 +1,5 @@
-import ButtonActions from "@/components/backoffice/ButtonActions";
 import { DataTable } from "@/components/backoffice/date-table-components/DataTable";
-import SearchForm from "@/components/backoffice/SearchForm";
 import Heading from "@/components/backoffice/styledComponent/Heading";
-import SubTitle2 from "@/components/backoffice/styledComponent/SubTitle2";
 import { getData } from "@/lib/getData";
 import React from "react";
 import { columns } from "./columns";
@@ -26,7 +23,7 @@ export default async function page() {
             initialColumnVisibility={initialColumnVisibility}
             fieldsToSearch={fieldsToSearch}
             inputPlaceholder="Buscar capacitación por nombre..."
-            addLink="dashboard/trainings"
+            endpoint="trainings"
             title="capacitaciones"
           />
         </div>

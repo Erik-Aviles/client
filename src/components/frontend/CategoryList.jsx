@@ -4,8 +4,6 @@ import CategoryCarousel from "./CategoryCarousel";
 import { ArrowRight } from "lucide-react";
 
 export default function CategoryList({ category }) {
-  if (!category?.isActive || category?.products.length === 0) return null;
-
   return (
     <div className="border overflow-y-auto dark:text-white mb-6 dark:bg-slate-800 rounded-lg">
       <div className="flex items-center justify-between py-2 px-3 border-b font-semibold bg-slate-50 dark:bg-slate-700  overflow-y-auto">

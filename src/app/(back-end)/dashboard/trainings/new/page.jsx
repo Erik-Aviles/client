@@ -1,4 +1,5 @@
-import NewTrainingForm from "@/components/backoffice/NewTrainingForm";
+import FormHeader from "@/components/backoffice/FormHeader";
+import NewTrainingForm from "@/components/backoffice/forms/NewTrainingForm";
 import { getData } from "@/lib/getData";
 import React from "react";
 
@@ -10,5 +11,12 @@ export default async function NewTraining() {
       title: caterory.title,
     };
   });
-  return <NewTrainingForm categories={categories} />;
+  return (
+    <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
+      <FormHeader title="Nueva Capacitación" />
+      <div className="flex-1 overflow-auto">
+        <NewTrainingForm categories={categories} />
+      </div>
+    </div>
+  );
 }

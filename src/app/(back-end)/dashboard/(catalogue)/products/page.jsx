@@ -28,7 +28,7 @@ export default async function page() {
           initialColumnVisibility={initialColumnVisibility}
           fieldsToSearch={fieldsToSearch}
           inputPlaceholder="Buscar producto por título, codigo o ID"
-          addLink="dashboard/products"
+          endpoint="products"
           title="productos"
         />
       </div>

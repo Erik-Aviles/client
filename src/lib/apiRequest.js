@@ -5,8 +5,8 @@ export async function makePostRequest(
   endpoint,
   data,
   resourceName,
-  reset,
-  redirect
+  redirect,
+  reset
 ) {
   try {
     setLoading(true);
@@ -43,8 +43,7 @@ export async function makePutRequest(
   endpoint,
   data,
   resourceName,
-  redirect,
-  reset
+  redirect
 ) {
   try {
     setLoading(true);

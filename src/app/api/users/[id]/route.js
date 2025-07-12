@@ -6,6 +6,7 @@ export async function GET(request, { params }) {
     const { id } = await params;
     const user = await db.user.findUnique({
       where: { id },
+      include: { supplierProfile: true, products: true },
     });
 
     return NextResponse.json(user, { status: 200 });

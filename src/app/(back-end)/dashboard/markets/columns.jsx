@@ -48,7 +48,7 @@ export const columns = [
   {
     accessorKey: "logoUrl",
     header: "Logo empresarial",
-    cell: ({ row }) => <ImageColumns row={row} imageTitle="logoUrl" />,
+    cell: ({ row }) => <ImageColumns row={row} imageTitle="logoUrl" title="title" />,
   },
   {
     accessorKey: "description",

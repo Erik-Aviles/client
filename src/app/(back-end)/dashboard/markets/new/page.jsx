@@ -1,4 +1,4 @@
-import NewMarketForm from "@/components/backoffice/NewMarketForm";
+import NewMarketForm from "@/components/backoffice/forms/NewMarketForm";
 import { getData } from "@/lib/getData";
 import React from "react";
 

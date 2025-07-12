@@ -39,7 +39,7 @@ export async function POST(request) {
     }
 
     const quantity = parseNumberOrNull(productsData?.quantity);
-    const stock = parseNumberOrNull(productsData?.stock);
+    const stock = quantity;
     const price = parseNumberOrNull(productsData?.price);
     const salePrice = parseNumberOrNull(productsData?.salePrice);
 
@@ -76,16 +76,16 @@ export async function POST(request) {
         imageUrl: productsData.imageUrl,
         isActive: productsData.isActive,
         hasDiscount: productsData.hasDiscount,
-        categoryId: productsData.categoryId,
         code: generatedCode,
         quantity,
         stock,
         price,
         salePrice,
-        userId: productsData?.supplierId,
+        categoryId: productsData.categoryId || null,
+        userId: productsData.userId || null,
       },
     });
-    console.log("Nuevo producto: ", newProduct);
+    console.log("LO QUE SE GUARDO: ", newProduct);
     return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {
     console.error("Error al registrar el producto:", error);

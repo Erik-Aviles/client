@@ -46,3 +46,39 @@ export async function DELETE(request, { params: { id } }) {
     );
   }
 }
+
+export async function PUT(request, { params: { id } }) {
+  try {
+    const { title, slug, description, imageUrl, isActive } =
+      await request.json();
+
+    const existingCategory = await db.category.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return NextResponse.json(
+        { data: null, message: "Categoria no encontrada" },
+        { status: 404 }
+      );
+    }
+
+    const updateCategory = await db.category.update({
+      where: { id },
+      data: {
+        title,
+        slug,
+        description,
+        imageUrl,
+        isActive,
+      },
+    });
+    return NextResponse.json(updateCategory, { status: 201 });
+  } catch (error) {
+    console.error("Error al actualizar categoría:", error);
+    return NextResponse.json(
+      { message: "No se pudo actualizar la categoría", error },
+      { status: 500 }
+    );
+  }
+}

@@ -7,13 +7,13 @@ export function AllDatesColumn({ row }) {
   return (
     <div className="flex flex-col gap-2 whitespace-nowrap">
       <div className="leading-none">
-        <p className="text-xs font-semibold text-purple-700 dark:text-purple-500">
+        <p className="text-xs font-semibold text-slate-700 dark:text-slate-500">
           Creación:
         </p>
         <small>{createdAt}</small>
       </div>
       <div className="leading-none">
-        <p className="text-xs font-semibold text-purple-700 dark:text-purple-500">
+        <p className="text-xs font-semibold text-slate-700 dark:text-slate-500">
           Actualización:
         </p>
         <small>{updatedAt}</small>
@@ -25,7 +25,7 @@ export function DateColumn({ row, title, column }) {
   const dateData = formatDateToEcuador(row.getValue(column));
   return (
     <div className="leading-none whitespace-nowrap">
-      <p className="capitalize text-xs font-semibold text-purple-700 dark:text-purple-500">
+      <p className="capitalize text-xs font-semibold text-slate-700 dark:text-slate-500">
         {title}
       </p>
       <small>{dateData}</small>

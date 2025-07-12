@@ -45,3 +45,32 @@ export async function DELETE(request, { params: { id } }) {
     );
   }
 }
+
+export async function PUT(request, { params: { id } }) {
+  try {
+    const { title, link, imageUrl, isActive } = await request.json();
+
+    const existingBanner = await db.banner.findUnique({
+      where: { id },
+    });
+
+    if (!existingBanner) {
+      return NextResponse.json(
+        { data: null, message: "Banner no exixte" },
+        { status: 404 }
+      );
+    }
+
+    const updateBanner = await db.banner.update({
+      where: { id },
+      data: { title, link, imageUrl, isActive },
+    });
+    return NextResponse.json(updateBanner, { status: 201 });
+  } catch (error) {
+    console.error("Error al obtener el Banner por Id:", error);
+    return NextResponse.json(
+      { message: "No se pudo obtener el Banner", error },
+      { status: 500 }
+    );
+  }
+}

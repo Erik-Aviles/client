@@ -3,8 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(request) {
   try {
-    const suppliers = await db.supplierProfile.findMany({
+    const suppliers = await db.user.findMany({
       orderBy: { createdAt: "desc" },
+      where: { role: "SUPPLIER" },
+      include: { supplierProfile: true },
     });
 
     return NextResponse.json(suppliers, { status: 200 });

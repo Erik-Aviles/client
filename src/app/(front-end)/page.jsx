@@ -6,7 +6,14 @@ import { getData } from "@/lib/getData";
 import Link from "next/link";
 
 export default async function Home() {
-  const categories = await getData("categories", 3);
+  const categoriesData = await getData("categories");
+  const categories = categoriesData.filter(category => {
+  if (!category) return false;
+  const isActive = category.isActive ?? true;
+  const productCount = category.products?.length ?? 0;
+  return isActive && productCount >= 4;
+})
+
   return (
     <div className="min-h-screen ">
       <Hero />

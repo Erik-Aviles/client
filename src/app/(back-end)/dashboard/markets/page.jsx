@@ -23,7 +23,7 @@ export default async function page() {
           initialColumnVisibility={initialColumnVisibility}
           fieldsToSearch={fieldsToSearch}
           inputPlaceholder="Buscar mercado por nombre..."
-          addLink="dashboard/markets"
+          endpoint="markets"
           title="mercado"
         />
       </div>

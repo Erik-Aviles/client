@@ -1,8 +1,8 @@
 import React from "react";
-import { Download, Plus, Share, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Download, Share, Trash2 } from "lucide-react";
+import AddBtn from "./Actions/AddBtn";
 
-export default function ButtonActions({ title, addLink }) {
+export default function ButtonActions({ title, endpoint }) {
   return (
     <div className="flex items-center flex-wrap sm:flex-nowrap gap-2 justify-between text-slate-800 ">
       <button
@@ -24,19 +24,14 @@ export default function ButtonActions({ title, addLink }) {
       <button
         title={`Eliminar ${title}`}
         type="button"
-        className="capitalize text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-bg-red-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-red-bg-red/50 "
+        className="capitalize text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-bg-red-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-red-bg-red/50"
       >
         <Trash2 className="w-4 h-4" />
-        <span className="hidden lg:inline">{"Eliminar"}</span>
+        <span className="hidden lg:inline">"Eliminar"</span>
       </button>
-      <Link
-        title={`Agregar ${title}`}
-        href={`/${addLink}/new`}
-        className="capitalize text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-bg-blue-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-blue-bg-blue-400/50 "
-      >
-        <Plus className="w-4 h-4" />
-        <span className="hidden lg:inline">{"Agregar"}</span>
-      </Link>
+
+      {/* Boton de agregar */}
+      <AddBtn endpoint={endpoint} title={title} />
     </div>
   );
 }

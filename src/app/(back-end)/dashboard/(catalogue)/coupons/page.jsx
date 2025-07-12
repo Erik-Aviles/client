@@ -21,7 +21,7 @@ export default async function page() {
           data={data}
           fieldsToSearch={fieldsToSearch}
           InputPlaceholder="Buscar cupón por nombre..."
-          addLink="dashboard/coupons"
+          endpoint="coupons"
           title="Cupones"
         />
       </div>

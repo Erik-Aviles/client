@@ -9,25 +9,14 @@ import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
-import { contentMain } from "@/utils/general/content";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-// Cargar solo en cliente para evitar SSR
-const RichTextEditorInput = dynamic(
-  () => import("../FormInputs/RichTextEditorInput"),
-  {
-    ssr: false,
-  }
-);
-
-export default function NewTrainingForm({ categories, isUpdate = false }) {
+export default function NewMarketForm({ categories, isUpdate = false }) {
   const [imageUrl, setImageUrl] = useState("");
-  const [content, setContent] = useState(contentMain);
   const [loading, setLoading] = useState(false);
-  const datapath = "trainings";
+  const datapath = "markets";
   const router = useRouter();
 
   function redirect() {
@@ -36,9 +25,9 @@ export default function NewTrainingForm({ categories, isUpdate = false }) {
 
   const {
     register,
-    handleSubmit,
     reset,
     watch,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -48,92 +37,84 @@ export default function NewTrainingForm({ categories, isUpdate = false }) {
   const isActive = watch("isActive");
 
   async function onSubmit(data) {
-    /* {id, title, categoryId, slug, description, content, imageUrl, isActive} */
+    /* {id, title, motto, slug, logoUrl, description, categoryIds, isActive,} */
     const slug = generateSlug(data.title);
     data.slug = slug;
-    data.imageUrl = imageUrl;
-    data.content = content;
-    console.log(data);
+    data.logoUrl = imageUrl;
     makePostRequest(
       setLoading,
       `api/${datapath}`,
       data,
-      "Capacitación ",
+      "Mercado",
       reset,
       redirect
     );
     setImageUrl("");
-    setContent("");
   }
-
   return (
-    <div className="h-[calc(100vh-40px)] flex flex-col">
-      <FormHeader
-        title={isUpdate ? "Actualizar Capacitación" : "Nueva Capacitación"}
-      />
+    <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
+      <FormHeader title={isUpdate ? "Actualizar Mercado" : "Nuevo Mercado"} />
       <div className="flex-1 overflow-auto">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg p-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
+          className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg pt-4 px-4 my-2 mx-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
         >
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
             <ToggleInput
-              label="Estado de la Capacitación"
+              label="Estado del Mercado"
               name="isActive"
               isActive={isActive}
               trueTitle="Activo"
               falseTitle="Inactivo"
               register={register}
             />
-
             <TextInput
-              label="Título la capacitación"
+              label="Nombre del mercado"
               name="title"
               register={register}
               errors={errors}
               className="w-full"
             />
             <SelectInput
-              label="seleccionar categoria"
-              name="categoryId"
+              label="seleccionar categorias"
+              name="categoryIds"
               register={register}
               errors={errors}
               className="w-full"
               options={categories}
+              multiple={true}
             />
+            <TextInput
+              label="Lema del mercado"
+              name="motto"
+              register={register}
+              errors={errors}
+              isRequired={false}
+            />
+
             <TextareaInput
-              label="Descripción de la Capacitación"
+              label="Descripción el mercado"
               name="description"
               register={register}
               errors={errors}
+              isRequired={false}
             />
-
             <ImageInput
               imageUrl={imageUrl}
               setImageUrl={setImageUrl}
-              endpoint="trainingImageUploader"
-              label="Imagen de la capacitación"
+              endpoint="marketLogoImageUploader"
+              label="Logo del mercado"
             />
-            {/* content editor 
-            <RichTextEditorInput
-              label="Contenido de la capacitación"
-              content={content}
-              onChange={setContent}
-              placeholder="Escribe tu capacitación"
-            />*/}
           </div>
 
           <div className="sm:col-span-2 flex gap-3 justify-end py-4">
-            <button
-              type="button"
-              className="inline-flex items-center px-3 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800"
-            >
+            <button className="inline-flex items-center px-3 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
               Cancelar
             </button>
             <SubmitButton
               isLoading={loading}
-              buttonTitle={isUpdate ? "Actualizar" : "Crear Capacitación"}
-              buttonLoading={"Creando capacitación..."}
+              buttonTitle={isUpdate ? "Actualizar" : "Crear mercado"}
+              buttonLoading={"Creando..."}
             />
           </div>
         </form>

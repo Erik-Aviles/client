@@ -9,7 +9,7 @@ export default function TextInput({
   defaultValue = "",
   readOnly = false,
   placeholder,
-  classNameInput = "focus:ring-amber-400 focus:border-amber-400 dark:bg-slate-700  dark:placeholder-slate-500 dark:text-white dark:focus:ring-amber-400 dark:focus:border-amber-400 border-border py-2",
+  classNameInput = "focus:ring-amber-400 focus:border-amber-400 dark:bg-slate-700 dark:placeholder-slate-500 dark:text-white dark:focus:ring-amber-400 dark:focus:border-amber-400 py-2",
 }) {
   return (
     <div className={className}>
@@ -25,9 +25,12 @@ export default function TextInput({
           type={type}
           name={name}
           id={name}
+          title={readOnly ? "Solo de lectura" : null}
           defaultValue={defaultValue}
           autoComplete={name}
-          className={`block w-full bg-white border rounded-lg  transition-all duration-300  ${classNameInput}`}
+          className={`block w-full bg-white border rounded-lg  transition-all duration-300  ${classNameInput} ${
+            readOnly && "cursor-not-allowed"
+          }`}
           placeholder={placeholder || `${label.toLowerCase()}`}
           readOnly={readOnly}
         />

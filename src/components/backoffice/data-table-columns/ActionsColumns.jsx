@@ -3,12 +3,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Copy, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import DeleteBtn from "../Actions/DeleteBtn";
+import EditBtn from "../Actions/EditBtn";
 
 export default function ActionsColumns({ row, endpoint, title }) {
   const showTitle = row.getValue(title);
@@ -22,11 +24,13 @@ export default function ActionsColumns({ row, endpoint, title }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(id)}>
           <Copy className="w-2 h-2 " /> Copiar ID
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Pencil className="w-2 h-2 " /> Editar
+          <EditBtn id={id} endpoint={endpoint} title={showTitle} />
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>

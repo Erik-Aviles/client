@@ -5,7 +5,13 @@ import React from "react";
 import defaultImage from "../../../public/products/defaultImage.png";
 
 export default async function SideBarCategories() {
-  const categories = await getData("categories");
+  const categoriesData = await getData("categories");
+  const categories = categoriesData.filter(category => {
+  if (!category) return false;
+  const isActive = category.isActive ?? true;
+  const productCount = category.products?.length ?? 0;
+  return isActive && productCount >= 1;
+})
   return (
     <>
       <h2 className="dark:text-slate-300 text-base bg-slate-100 dark:bg-slate-700 py-2 px-3 border-b font-semibold">
@@ -13,8 +19,6 @@ export default async function SideBarCategories() {
       </h2>
       <div className="flex flex-col gap-3 py-3 px-4 h-[320px] overflow-y-auto dark:text-slate-300">
         {categories?.map((category) => {
-          if (!category?.isActive || category?.products.length === 0)
-            return null;
           return (
             <Link
               key={category?.id}

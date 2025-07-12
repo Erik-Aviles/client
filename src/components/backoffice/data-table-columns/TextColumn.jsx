@@ -1,32 +1,39 @@
-import { formatDateToEcuador } from "@/utils/formats/formatDateToEcuador";
 import React from "react";
 
-export function TitleColumn({ row, column }) {
+export function TitleColumn({ row, column, className = "uppercase" }) {
   const title = row.getValue(column);
   return (
-    <div className="ml-2 uppercase min-w-48 max-w-28">
-      <small>{title}</small>
+    <div className="ml-2 min-w-44 max-w-48">
+      <small className={title ? `${className}` : "text-red-600 capitalize"}>
+        {title || "Sin registro"}
+      </small>
     </div>
   );
 }
 
-export function TextShorthColumn({ row, title, column }) {
-  const dateData = formatDateToEcuador(row.getValue(column));
+export function TextShortColumn({
+  row,
+  column,
+  fallback,
+  className = "capitalize",
+}) {
+  const text = column ? row.getValue(column) : null;
+  const content = text || fallback;
+
   return (
-    <div className="leading-none whitespace-nowrap">
-      <p className="capitalize text-xs font-semibold text-purple-700 dark:text-purple-500">
-        {title}
-      </p>
-      <small>{dateData}</small>
-    </div>
+    <small className={content ? `${className}` : "text-red-600 capitalize"}>
+      {content || "Sin registro"}
+    </small>
   );
 }
 
-export function TextLongColumn({ row, column }) {
+export function TextLongColumn({ row, column, className = "capitalize" }) {
   const textLong = row.getValue(column);
   return (
-    <div className="min-w-48 max-w-80 capitalize">
-      <small>{textLong}</small>
+    <div className="min-w-48 max-w-80">
+      <small className={textLong ? `${className}` : "text-red-600 capitalize"}>
+        {textLong || "Sin registro"}
+      </small>
     </div>
   );
 }

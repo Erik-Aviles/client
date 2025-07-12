@@ -30,7 +30,7 @@ export function DataTable({
   fieldsToSearch = ["title", "id"],
   inputPlaceholder = "Busqueda...",
   title = "elemento",
-  addLink = "#",
+  endpoint,
 }) {
 
   const { pagination, setPagination } = usePagination(4);
@@ -74,7 +74,7 @@ export function DataTable({
       <DataTableToolbar
         table={table}
         title={title}
-        addLink={addLink}
+        endpoint={endpoint}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
         inputPlaceholder={inputPlaceholder}
@@ -84,7 +84,7 @@ export function DataTable({
       <div className="overflow-auto">
         <div className="h-[calc(100vh-292.67px)] md:h-[calc(100vh-224.67px)] ">
           <div className="min-w-max overflow-x-auto pb-2">
-            <Table className="border dark:bg-slate-800 rounded-lg">
+            <Table className="border dark:bg-slate-900 rounded-lg">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>

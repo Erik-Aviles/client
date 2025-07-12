@@ -23,7 +23,7 @@ export default async function page() {
           initialColumnVisibility={initialColumnVisibility}
           fieldsToSearch={fieldsToSearch}
           inputPlaceholder="Buscar banner por nombre..."
-          addLink="dashboard/banners"
+          endpoint="banners"
           title="banner"
         />
       </div>

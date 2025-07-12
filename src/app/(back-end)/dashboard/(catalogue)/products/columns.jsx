@@ -6,7 +6,11 @@ import BooleanColumns from "@/components/backoffice/data-table-columns/BooleanCo
 import ActionsColumns from "@/components/backoffice/data-table-columns/ActionsColumns";
 import { SortableColumn } from "@/components/backoffice/data-table-columns/SortableColumn";
 import { AllDatesColumn } from "@/components/backoffice/data-table-columns/DateColumns";
-import { TextLongColumn, TitleColumn } from "@/components/backoffice/data-table-columns/TextColumn";
+import {
+  TextLongColumn,
+  TextShortColumn,
+  TitleColumn,
+} from "@/components/backoffice/data-table-columns/TextColumn";
 
 export const columns = [
   {
@@ -32,18 +36,6 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "barcode",
-    header: () => <div className="whitespace-nowrap">codigo de barra</div>,
-    cell: ({ row }) => {
-      const barcode = row.getValue("barcode");
-      return (
-        <div>
-          <small>{barcode}</small>
-        </div>
-      );
-    },
-  },
-  {
     accessorKey: "title",
     header: ({ column }) => <SortableColumn column={column} title="Nombre" />,
     cell: ({ row }) => <TitleColumn row={row} column="title" />,
@@ -51,23 +43,24 @@ export const columns = [
   {
     accessorKey: "code",
     header: () => <div className="whitespace-nowrap">codigo</div>,
-    cell: ({ row }) => {
-      const code = row.getValue("code");
-      return <small>{code}</small>;
-    },
+    cell: ({ row }) => <TextShortColumn row={row} column="code" />,
+  },
+  {
+    accessorKey: "barcode",
+    header: () => <div className="whitespace-nowrap">codigo de barra</div>,
+    cell: ({ row }) => <TextShortColumn row={row} column="barcode" />,
   },
   {
     accessorKey: "sku",
     header: () => <div className="whitespace-nowrap">cod. unico</div>,
-    cell: ({ row }) => {
-      const sku = row.getValue("sku");
-      return <small>{sku}</small>;
-    },
+    cell: ({ row }) => <TextShortColumn row={row} column="sku" />,
   },
   {
     accessorKey: "imageUrl",
     header: "Imagen",
-    cell: ({ row }) => <ImageColumns row={row} imageTitle="imageUrl" />,
+    cell: ({ row }) => (
+      <ImageColumns row={row} imageTitle="imageUrl" title="title" />
+    ),
   },
   {
     accessorKey: "price",
@@ -79,7 +72,11 @@ export const columns = [
         currency: "USD",
       }).format(price);
 
-      return <div className="font-medium">{formatted}</div>;
+      return (
+        <small className={price ? "font-medium " : "text-red-600 capitalize"}>
+          {price ? formatted : "Sin registro"}
+        </small>
+      );
     },
   },
   {
@@ -93,9 +90,11 @@ export const columns = [
       }).format(salePrice);
 
       return (
-        <div className="font-medium whitespace-nowrap">
-          {salePrice ? formatted : ""}
-        </div>
+        <small
+          className={salePrice ? "font-medium " : "text-red-600 capitalize"}
+        >
+          {salePrice ? formatted : "Sin registro"}
+        </small>
       );
     },
   },
@@ -106,7 +105,9 @@ export const columns = [
   },
   {
     accessorKey: "hasDiscount",
-    header: ({ column }) => <SortableColumn column={column} title="Desc." />,
+    header: ({ column }) => (
+      <SortableColumn column={column} title="Descuento" />
+    ),
     cell: ({ row }) => <BooleanColumns row={row} column="hasDiscount" />,
   },
   {
@@ -114,7 +115,7 @@ export const columns = [
     header: "Existencia",
     cell: ({ row }) => {
       const stock = row.getValue("stock");
-      return <small>{stock}</small>;
+      return <TextShortColumn row={row} column="stock" />;
     },
   },
   {

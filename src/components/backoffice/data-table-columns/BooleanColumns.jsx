@@ -7,16 +7,16 @@ export default function BooleanColumns({ row, column = "isActive" }) {
   const text = displayByMap(
     value,
     {
-      true: "SI",
-      false: "NO",
+      true: "Si aplica",
+      false: "No aplica",
     },
     "Desconocido"
   );
 
   const textColor = getTextColorClass(value, {
     true: "text-lime-400 dark:text-green-400",
-    false: "text-red-600 dark:text-red-700",
+    false: "text-red-600 dark:text-red-600",
   });
 
-  return <span className={`font-semibold ${textColor} `}>{text}</span>;
+  return <small className={`ml-4 ${textColor} `}>{text}</small>;
 }

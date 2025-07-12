@@ -25,7 +25,7 @@ export default async function page() {
           initialColumnVisibility={initialColumnVisibility}
           fieldsToSearch={fieldsToSearch}
           inputPlaceholder="Buscar categoria por título, descripción o ID"
-          addLink="dashboard/categories"
+          endpoint="categories"
           title="categorias"
         />
       </div>

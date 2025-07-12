@@ -6,7 +6,10 @@ import ActionsColumns from "@/components/backoffice/data-table-columns/ActionsCo
 import ImageColumns from "@/components/backoffice/data-table-columns/ImageColumns";
 import { SortableColumn } from "@/components/backoffice/data-table-columns/SortableColumn";
 import { AllDatesColumn } from "@/components/backoffice/data-table-columns/DateColumns";
-import { TitleColumn } from "@/components/backoffice/data-table-columns/TextColumn";
+import {
+  TextLongColumn,
+  TitleColumn,
+} from "@/components/backoffice/data-table-columns/TextColumn";
 
 export const columns = [
   {
@@ -39,7 +42,16 @@ export const columns = [
   {
     accessorKey: "imageUrl",
     header: "Imagen",
-    cell: ({ row }) => <ImageColumns row={row} imageTitle="imageUrl" />,
+    cell: ({ row }) => (
+      <ImageColumns row={row} imageTitle="imageUrl" title="title" />
+    ),
+  },
+  {
+    accessorKey: "link",
+    header: "Enlace",
+    cell: ({ row }) => (
+      <TextLongColumn row={row} column="link" className="lowercase" />
+    ),
   },
   {
     accessorKey: "createdAt",

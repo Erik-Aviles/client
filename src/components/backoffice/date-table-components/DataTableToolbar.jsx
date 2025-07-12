@@ -1,9 +1,5 @@
 "use client";
 
-import { X } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-
 import SearchForm from "../SearchForm";
 import { DataTableViewOptions } from "./DataTableViewOptions";
 import ButtonActions from "../ButtonActions";
@@ -11,7 +7,7 @@ import ButtonActions from "../ButtonActions";
 export function DataTableToolbar({
   table,
   title,
-  addLink,
+  endpoint,
   globalFilter,
   setGlobalFilter,
   inputPlaceholder,
@@ -30,7 +26,7 @@ export function DataTableToolbar({
       />
       <div className="inline-flex justify-between gap-2 md:ml-auto">
         <DataTableViewOptions table={table} />
-        <ButtonActions title={title} addLink={addLink} />
+        <ButtonActions title={title} endpoint={endpoint} />
       </div>
     </div>
   );

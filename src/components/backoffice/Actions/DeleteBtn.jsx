@@ -9,7 +9,6 @@ import { LoadingIcon } from "@/components/Icons/Loading";
 import { capitalizeFirstWord, cropText } from "@/utils/formats/normalized";
 
 export default function DeleteBtn({ id, endpoint, title }) {
-  console.log({ id, endpoint, title });
   const [loading, setLoading] = useState(false);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const router = useRouter();
@@ -60,9 +59,9 @@ export default function DeleteBtn({ id, endpoint, title }) {
       ) : (
         <button
           onClick={handleDelete}
-          className="font-medium text-red-600 hover:text-red-800 hover:dark:text-red-500 flex items-center space-x-2"
+          className="text-red-600 font-medium flex items-center space-x-2"
         >
-          <Trash2 className="w-4 h-4 text-red-600 hover:text-red-800 hover:dark:text-red-500" />
+          <Trash2 className="w-2 h-2 text-red-600" />
           <span>Eliminar</span>
         </button>
       )}

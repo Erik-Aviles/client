@@ -21,12 +21,12 @@ export function DataTablePagination({ table }) {
   const selectedText =
     selectedRowsCount === 1 ? "fila seleccionada" : "filas seleccionadas";
   return (
-    <div className="flex flex-col gap-1 md:gap-2 md:flex-row md:items-center justify-between py-2">
-      <div className="flex-1 text-sm text-muted-foreground whitespace-nowrap">
+    <div className="flex flex-col gap-1 md:gap-2 md:flex-row md:items-center justify-between py-2 text-muted-foreground">
+      <div className="flex-1 text-sm  whitespace-nowrap">
         {`  (${selectedRowsCount}) de (${selectedRowsCountTotal}) ${selectedText}`}
         .
       </div>
-      <div className="flex items-center justify-end space-x-6 lg:space-x-8">
+      <div className="flex items-center justify-end space-x-6 lg:space-x-8 ">
         <div className="flex items-center space-x-2">
           <p className="hidden md:block text-sm font-medium">Fila por pagina</p>
           <Select
@@ -51,14 +51,14 @@ export function DataTablePagination({ table }) {
           Pag. {table.getState().pagination.pageIndex + 1} de{" "}
           {table.getPageCount()}
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 text-muted-foreground">
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className="sr-only">Go to first page</span>
+            <span className="sr-only">Ir a la primera pagina</span>
             <ChevronsLeft />
           </Button>
           <Button

@@ -43,7 +43,7 @@ export async function POST(request) {
         isActive,
       },
     });
-    console.log("Nueva categoría creada:", newCategory);
+
     return NextResponse.json(newCategory, { status: 201 });
   } catch (error) {
     console.error("Error al crear categoría:", error);
