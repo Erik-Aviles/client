@@ -89,8 +89,12 @@ model Product {
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String? @db.ObjectId
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  SupplierProfile   SupplierProfile? @relation(fields: [supplierProfileId], references: [id])
+  supplierProfileId String?          @db.ObjectId
+  StaffProfile      StaffProfile?    @relation(fields: [staffProfileId], references: [id])
+  staffProfileId    String?          @db.ObjectId
 }
 
 /**
@@ -110,28 +114,6 @@ model Market {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-/**
- * {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,}
- */
-model Staff {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  idDocument String
-  codeUser   String
-  role       UserRole @default(MODERATOR)
-  password   String
-  email      String
-  phone      String
-  address    String?
-  dob        String?
-  notes      String?
-  workScope  String?
-  imageUrl   String?
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 }
 
 /**
@@ -166,13 +148,16 @@ enum UserRole {
  * {id, name, email, password, emailVerified, role, isActive,}
  */
 model User {
-  id              String           @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  password        String?
-  email           String?          @unique
-  emailVerified   DateTime?
-  role            UserRole         @default(USER)
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  password      String
+  email         String?   @unique
+  emailVerified DateTime?
+  role          UserRole  @default(USER)
+  isActive      Boolean   @default(true)
+
   supplierProfile SupplierProfile?
+  staffProfile    StaffProfile?
 
   products Product[]
 
@@ -186,8 +171,8 @@ model User {
 model SupplierProfile {
   id                 String   @id @default(auto()) @map("_id") @db.ObjectId
   name               String
-  idDocument         String
-  codeSupplier       String
+  idDocument         String   @unique
+  codeSupplier       String   @unique
   phone              String
   profileImageUrl    String?
   email              String
@@ -198,11 +183,38 @@ model SupplierProfile {
   paymentTerms       String?
   notes              String?
   isActive           Boolean  @default(true)
-  products           String[]
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String @unique @db.ObjectId
 
+  products Product[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+/**
+ * {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,}
+ */
+model StaffProfile {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  idDocument String    @unique
+  codeUser   String    @unique
+  role       UserRole  @default(MODERATOR)
+  email      String
+  phone      String
+  address    String?
+  dob        DateTime?
+  notes      String?
+  workScope  String?
+  imageUrl   String?
+  isActive   Boolean   @default(true)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique @db.ObjectId
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
 }

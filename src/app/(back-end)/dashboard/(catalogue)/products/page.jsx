@@ -1,9 +1,7 @@
-import ButtonActions from "@/components/backoffice/ButtonActions";
-import Heading from "@/components/backoffice/styledComponent/Heading";
-
 import React from "react";
 import { getData } from "@/lib/getData";
 import { columns } from "./columns";
+import Heading from "@/components/backoffice/styledComponent/Heading";
 import { DataTable } from "@/components/backoffice/date-table-components/DataTable";
 
 export default async function page() {

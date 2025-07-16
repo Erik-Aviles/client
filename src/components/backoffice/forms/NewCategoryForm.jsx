@@ -49,7 +49,6 @@ export default function NewCategoryForm({ initialData = {} }) {
     const slug = generateSlug(data.title);
     data.slug = slug;
     data.imageUrl = imageUrl;
-    console.log("en el submmit:", data);
 
     const isUpdating = !!data.id;
     const requestFn = isUpdating ? makePutRequest : makePostRequest;

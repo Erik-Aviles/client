@@ -1,7 +1,5 @@
 "use client";
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
-
 export default function EmptyCart() {
   return (
     <div className="text-center py-16">

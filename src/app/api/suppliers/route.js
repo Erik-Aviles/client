@@ -22,27 +22,44 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const supplierData = await request.json();
-    const newSupplierProfile = await db.supplierProfile.create({
+
+    const existingUser = await db.user.findUnique({
+      where: { id },
+    });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "El usuario ya tiene un perfil de proveedor asignado" },
+        { status: 400 }
+      );
+    }
+
+    const newSupplier = await db.user.create({
       data: {
         name: supplierData.name,
-        idDocument: supplierData.idDocument,
-        codeSupplier: supplierData.codeSupplier,
-        phone: supplierData.phone,
-        profileImageUrl: supplierData.profileImageUrl,
         email: supplierData.email,
-        role: supplierData.role,
-        address: supplierData.address,
-        contactPerson: supplierData.contactPerson,
-        contactPersonPhone: supplierData.contactPersonPhone,
-        paymentTerms: supplierData.paymentTerms,
-        notes: supplierData.notes,
-        products: supplierData.products,
+        role: "SUPPLIER",
         isActive: supplierData.isActive,
-        userId: supplierData.userId,
+        supplierProfile: {
+          create: {
+            name: supplierData.name,
+            codeSupplier: supplierData.codeSupplier,
+            idDocument: supplierData.idDocument,
+            phone: supplierData.phone,
+            profileImageUrl: supplierData.profileImageUrl,
+            address: supplierData.address,
+            contactPerson: supplierData.contactPerson,
+            contactPersonPhone: supplierData.contactPersonPhone,
+            paymentTerms: supplierData.paymentTerms,
+            notes: supplierData.notes,
+            products: supplierData.products,
+            isActive: supplierData.isActive,
+          },
+        },
       },
     });
-    console.log("Nuevo proveedor creado:", newSupplierProfile);
-    return NextResponse.json(newSupplierProfile, { status: 201 });
+    console.log("Nuevo proveedor creado:", newSupplier);
+    return NextResponse.json(newSupplier, { status: 201 });
   } catch (error) {
     console.error("Error al registrar el proveedor:", error);
     return NextResponse.json(

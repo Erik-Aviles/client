@@ -3,10 +3,10 @@ import logo from "../../../public/logo.png";
 import Link from "next/link";
 import Image from "next/image";
 import { companyData } from "@/utils/general/companyData";
-import { Menu, ShoppingCart, User } from "lucide-react";
+import { Menu, User } from "lucide-react";
 import { ThemeSwitcherBtn } from "../ThemeSwitcherBtn";
 import HelpModal from "../frontend/HelpModal";
-import { cartItems } from "@/utils/general/cartItems";
+import CartCount from "./cart/CartCount";
 
 export default function Navbar() {
   const nameCompany = companyData?.name;
@@ -39,21 +39,8 @@ export default function Navbar() {
           <User />
           <span className="hidden sm:block">Cuenta</span>
         </Link>
-
         <HelpModal />
-
-        <Link
-          href="/cart"
-          type="button"
-          className="relative inline-flex items-center p-3 text-sm font-medium text-center hover:scale-110 active:scale-100 transition-all duration-300 dark:text-slate-50 text-amber-600 hover:text-amber-500 dark:hover:text-slate-50"
-        >
-          <div className="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full -top-0 start-6 dark:border-gray-900">
-            {cartItems.length}
-          </div>
-          <ShoppingCart />
-          <span className="hidden sm:block pl-1">Cart</span>
-        </Link>
-
+        <CartCount />
         <ThemeSwitcherBtn />
       </div>
 

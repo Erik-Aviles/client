@@ -1,17 +1,18 @@
 "use client";
 
+import CancelButton from "@/components/FormInputs/CancelButton";
 import ImageInput from "@/components/FormInputs/ImageInput";
 import SelectInput from "@/components/FormInputs/SelectInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
-import { makePostRequest } from "@/lib/apiRequest";
+import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
 import { contentMain } from "@/utils/general/content";
 // import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 // Cargar solo en cliente para evitar SSR
@@ -22,12 +23,14 @@ import { useForm } from "react-hook-form";
 //   }
 // );
 
-export default function NewTrainingForm({ categories, isUpdate = false }) {
-  const [imageUrl, setImageUrl] = useState("");
-  const [content, setContent] = useState(contentMain);
-  const [loading, setLoading] = useState(false);
-  const datapath = "trainings";
+export default function NewTrainingForm({ initialData, categories }) {
   const router = useRouter();
+  const datapath = "trainings";
+  const id = initialData?.id ?? "";
+
+  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl ?? "");
+  const [content, setContent] = useState(initialData?.contentMain ?? "");
+  const [loading, setLoading] = useState(false);
 
   function redirect() {
     router.push(`/dashboard/${datapath}`);
@@ -38,12 +41,25 @@ export default function NewTrainingForm({ categories, isUpdate = false }) {
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
+      ...(initialData || {}),
       isActive: true,
+      isActive: initialData?.isActive ?? true,
+      imageUrl: initialData?.imageUrl ?? "",
     },
   });
+
+  useEffect(() => {
+    setValue("imageUrl", imageUrl);
+  }, [imageUrl, setValue]);
+
+  useEffect(() => {
+    setValue("content", content);
+  }, [content, setValue]);
+
   const isActive = watch("isActive");
 
   async function onSubmit(data) {
@@ -52,17 +68,24 @@ export default function NewTrainingForm({ categories, isUpdate = false }) {
     data.slug = slug;
     data.imageUrl = imageUrl;
     data.content = content;
-    console.log(data);
-    makePostRequest(
+
+    const isUpdating = !!data.id;
+    const requestFn = isUpdating ? makePutRequest : makePostRequest;
+    const endpoint = isUpdating
+      ? `api/${datapath}/${data.id}`
+      : `api/${datapath}`;
+    requestFn(
       setLoading,
-      `api/${datapath}`,
+      endpoint,
       data,
-      "Capacitación ",
-      reset,
-      redirect
+      "Capacitación",
+      redirect,
+      isUpdating ? null : reset
     );
-    setImageUrl("");
-    setContent("");
+    if (!isUpdating) {
+      setImageUrl("");
+      setContent(contentMain);
+    }
   }
 
   return (
@@ -118,16 +141,11 @@ export default function NewTrainingForm({ categories, isUpdate = false }) {
       </div>
 
       <div className="sm:col-span-2 flex gap-3 justify-end py-4">
-        <button
-          type="button"
-          className="inline-flex items-center px-3 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800"
-        >
-          Cancelar
-        </button>
+        <CancelButton onClick={redirect} />
         <SubmitButton
           isLoading={loading}
-          buttonTitle={isUpdate ? "Actualizar" : "Crear Capacitación"}
-          buttonLoading={"Creando capacitación..."}
+          isEditing={id}
+          itemName="capacitación"
         />
       </div>
     </form>

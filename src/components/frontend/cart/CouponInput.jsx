@@ -83,13 +83,13 @@ export default function CouponInput({ onApply, onClear }) {
       </div>
 
       {applied && !error && (
-        <p className="flex items-center text-lime-600 text-sm" id="couponHelp">
+        <p className="flex items-center text-lime-600 text-xs" id="couponHelp">
           <CheckCircle2 className="w-4 h-4 mr-1" />
           Cupón aplicado con éxito
         </p>
       )}
       {error && (
-        <p className="flex items-center text-red-600 text-sm" id="couponHelp">
+        <p className="flex items-center text-red-600 text-xs" id="couponHelp">
           <XCircle className="w-4 h-4 mr-1" />
           {error}
         </p>

@@ -1,7 +1,7 @@
+import React from "react";
+import { getData } from "@/lib/getData";
 import FormHeader from "@/components/backoffice/FormHeader";
 import NewProductForm from "@/components/backoffice/forms/NewProductForm";
-import { getData } from "@/lib/getData";
-import React from "react";
 
 export default async function NewProdutc() {
   const categoriesData = await getData("categories");

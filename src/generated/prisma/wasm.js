@@ -164,7 +164,9 @@ exports.Prisma.ProductScalarFieldEnum = {
   categoryId: 'categoryId',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  supplierProfileId: 'supplierProfileId',
+  staffProfileId: 'staffProfileId'
 };
 
 exports.Prisma.MarketScalarFieldEnum = {
@@ -176,25 +178,6 @@ exports.Prisma.MarketScalarFieldEnum = {
   description: 'description',
   isActive: 'isActive',
   categoryIds: 'categoryIds',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.StaffScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  idDocument: 'idDocument',
-  codeUser: 'codeUser',
-  role: 'role',
-  password: 'password',
-  email: 'email',
-  phone: 'phone',
-  address: 'address',
-  dob: 'dob',
-  notes: 'notes',
-  workScope: 'workScope',
-  imageUrl: 'imageUrl',
-  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -219,6 +202,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   role: 'role',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -238,7 +222,25 @@ exports.Prisma.SupplierProfileScalarFieldEnum = {
   paymentTerms: 'paymentTerms',
   notes: 'notes',
   isActive: 'isActive',
-  products: 'products',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StaffProfileScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  idDocument: 'idDocument',
+  codeUser: 'codeUser',
+  role: 'role',
+  email: 'email',
+  phone: 'phone',
+  address: 'address',
+  dob: 'dob',
+  notes: 'notes',
+  workScope: 'workScope',
+  imageUrl: 'imageUrl',
+  isActive: 'isActive',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -267,10 +269,10 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Product: 'Product',
   Market: 'Market',
-  Staff: 'Staff',
   Training: 'Training',
   User: 'User',
-  SupplierProfile: 'SupplierProfile'
+  SupplierProfile: 'SupplierProfile',
+  StaffProfile: 'StaffProfile'
 };
 
 /**

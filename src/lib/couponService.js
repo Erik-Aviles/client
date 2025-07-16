@@ -2,6 +2,7 @@
 
 import { coupons } from "@/utils/general/coupons";
 
+
 /**
  * Simula una consulta asíncrona a base de datos para buscar un cupón por código.
  * @param {string} code Código del cupón
@@ -17,7 +18,6 @@ export async function findCoupon(code) {
 
   // Por ahora devuelve de la lista simulada
   const coupon = coupons.find((c) => c.code === normalizedCode); 
-  console.log(coupon)
 
   return coupon || null;
 }

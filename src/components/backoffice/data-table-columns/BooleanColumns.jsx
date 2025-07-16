@@ -7,8 +7,8 @@ export default function BooleanColumns({ row, column = "isActive" }) {
   const text = displayByMap(
     value,
     {
-      true: "Si aplica",
-      false: "No aplica",
+      true: "Si",
+      false: "No",
     },
     "Desconocido"
   );

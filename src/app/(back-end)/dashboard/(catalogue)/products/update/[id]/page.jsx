@@ -1,11 +1,11 @@
+import React from "react";
+import { getData } from "@/lib/getData";
 import FormHeader from "@/components/backoffice/FormHeader";
 import NewProductForm from "@/components/backoffice/forms/NewProductForm";
-import { getData } from "@/lib/getData";
-import React from "react";
 
 export default async function UpdateProdutc({ params }) {
   const { id } = await params;
-  const producto = await getData(`products/${id}`);
+  const product = await getData(`products/${id}`);
   const categoriesData = await getData("categories");
   const usersData = await getData("users");
 
@@ -27,7 +27,7 @@ export default async function UpdateProdutc({ params }) {
       <FormHeader title="Editar Producto" />
       <div className="flex-1 overflow-auto">
         <NewProductForm
-          initialData={producto}
+          initialData={product}
           categories={categories}
           suppliers={suppliers}
         />

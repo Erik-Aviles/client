@@ -5,7 +5,7 @@ import React from "react";
 import { columns } from "./columns";
 
 export default async function Supplier() {
-  const data = await getData("suppliers");
+  const suppliers = await getData("suppliers");
 
   const initialColumnVisibility = {
     address: false,
@@ -22,7 +22,7 @@ export default async function Supplier() {
       <div className="flex-1">
         <DataTable
           columns={columns}
-          data={data}
+          data={suppliers}
           initialColumnVisibility={initialColumnVisibility}
           fieldsToSearch={fieldsToSearch}
           inputPlaceholder="Buscar proveedor por nombre, cedula, email."

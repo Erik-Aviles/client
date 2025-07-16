@@ -11,22 +11,20 @@ export default async function page() {
   };
   const fieldsToSearch = ["title", "id"];
   return (
-    <div className="flex flex-col gap-4">
-      <div className="h-[calc(100vh-40px)] flex flex-col gap-3">
-        <div className="px-4 md:px-6">
-          <Heading title="capacitaciones" />
-        </div>
-        <div className="flex-1">
-          <DataTable
-            columns={columns}
-            data={data}
-            initialColumnVisibility={initialColumnVisibility}
-            fieldsToSearch={fieldsToSearch}
-            inputPlaceholder="Buscar capacitación por nombre..."
-            endpoint="trainings"
-            title="capacitaciones"
-          />
-        </div>
+    <div className="h-[calc(100vh-40px)] flex flex-col gap-3">
+      <div className="px-4 md:px-6">
+        <Heading title="capacitaciones" />
+      </div>
+      <div className="flex-1">
+        <DataTable
+          columns={columns}
+          data={data}
+          initialColumnVisibility={initialColumnVisibility}
+          fieldsToSearch={fieldsToSearch}
+          inputPlaceholder="Buscar capacitación por nombre..."
+          endpoint="trainings"
+          title="capacitaciones"
+        />
       </div>
     </div>
   );

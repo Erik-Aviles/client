@@ -8,6 +8,7 @@ import ActionsColumns from "@/components/backoffice/data-table-columns/ActionsCo
 import { SortableColumn } from "@/components/backoffice/data-table-columns/SortableColumn";
 import {
   TextLongColumn,
+  TextShortColumn,
   TitleColumn,
 } from "@/components/backoffice/data-table-columns/TextColumn";
 
@@ -42,7 +43,9 @@ export const columns = [
   {
     accessorKey: "imageUrl",
     header: "Logo empresarial",
-    cell: ({ row }) => <ImageColumns row={row} imageTitle="imageUrl" title="title" />,
+    cell: ({ row }) => (
+      <ImageColumns row={row} imageTitle="imageUrl" title="title" />
+    ),
   },
   {
     accessorKey: "description",
@@ -62,10 +65,7 @@ export const columns = [
   {
     accessorKey: "categoryId",
     header: "Categoria",
-    cell: ({ row }) => {
-      const category = row.getValue("categoryId");
-      return <small>{category}</small>;
-    },
+    cell: ({ row }) => <TextShortColumn row={row} column="categoryId" />,
   },
   {
     id: "actions",

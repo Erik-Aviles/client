@@ -1,20 +1,13 @@
+import FormHeader from "@/components/backoffice/FormHeader";
 import NewSupplierForm from "@/components/backoffice/forms/NewSupplierForm";
 
-export default async function NewSupplier({
-  initialData = {},
-  isUpdate = false,
-}) {
-  // const usersData = await getData("users");
-  // const suppliers = usersData
-  //   ?.filter((user) => user.role === "SUPPLIER")
-  //   ?.map((supplier) => {
-  //     return { id: supplier.id, title: supplier.name };
-  //   });
+export default async function NewSupplier() {
   return (
-    <NewSupplierForm
-      isUpdate={isUpdate}
-      initialData={initialData}
-      // user={suppliers}
-    />
+    <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
+      <FormHeader title="Nuevo proveedor" />
+      <div className="flex-1 overflow-auto">
+        <NewSupplierForm />
+      </div>
+    </div>
   );
 }

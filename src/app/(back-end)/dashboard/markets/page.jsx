@@ -1,8 +1,8 @@
-import { DataTable } from "@/components/backoffice/date-table-components/DataTable";
-import Heading from "@/components/backoffice/styledComponent/Heading";
-import { getData } from "@/lib/getData";
 import React from "react";
 import { columns } from "./columns";
+import { getData } from "@/lib/getData";
+import Heading from "@/components/backoffice/styledComponent/Heading";
+import { DataTable } from "@/components/backoffice/date-table-components/DataTable";
 
 export default async function page() {
   const data = await getData("markets");

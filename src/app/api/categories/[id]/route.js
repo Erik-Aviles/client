@@ -1,7 +1,8 @@
 import db from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request, { params: { id } }) {
+export async function GET(request, { params }) {
+  const { id } = await params
   try {
     const category = await db.category.findUnique({
       where: { id },
@@ -18,7 +19,8 @@ export async function GET(request, { params: { id } }) {
   }
 }
 
-export async function DELETE(request, { params: { id } }) {
+export async function DELETE(request, { params }) {
+  const { id } = await params
   try {
     const existingCategory = await db.category.findUnique({
       where: { id },
@@ -47,7 +49,8 @@ export async function DELETE(request, { params: { id } }) {
   }
 }
 
-export async function PUT(request, { params: { id } }) {
+export async function PUT(request, { params }) {
+  const { id } = await params
   try {
     const { title, slug, description, imageUrl, isActive } =
       await request.json();
