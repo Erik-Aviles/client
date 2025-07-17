@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
@@ -22,9 +22,10 @@ export default function NewBannerForm({ initialData = {} }) {
   }
   const {
     register,
+    handleSubmit,
     reset,
     watch,
-    handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -33,6 +34,10 @@ export default function NewBannerForm({ initialData = {} }) {
       imageUrl: initialData?.imageUrl ?? "",
     },
   });
+
+  useEffect(() => {
+    setValue("imageUrl", imageUrl);
+  }, [imageUrl, setValue]);
 
   const isActive = watch("isActive");
 

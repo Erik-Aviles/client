@@ -1,6 +1,24 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
-const initialState = [
+// --- Helpers ---
+const loadCart = () => {
+  if (typeof window === "undefined") return [];
+  try {
+    const saved = localStorage.getItem("cart");
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+};
+
+const persistCart = (state) => {
+  if (typeof window === "undefined") return;
+  localStorage.setItem("cart", JSON.stringify([...state]));
+};
+
+// --- Estado inicial ---
+const initialState = loadCart();
+/* const initialState = [
   {
     id: 2,
     title: "Otro producto",
@@ -12,7 +30,9 @@ const initialState = [
     slug: "colas-feas",
     stock: 6,
   },
-];
+]; */
+
+// --- Slice ---
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -23,7 +43,9 @@ const cartSlice = createSlice({
       const existingItem = state.find((item) => item.id === id);
 
       if (existingItem) {
-        existingItem.qty += 1;
+        if (existingItem.qty < stock) {
+          existingItem.qty += 1;
+        }
       } else {
         state.push({
           id,
@@ -36,18 +58,23 @@ const cartSlice = createSlice({
           stock,
         });
       }
+
+      persistCart(state);
     },
 
     removeFromCart: (state, action) => {
       const cartId = action.payload;
-      return state.filter((item) => item.id !== cartId);
+      const newState = state.filter((item) => item.id !== cartId);
+      persistCart(newState);
+      return newState;
     },
 
     incrementQty: (state, action) => {
       const cartId = action.payload;
       const cartItem = state.find((item) => item.id === cartId);
-      if (cartItem) {
+      if (cartItem && cartItem.qty < cartItem.stock) {
         cartItem.qty += 1;
+        persistCart(state);
       }
     },
 
@@ -56,6 +83,7 @@ const cartSlice = createSlice({
       const cartItem = state.find((item) => item.id === cartId);
       if (cartItem && cartItem.qty > 1) {
         cartItem.qty -= 1;
+        persistCart(state);
       }
     },
 
@@ -65,13 +93,16 @@ const cartSlice = createSlice({
       if (!cartItem) return;
 
       const parsedQty = parseInt(qty, 10);
-      if (isNaN(parsedQty) || parsedQty < 1 || !Number.isInteger(parsedQty)) {
+      if (isNaN(parsedQty) || parsedQty < 1 || parsedQty > cartItem.stock)
         return;
-      }
+
+      cartItem.qty = parsedQty;
+      persistCart(state);
     },
 
     emptyCart: (state) => {
       state.length = 0;
+      persistCart(state);
     },
   },
 });
@@ -84,4 +115,5 @@ export const {
   setQty,
   emptyCart,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;

@@ -12,7 +12,7 @@ export default function CategoryList({ category }) {
         </h2>
         <Link
           href={"#"}
-          className="px-2 py-1 text-xs text-slate-50 flex items-center gap-1 bg-amber-600  rounded-lg border border-amber-600 hover:bg-amber-500 hover:border-transparent focus:outline-none focus:ring-amber-600 transition-all duration-300"
+          className="px-2 py-1 text-xs text-slate-50 flex items-center gap-1 bg-amber-600 rounded-lg border border-amber-600 hover:bg-amber-500 hover:border-transparent focus:outline-none focus:ring-amber-600 transition-all duration-300"
         >
           Ver todo <ArrowRight width={18} height={18} />
         </Link>

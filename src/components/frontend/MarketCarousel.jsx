@@ -6,7 +6,6 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import defaultImage from "../../../public/categories/defaultImage.png";
 import "react-multi-carousel/lib/styles.css";
-import HoverTooltipTitle from "./HoverTooltip";
 
 export default function MarketCarousel({ markets }) {
   const responsive = {
@@ -38,9 +37,9 @@ export default function MarketCarousel({ markets }) {
   };
   return (
     <Carousel
-      swipeable={false}
+      swipeable={true}
       draggable={true}
-      showDots={true}
+      showDots={["tablet", "mobilesm", "mobile"] ? false : true}
       responsive={responsive}
       ssr={true}
       infinite={true}
@@ -56,25 +55,29 @@ export default function MarketCarousel({ markets }) {
     >
       {markets?.map((item, i) => {
         return (
-          <div className="flex justify-center items-center " key={i}>
+          <div
+            className="flex flex-col justify-end items-center transition-shadow duration-500"
+            key={i}
+          >
             <Link
               href={item?.link || "#"}
-              className="bg-white flex flex-col items-center justify-end gap-2 dark:bg-slate-800 border h-[166.13px] w-[140px] md:min-w-[165px] rounded-lg shadow-lg hover:shadow-lg transition-shadow duration-500"
+              className="hidden md:flex bg-white  dark:bg-slate-800 border h-[166.13px] w-full rounded-t-lg  hover:shadow-lg "
             >
               <Image
                 src={item?.logoUrl || defaultImage}
                 alt={item?.title}
                 width={100}
                 height={100}
-                className="p-4"
+                className="p-4 object-contain w-full"
               />
-              <div className="basis-1/5 w-full rounded-b-lg flex items-center justify-center bg-amber-600 border border-amber-600 hover:bg-amber-500 hover:border-transparent focus:outline-none focus:ring-amber-600 ">
-                <h2
-                  className="text-white text-xs font-medium uppercase transition-all duration-300"
-                >
-                  {item?.title}
-                </h2>
-              </div>
+            </Link>
+            <Link
+              href={item?.link || "#"}
+              className="md:basis-1/5  w-full rounded-sm md:rounded-t-none md:rounded-b-lg flex items-center justify-center bg-amber-600 border border-amber-600 hover:bg-amber-500 hover:border-transparent focus:outline-none focus:ring-amber-600 py-2"
+            >
+              <h2 className=" text-white text-center text-xs md:text-sm font-medium uppercase transition-all duration-300 line-clamp-1">
+                {item?.title}
+              </h2>
             </Link>
           </div>
         );

@@ -31,7 +31,7 @@ export default function CategoryCarousel({ products }) {
 
   return (
     <Carousel
-      swipeable={false}
+      swipeable={true}
       draggable={false}
       showDots={true}
       responsive={responsive}
@@ -42,7 +42,7 @@ export default function CategoryCarousel({ products }) {
       keyBoardControl={true}
       customTransition="all .5"
       transitionDuration={1000}
-      containerClass="carousel-container"
+      containerClass="carousel-container z-10"
       removeArrowOnDeviceType={["tablet", "mobile"]}
       // deviceType={true}
       dotListClass="custom-dot-list-style"

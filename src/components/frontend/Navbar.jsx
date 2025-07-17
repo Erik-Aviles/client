@@ -11,9 +11,9 @@ import CartCount from "./cart/CartCount";
 export default function Navbar() {
   const nameCompany = companyData?.name;
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col dark:bg-slate-700 ">
       {/* <div className=" flex items-center justify-between py-3 max-w-6xl mx-auto px-8 gap-8"> */}
-      <div className="w-full flex items-center justify-between py-4 px-6 dark:bg-slate-700 bg-white md:max-w-7xl md:mx-auto gap-8 shadow-md lg:shadow-none">
+      <div className="w-full flex items-center justify-between py-4 px-6 md:max-w-7xl md:mx-auto gap-8 shadow-md lg:shadow-none">
         <div className="flex items-center justify-center space-x-1">
           {/* Logo */}
           <button type="button" className="inline-block md:hidden">
@@ -24,7 +24,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* SEARCH */}
+        {/* SEARCH: Escritorio*/}
         <div className="hidden lg:block flex-grow">
           <SearchForm
             placeholder="Buscar productos, marca y categorias..."
@@ -43,8 +43,8 @@ export default function Navbar() {
         <CartCount />
         <ThemeSwitcherBtn />
       </div>
-
-      <div className="lg:hidden block p-4">
+      {/* SEARCH: Escritorio*/}
+      <div className="lg:hidden block p-4 dark:bg-slate-900">
         <SearchForm
           placeholder="Buscar productos, marca y categorias..."
           className=""

@@ -8,7 +8,7 @@ export default async function MarketList() {
     return null;
   }
   return (
-    <div className=" dark:text-white p-4 mb-6 rounded-lg">
+    <div className=" dark:text-white mb-6 rounded-lg">
       <h2 className="dark:text-slate-50 text-center text-2xl font-semibold uppercase">
         Lista de Negocios
       </h2>

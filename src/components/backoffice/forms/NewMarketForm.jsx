@@ -1,6 +1,5 @@
 "use client";
 
-import FormHeader from "@/components/backoffice/FormHeader";
 import CancelButton from "@/components/FormInputs/CancelButton";
 import ImageInput from "@/components/FormInputs/ImageInput";
 import SelectInput from "@/components/FormInputs/SelectInput";
@@ -11,7 +10,7 @@ import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewMarketForm({ initialData = {}, categories }) {
