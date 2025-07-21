@@ -13,11 +13,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import ArrayItemsInput from "../../FormInputs/ArrayItemsInput";
 import CancelButton from "@/components/FormInputs/CancelButton";
+import { cleanEmptyFields } from "@/utils/cleanEmptyFields";
 
 export default function NewSupplierForm({ initialData = {} }) {
+  console.log(initialData)
   const router = useRouter();
   const datapath = "suppliers";
-  const id = initialData?.id ?? "";
+  const id = "";
   const nameCompany = companyData.name;
 
   const [imageUrl, setImageUrl] = useState(initialData?.profileImageUrl ?? "");
@@ -25,7 +27,7 @@ export default function NewSupplierForm({ initialData = {} }) {
   const [loading, setLoading] = useState(false);
 
   function redirect() {
-    router.push(`/dashboard/${datapath}`);
+    router.push(`/login`);
   }
 
   const {
@@ -38,8 +40,9 @@ export default function NewSupplierForm({ initialData = {} }) {
   } = useForm({
     defaultValues: {
       ...(initialData || {}),
-      isActive: initialData?.isActive ?? true,
+      isActive: initialData?.isActive ?? false,
       imageUrl: initialData?.profileImageUrl ?? "",
+      products: initialData?.products ?? [],
     },
   });
 
@@ -72,49 +75,34 @@ export default function NewSupplierForm({ initialData = {} }) {
 
   async function onSubmit(data) {
     /* {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, address, contactPerson, contactPersonPhone, products, paymentTerms, notes, isActive, userId} */
-    const formattedData = {
-      ...data,
-      profileImageUrl: data.imageUrl,
-      products,
-      userId: data.userId?.trim() ? data.userId : null,
-    };
 
-    console.log(data);
+    data.codeSupplier = supplierCodeGenerated;
+    data.userId = initialData.id;
+    data.products = products;
+    data.profileImageUrl = imageUrl;
 
-    const isUpdating = !!data.id;
-    const requestFn = isUpdating ? makePutRequest : makePostRequest;
-    const endpoint = isUpdating
-      ? `api/${datapath}/${data.id}`
-      : `api/${datapath}`;
-    requestFn(
-      setLoading,
-      endpoint,
-      formattedData,
-      "Proveedor",
-      redirect,
-      isUpdating ? null : reset
-    );
-    if (!isUpdating) {
-      setImageUrl("");
-    }
+    data = cleanEmptyFields(data);
+
+    const endpoint = `api/${datapath}`;
+    makePostRequest(setLoading, endpoint, data, "Proveedor", redirect, reset);
   }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg pt-4 px-4 my-2 mx-4 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
+      className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg pt-4 px-4 my-2 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
     >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-        {initialData?.role === "ADMIN" && (
-          <ToggleInput
-            label="Estado del proveedor"
-            name="isActive"
-            isActive={isActive}
-            trueTitle="Activo"
-            falseTitle="Inactivo"
-            register={register}
-          />
-        )}
+        {/* {initialData?.role === "ADMIN" && ( */}
+        <ToggleInput
+          label="Estado del proveedor"
+          name="isActive"
+          isActive={isActive}
+          trueTitle="Activo"
+          falseTitle="Inactivo"
+          register={register}
+        />
+        {/* )} */}
         <TextInput
           label="Nombre completo"
           name="name"

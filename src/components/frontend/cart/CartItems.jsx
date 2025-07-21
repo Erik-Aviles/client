@@ -54,7 +54,7 @@ export default function CartItems({ item }) {
           />
         </Link>
         <div>
-          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 capitalize">
             {item?.title}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">

@@ -1,17 +1,14 @@
-import RegisterForm from "@/components/frontend/RegisterForm";
+import RegisterForm from "@/components/frontend/forms/RegisterForm";
 
 export default function Register() {
   return (
-    <section className=" bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center p-4 mx-auto min-h-screen lg:py-0">
-      
-        <div className="w-full bg-white rounded-lg shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
-              Crear nueva cuenta
-            </h1>
-            <RegisterForm role="USER" />
-          </div>
+    <section className=" dark:bg-slate-900 h-[calc(100vh-189.33px)] lg:h-[calc(100vh-120px)] flex justify-center items-center ">
+      <div className="w-full rounded-lg shadow-2xl border dark:bg-slate-800 dark:border-slate-700 max-w-md">
+        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-slate-900 md:text-2xl dark:text-white text-center">
+            Crear nueva cuenta
+          </h1>
+          <RegisterForm role="USER" />
         </div>
       </div>
     </section>

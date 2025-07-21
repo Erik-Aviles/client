@@ -198,13 +198,20 @@ exports.Prisma.TrainingScalarFieldEnum = {
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  password: 'password',
   email: 'email',
+  password: 'password',
   emailVerified: 'emailVerified',
   role: 'role',
-  isActive: 'isActive',
+  verificationToken: 'verificationToken',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  dateOfBirth: 'dateOfBirth',
+  address: 'address'
 };
 
 exports.Prisma.SupplierProfileScalarFieldEnum = {
@@ -271,6 +278,7 @@ exports.Prisma.ModelName = {
   Market: 'Market',
   Training: 'Training',
   User: 'User',
+  UserProfile: 'UserProfile',
   SupplierProfile: 'SupplierProfile',
   StaffProfile: 'StaffProfile'
 };

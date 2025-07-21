@@ -148,21 +148,33 @@ enum UserRole {
  * {id, name, email, password, emailVerified, role, isActive,}
  */
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  password      String
-  email         String?   @unique
-  emailVerified DateTime?
-  role          UserRole  @default(USER)
-  isActive      Boolean   @default(true)
-
-  supplierProfile SupplierProfile?
-  staffProfile    StaffProfile?
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  name              String?
+  email             String?  @unique
+  password          String
+  emailVerified     Boolean  @default(false)
+  role              UserRole @default(USER)
+  verificationToken String?
 
   products Product[]
 
+  supplierProfile SupplierProfile?
+  staffProfile    StaffProfile?
+  profile         UserProfile?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model UserProfile {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String    @unique @db.ObjectId
+  // Add other fields for user onboarding information
+  // For example:
+  dateOfBirth DateTime?
+  address     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 /**

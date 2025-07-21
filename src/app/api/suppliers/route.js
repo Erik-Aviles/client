@@ -24,42 +24,43 @@ export async function POST(request) {
     const supplierData = await request.json();
 
     const existingUser = await db.user.findUnique({
-      where: { id },
+      where: { id: supplierData.userId },
     });
 
-    if (existingUser) {
+    if (!existingUser) {
       return NextResponse.json(
-        { message: "El usuario ya tiene un perfil de proveedor asignado" },
-        { status: 400 }
+        { data: null, message: `Usuario no existe` },
+        { status: 404 }
       );
     }
 
-    const newSupplier = await db.user.create({
+    const updatedUser = await db.user.update({
+      where: { id: supplierData.userId },
       data: {
-        name: supplierData.name,
-        email: supplierData.email,
-        role: "SUPPLIER",
-        isActive: supplierData.isActive,
-        supplierProfile: {
-          create: {
-            name: supplierData.name,
-            codeSupplier: supplierData.codeSupplier,
-            idDocument: supplierData.idDocument,
-            phone: supplierData.phone,
-            profileImageUrl: supplierData.profileImageUrl,
-            address: supplierData.address,
-            contactPerson: supplierData.contactPerson,
-            contactPersonPhone: supplierData.contactPersonPhone,
-            paymentTerms: supplierData.paymentTerms,
-            notes: supplierData.notes,
-            products: supplierData.products,
-            isActive: supplierData.isActive,
-          },
-        },
+        emailVerified: true,
       },
     });
-    console.log("Nuevo proveedor creado:", newSupplier);
-    return NextResponse.json(newSupplier, { status: 201 });
+
+    const newSupplierProfile = await db.supplierProfile.create({
+      data: {
+        codeSupplier: supplierData.codeSupplier,
+        contactPerson: supplierData.contactPerson,
+        contactPersonPhone: supplierData.contactPersonPhone,
+        profileImageUrl: supplierData.profileImageUrl,
+        email: supplierData.email,
+        name: supplierData.name,
+        notes: supplierData.notes,
+        idDocument: supplierData.idDocument,
+        phone: supplierData.phone,
+        address: supplierData.address,
+        paymentTerms: supplierData.paymentTerms,
+        products: supplierData.products,
+        userId: supplierData.userId,
+        isActive: supplierData.isActive,
+      },
+    });
+    console.log("Nuevo proveedor creado:", newSupplierProfile);
+    return NextResponse.json(newSupplierProfile, { status: 201 });
   } catch (error) {
     console.error("Error al registrar el proveedor:", error);
     return NextResponse.json(

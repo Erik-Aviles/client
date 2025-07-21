@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import SubmitButton from "../FormInputs/SubmitButton";
-import TextInput from "../FormInputs/TextInput";
+import SubmitButton from "../../FormInputs/SubmitButton";
+import TextInput from "../../FormInputs/TextInput";
 // import { FaGithub, FaGoogle } from "react-icons/fa";
 
-export default function RegisterForm({ role = "USER" }) {
+export default function LoginForm({ role = "USER" }) {
   const router = useRouter();
   const {
     register,
@@ -42,7 +42,7 @@ export default function RegisterForm({ role = "USER" }) {
       if (response.ok) {
         console.log("Usuario creado:", responseData);
         setLoading(false);
-        toast.success("Usuario crerado correctamente");
+        toast.success("Usuario creado correctamente");
         reset();
         if (role === "USER") {
           router.push("/");
@@ -68,14 +68,8 @@ export default function RegisterForm({ role = "USER" }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-4 flex flex-col gap-3">
-        <TextInput
-          label="Nombre completo"
-          name="name"
-          register={register}
-          errors={errors}
-        />
         <TextInput
           label="Correo electrónico"
           name="email"
@@ -92,33 +86,19 @@ export default function RegisterForm({ role = "USER" }) {
         />
       </div>
       <SubmitButton
+        withIcon={false}
         isLoading={loading}
-        buttonTitle={"Registrarse"}
-        buttonLoading={"Creando, por favor espere..."}
-        className="w-full"
+        buttonTitle={"Iniciar sessión"}
+        buttonLoading={"Ingresando, por favor espere..."}
+        className="w-full text-center text-white bg-amber-400 dark:bg-amber-500 focus:ring-amber-600 hover:bg-amber-500 hover:dark:bg-amber-400"
       />
-      {/*    <div className="flex items-center ">
-        <div className="w-full bg-slate-500 h-[1px]"></div>
-        <span className="mx-2">or</span>
-        <div className="w-full bg-slate-500 h-[1px]"></div>
-      </div>
-    <div className="">
-        <button
-          type="button"
-          //   onClick={() => signIn("google")}
-          className="w-full text-slate-950 bg-white hover:bg-slate-50 focus:ring-4 focus:outline-none focus:ring-slate-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-center flex items-center dark:focus:ring-slate-100 me-2 mb-4 border border-slate-200"
-        >
-         <FaGoogle className="mr-2 text-red-600 w-4 h-4" /> 
-          Registrarse con Google
-        </button>
-      </div> */}
       <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-3">
-        Ya tienes una cuenta?{" "}
+        No tienes una cuenta?{" "}
         <Link
-          href="/login"
+          href="/register"
           className="font-medium text-purple-600 hover:underline dark:text-purple-500"
         >
-          Iniciar sesión
+          Registrate aquí
         </Link>
       </p>
     </form>

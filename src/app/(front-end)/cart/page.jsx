@@ -30,7 +30,7 @@ export default function Cart() {
     );
 
   return (
-    <div>
+    <section>
       <BreadcrumbAuto />
       <div className="grid gap-8 md:grid-cols-6 lg:grid-cols-12">
         {/* Lista de Productos */}
@@ -39,6 +39,6 @@ export default function Cart() {
         {/* Resumen de pago del pedido*/}
         <CartSummary subTotal={subTotal} />
       </div>
-    </div>
+    </section>
   );
 }

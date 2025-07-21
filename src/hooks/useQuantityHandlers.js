@@ -6,6 +6,7 @@ import {
   removeFromCart,
   setQty,
 } from "../../redux/slices/cartSlice";
+import toast from "react-hot-toast";
 
 export default function useQuantityHandlers({ id, qty, stock = 1 }) {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ export default function useQuantityHandlers({ id, qty, stock = 1 }) {
 
   const handleCartDelete = () => {
     dispatch(removeFromCart(id));
+    toast.success("Producto eliminado exitosamente")
   };
 
   const handleIncrementQty = () => {
