@@ -19,7 +19,7 @@ export default function Layout({ children }) {
           showSiderbarCatalogue={showSiderbarCatalogue}
         />
         <main
-          className={` pt-[40px]  
+          className={` pt-[48px]  
             fixed w-full bg-slate-100 dark:bg-slate-900 dark:text-slate-50 transition-all duration-300 ${
             showSiderbarCatalogue ? "sm:pr-[16rem] sm:ml-64 " : " sm:ml-0 "
           } `}

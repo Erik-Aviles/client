@@ -1,6 +1,6 @@
+import * as React from "react";
 import {
   Body,
-  Button,
   Container,
   Head,
   Html,
@@ -10,19 +10,22 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-import * as React from "react";
+import { companyData } from "@/utils/general/companyData";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const addressCompany = companyData?.address;
 
 export const EmailTemplate = ({
   name = "",
   redirectUrl = "/login",
   linkText,
+  description,
+  subject
 }) => (
   <Html>
     <Head />
     <Preview>
-      A fine-grained personal access token has been added to your account
+      {subject}
     </Preview>
     <Body style={main}>
       <Container style={container}>
@@ -37,26 +40,18 @@ export const EmailTemplate = ({
 
         <Section style={section}>
           <Text style={text}>
-            Hola <strong>{name}</strong>!
+            Hola <strong>{name},</strong>!
           </Text>
-          <Text style={text}>
-            Gracias por crear una cuenta con nosotros. Haga clic en el enlace a
-            continuación para completar su proceso de incorporación. Gracias.
-          </Text>
+          <Text style={text}>{description}</Text>
 
           <Link style={button} href={`${baseUrl}/${redirectUrl}`}>
             {linkText}
           </Link>
         </Section>
         <Text style={links}>
-          <Link style={link}>Your security audit log</Link> ・{" "}
-          <Link style={link}>Contact support</Link>
+          <Link style={link}>Contactar con soporte</Link>
         </Text>
-
-        <Text style={footer}>
-          Auth System By JB, Inc. ・88 Colin P Kelly Jr Street ・San Francisco,
-          CA 94107
-        </Text>
+        <Text style={footer}>{addressCompany}</Text>
       </Container>
     </Body>
   </Html>

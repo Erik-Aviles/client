@@ -10,6 +10,7 @@
     "postinstall": "flowbite-react patch"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.10.0",
     "@mantine/core": "^8.0.1",
     "@mantine/hooks": "^8.0.1",
     "@mantine/tiptap": "^8.0.1",
@@ -53,6 +54,7 @@
     "react-dom": "19.1.0",
     "react-hook-form": "^7.56.2",
     "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
     "react-multi-carousel": "^2.8.6",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",

@@ -5,7 +5,12 @@ import React from "react";
 import { columns } from "./columns";
 
 export default async function Supplier() {
-  const suppliers = await getData("suppliers");
+  const suppliersData = await getData("suppliers");
+  console.log("table", suppliersData);
+
+  const suppliers = suppliersData?.supplierProfile ?? suppliersData;
+
+  console.log("dos", suppliers);
 
   const initialColumnVisibility = {
     address: false,

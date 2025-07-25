@@ -1,10 +1,13 @@
-import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
 import db from "@/lib/db";
-import { v4 as uuidv4 } from "uuid";
+import bcrypt from "bcrypt";
 import { Resend } from "resend";
 import base64url from "base64url";
+import { v4 as uuidv4 } from "uuid";
+import { NextResponse } from "next/server";
+import { companyData } from "@/utils/general/companyData";
 import { EmailTemplate } from "@/components/email-template";
+
+const nameCompany = companyData?.name;
 
 export async function POST(request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -41,12 +44,21 @@ export async function POST(request) {
     if (role === "SUPPLIER") {
       const userId = newUser.id;
       const linkText = "Verificar cuenta";
+      const subject = `Verificar cuenta - ${nameCompany}`;
+      const description =
+        "Gracias por crear una cuenta con nosotros. Haga clic en el enlace a continuación para completar su proceso de incorporación. Gracias.";
       const redirectUrl = `onboarding/${userId}?token=${token}`;
       const sendMail = await resend.emails.send({
         from: "Multivendor <brd@resend.dev>",
         to: "boderoracing2016@gmail.com",
-        subject: "Verificación de cuenta - Multivendor",
-        react: EmailTemplate({ name, redirectUrl, linkText }),
+        subject: subject,
+        react: EmailTemplate({
+          name,
+          redirectUrl,
+          linkText,
+          description,
+          subject,
+        }),
       });
 
       console.log(sendMail);

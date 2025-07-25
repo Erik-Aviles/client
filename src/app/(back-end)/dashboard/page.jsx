@@ -1,13 +1,26 @@
 import React from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import LargeCards from "@/components/backoffice/order/LargeCards";
-import SmallCards from "@/components/backoffice/order/SmallCards";
-import DashboardCharts from "@/components/backoffice/sales/DashboardCharts";
-import Heading from "@/components/backoffice/styledComponent/Heading";
 import DataOrders from "@/components/backoffice/order/DataOrders";
+import SmallCards from "@/components/backoffice/order/SmallCards";
+import UserDashboard from "@/components/backoffice/UserDashboard";
+import Heading from "@/components/backoffice/styledComponent/Heading";
+import SupplierDashboard from "@/components/backoffice/SupplierDashboard";
+import DashboardCharts from "@/components/backoffice/sales/DashboardCharts";
 
-export default function page() {
+export default async function page() {
+  const session = await getServerSession(authOptions);
+  const role = session?.user?.role;
+
+  if (role === "USER") {
+    return <UserDashboard />;
+  }
+  if (role === "SUPPLIER") {
+    return <SupplierDashboard />;
+  }
+
   return (
-    // <div className="w-full flex flex-col gap-10">
     <div className="h-[calc(100vh-40px)] w-full flex flex-col gap-6">
       <div className="px-4 md:px-6">
         <Heading title="PANEL GENERAL" />

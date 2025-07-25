@@ -16,20 +16,25 @@ import CancelButton from "@/components/FormInputs/CancelButton";
 import { cleanEmptyFields } from "@/utils/cleanEmptyFields";
 
 export default function NewSupplierForm({ initialData = {} }) {
-  console.log(initialData)
+  console.log(initialData);
   const router = useRouter();
   const datapath = "suppliers";
-  const id = "";
+  const supplierProfile = initialData?.supplierProfile ?? initialData;
+  const isEditing = Boolean(initialData?.supplierProfile?.id);
   const nameCompany = companyData.name;
+  const initialImage =
+    supplierProfile?.profileImageUrl ?? supplierProfile?.imageUrl ?? "";
+  const initialProducts = supplierProfile?.products ?? [];
 
-  const [imageUrl, setImageUrl] = useState(initialData?.profileImageUrl ?? "");
-  const [products, setProducts] = useState(initialData?.products ?? []);
+  const [imageUrl, setImageUrl] = useState(initialImage);
+  const [products, setProducts] = useState(initialProducts);
   const [loading, setLoading] = useState(false);
 
   function redirect() {
     router.push(`/login`);
   }
 
+  // React Hook Form --------------------------------------------------
   const {
     register,
     handleSubmit,
@@ -39,52 +44,84 @@ export default function NewSupplierForm({ initialData = {} }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      ...(initialData || {}),
-      isActive: initialData?.isActive ?? false,
-      imageUrl: initialData?.profileImageUrl ?? "",
-      products: initialData?.products ?? [],
+      ...supplierProfile,
+      profileImageUrl: initialImage,
+      products: initialProducts,
+      isActive: supplierProfile?.isActive ?? false,
     },
   });
 
+  // Watches ----------------------------------------------------------
   const name = watch("name");
   const idDocument = watch("idDocument");
   const role = watch("role");
   const isActive = watch("isActive");
 
+  // Generar código de proveedor cuando name + idDocument (y opcional role) cambian.
   const supplierCodeGenerated = useMemo(() => {
     if (
       name &&
       typeof name === "string" &&
       name.trim() !== "" &&
+      idDocument &&
       idDocument !== ""
     ) {
       return generatePersonCode(nameCompany, name, idDocument, role);
     }
     return "";
-  }, [name, idDocument]);
+  }, [name, idDocument, role, nameCompany]);
 
+  // Empujar el código al form cuando se genera.
   useEffect(() => {
     if (supplierCodeGenerated) {
-      setValue("codeSupplier", supplierCodeGenerated);
+      setValue("codeSupplier", supplierCodeGenerated, { shouldValidate: true });
     }
   }, [supplierCodeGenerated, setValue]);
 
   useEffect(() => {
-    setValue("imageUrl", imageUrl);
+    setValue("profileImageUrl", imageUrl, { shouldValidate: true });
   }, [imageUrl, setValue]);
 
-  async function onSubmit(data) {
-    /* {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, address, contactPerson, contactPersonPhone, products, paymentTerms, notes, isActive, userId} */
+  useEffect(() => {
+    setValue("products", products, { shouldValidate: true });
+  }, [products, setValue]);
 
-    data.codeSupplier = supplierCodeGenerated;
-    data.userId = initialData.id;
-    data.products = products;
-    data.profileImageUrl = imageUrl;
+  /* {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, address, contactPerson, contactPersonPhone, products, paymentTerms, notes, isActive, userId} */
+  async function onSubmit(formValues) {
+    const payload = {
+      ...formValues,
+      codeSupplier:
+        supplierCodeGenerated || formValues.codeSupplier || undefined,
+      userId: initialData.id,
+      profileImageUrl: imageUrl || formValues.profileImageUrl,
+      products,
+    };
 
-    data = cleanEmptyFields(data);
+    const cleanedData = cleanEmptyFields(payload) || {};
 
-    const endpoint = `api/${datapath}`;
-    makePostRequest(setLoading, endpoint, data, "Proveedor", redirect, reset);
+    const endpoint = isEditing
+      ? `api/${datapath}/${supplierProfile.id}`
+      : `api/${datapath}`;
+
+    if (isEditing) {
+      await makePutRequest(
+        setLoading,
+        endpoint,
+        cleanedData,
+        "Proveedor",
+        redirect,
+        reset
+      );
+    } else {
+      await makePostRequest(
+        setLoading,
+        endpoint,
+        cleanedData,
+        "Proveedor",
+        redirect,
+        reset
+      );
+    }
   }
 
   return (
@@ -93,7 +130,7 @@ export default function NewSupplierForm({ initialData = {} }) {
       className="dark:text-slate-100 text-slate-900 border border-border dark:bg-slate-800 rounded-lg pt-4 px-4 my-2 sm:mx-6 md:mx-10 lg:mx-14 xl:mx-20 2xl:mx-24"
     >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-        {/* {initialData?.role === "ADMIN" && ( */}
+        {/* Estado */}
         <ToggleInput
           label="Estado del proveedor"
           name="isActive"
@@ -102,13 +139,16 @@ export default function NewSupplierForm({ initialData = {} }) {
           falseTitle="Inactivo"
           register={register}
         />
-        {/* )} */}
+
+        {/* Nombre */}
         <TextInput
           label="Nombre completo"
           name="name"
           register={register}
           errors={errors}
         />
+
+        {/* Documento */}
         <TextInput
           label="Documento de identificación"
           name="idDocument"
@@ -116,7 +156,9 @@ export default function NewSupplierForm({ initialData = {} }) {
           errors={errors}
           className="w-full"
         />
-        {initialData?.id === "ADMIN" && (
+
+        {/* Código auto-generado: visible si usuario ADMIN o si ya existe */}
+        {(initialData?.role === "ADMIN" || supplierCodeGenerated) && (
           <TextInput
             label="Código (se genera automáticamente)"
             name="codeSupplier"
@@ -126,6 +168,8 @@ export default function NewSupplierForm({ initialData = {} }) {
             className="w-full"
           />
         )}
+
+        {/* Teléfono proveedor */}
         <TextInput
           label="Teléfono del proveedor"
           name="phone"
@@ -134,6 +178,8 @@ export default function NewSupplierForm({ initialData = {} }) {
           errors={errors}
           className="w-full"
         />
+
+        {/* Correo */}
         <TextInput
           label="Correo"
           name="email"
@@ -142,6 +188,8 @@ export default function NewSupplierForm({ initialData = {} }) {
           errors={errors}
           className="w-full"
         />
+
+        {/* Dirección */}
         <TextInput
           label="Dirección"
           name="address"
@@ -150,6 +198,8 @@ export default function NewSupplierForm({ initialData = {} }) {
           className="w-full"
           isRequired={false}
         />
+
+        {/* Contacto */}
         <TextInput
           label="Nombre de contacto"
           name="contactPerson"
@@ -167,11 +217,15 @@ export default function NewSupplierForm({ initialData = {} }) {
           className="w-full"
           isRequired={false}
         />
+
+        {/* Productos */}
         <ArrayItemsInput
           setItems={setProducts}
           items={products}
           itemTitle="Producto"
         />
+
+        {/* Condiciones de pago */}
         <TextareaInput
           label="Condiciones de pago"
           name="paymentTerms"
@@ -179,6 +233,8 @@ export default function NewSupplierForm({ initialData = {} }) {
           errors={errors}
           isRequired={false}
         />
+
+        {/* Notas */}
         <TextareaInput
           label="Notas"
           name="notes"
@@ -187,6 +243,7 @@ export default function NewSupplierForm({ initialData = {} }) {
           isRequired={false}
         />
 
+        {/* Imagen */}
         <ImageInput
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
@@ -197,7 +254,11 @@ export default function NewSupplierForm({ initialData = {} }) {
 
       <div className="sm:col-span-2 flex gap-3 justify-end py-4">
         <CancelButton onClick={redirect} />
-        <SubmitButton isLoading={loading} isEditing={id} itemName="proveedor" />
+        <SubmitButton
+          isLoading={loading}
+          iisEditing={isEditing}
+          itemName="proveedor"
+        />
       </div>
     </form>
   );

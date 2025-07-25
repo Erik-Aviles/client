@@ -1,62 +1,52 @@
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { cloneElement } from "react";
+"use client";
 
-export const SidebarCollapsibleGroup = ({
+import Link from "next/link";
+import { ChevronDown } from "lucide-react";
+
+export default function SidebarCollapsibleItem({
   link,
+  pathname,
   isOpen,
   toggleOpen,
-  pathname,
-  activeLink,
-  links,
   styles,
+  activeLink,
   activeLinkDefaul,
   toggleSidebar,
-}) => {
-  const handleToggle = () => {
-    toggleOpen((prev) => (prev === link.name ? null : link.name));
-  };
+}) {
+  const Icon = link.icon;
+  const isActive = link.children?.some((child) => child.href === pathname);
+
   return (
-    <Collapsible key={link.name} open={isOpen === link.name}>
-      <CollapsibleTrigger
-        onClick={handleToggle}
-        className={`${styles} px-6 py-1 ${
-          link.href === pathname ? activeLink : ""
-        }`}
+    <div>
+      <button
+        className={`${styles} px-6 py-1 justify-between ${isActive ? activeLink : ""}`}
+        onClick={() => toggleOpen(isOpen ? null : link.key)}
       >
-        <div className={styles}>
-          {cloneElement(link.icon, { className: "w-4 h-4" })}
+        <span className="flex items-center space-x-3">
+          <Icon className="w-4 h-4" />
           <span>{link.name}</span>
+        </span>
+        <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+      </button>
+
+      {isOpen && (
+        <div className="pl-8 space-y-1 py-1">
+          {link.children.map((child) => {
+            const ChildIcon = child.icon;
+            return (
+              <Link
+                onClick={toggleSidebar}
+                key={child.key}
+                href={child.href || "#"}
+                className={`${styles} px-6 py-1 ${child.href === pathname ? activeLinkDefaul : ""}`}
+              >
+                <ChildIcon className="w-4 h-4" />
+                <span>{child.name}</span>
+              </Link>
+            );
+          })}
         </div>
-        {isOpen === link.name ? <ChevronDown /> : <ChevronRight />}
-      </CollapsibleTrigger>
-      <CollapsibleContent
-        className="my-2 mx-5 px-3 pl-5 py-2 border border-border dark:bg-slate-800 rounded-lg overflow-hidden
-        data-[state=open]:animate-slideDown
-        data-[state=closed]:animate-slideUp"
-      >
-        {links.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              onClick={toggleSidebar}
-              key={item.name}
-              href={item.href}
-              className={`${styles} text-sm pl-2 py-2 ${
-                item.href === pathname ? activeLinkDefaul : ""
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              <span>{item.name}</span>
-            </Link>
-          );
-        })}
-      </CollapsibleContent>
-    </Collapsible>
+      )}
+    </div>
   );
-};
+}

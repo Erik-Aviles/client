@@ -7,7 +7,6 @@ import { addToCart, removeFromCart } from "../../../../redux/slices/cartSlice";
 import toast from "react-hot-toast";
 
 const AddRemoveCart = ({ product }) => {
-    console.log("del la principal", product)
   const dispatch = useDispatch();
 
   const cartItem = useSelector((state) =>

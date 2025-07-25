@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useMemo, useCallback } from "react";
-import { Trash2 } from "lucide-react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import BreadcrumbAuto from "@/components/frontend/BreadcrumbAuto";
 import EmptyCart from "@/components/frontend/cart/EmptyCart";
@@ -17,7 +16,7 @@ export default function Cart() {
     return cartItems.reduce((acc, item) => {
       const price = item.salePrice ?? item.price;
       return acc + price * item.qty;
-    }, 0)
+    }, 0);
   }, [cartItems]);
 
   // --- Render ---
@@ -32,10 +31,9 @@ export default function Cart() {
   return (
     <section>
       <BreadcrumbAuto />
-      <div className="grid gap-8 md:grid-cols-6 lg:grid-cols-12">
+      <div className="grid gap-8 md:grid-cols-6 lg:grid-cols-12 pb-20">
         {/* Lista de Productos */}
         <CartProduct cartItems={cartItems} subTotal={subTotal} />
-
         {/* Resumen de pago del pedido*/}
         <CartSummary subTotal={subTotal} />
       </div>

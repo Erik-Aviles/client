@@ -6,7 +6,7 @@ import calcularImpuesto from "@/lib/calcularImpuesto";
 import CouponInput from "./CouponInput";
 import { findCoupon } from "@/lib/couponService";
 
-export default function CartSummary({subTotal}) {
+export default function CartSummary({ subTotal }) {
   const [discount, setDiscount] = useState(0);
   const [couponApplied, setCouponApplied] = useState("");
 
@@ -15,7 +15,7 @@ export default function CartSummary({subTotal}) {
     [subTotal]
   );
   const total = useMemo(() => subTotal + ENVIO, [subTotal]);
-  
+
   const finalTotal = Math.max(0, total - discount);
 
   const handleApplyCoupon = useCallback(
@@ -41,7 +41,7 @@ export default function CartSummary({subTotal}) {
   }, []);
 
   return (
-    <div className="md:col-span-full lg:col-span-4 bg-white border rounded-lg dark:bg-slate-800 text-slate-800 overflow-hidden px-6 py-4 lg:p-7">
+    <div className="h-min md:col-span-full lg:col-span-4 bg-white border rounded-lg dark:bg-slate-800 text-slate-800 overflow-hidden px-6 py-4 lg:p-7">
       <h2 className="dark:text-slate-300 text-xl font-semibold mb-4">
         Resumen de pago
       </h2>

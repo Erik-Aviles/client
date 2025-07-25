@@ -1,0 +1,104 @@
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+
+import { compare } from "bcrypt";
+import db from "./db";
+// import { UserRole } from "@prisma/client";
+
+export const authOptions = {
+  adapter: PrismaAdapter(db),
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/login",
+  },
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email", placeholder: "jb@gmail.com" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        try {
+          console.log(
+            "La función de autorización recibió credenciales:",
+            credentials
+          );
+
+          if (!credentials?.email || !credentials?.password) {
+            throw { error: "No se encontraron entradas", status: 401 };
+          }
+          console.log("Passed Check 1 ");
+
+          const existingUser = await db.user.findUnique({
+            where: { email: credentials.email },
+          });
+          if (!existingUser) {
+            console.log("Ningún usuario encontrado");
+            throw { error: "Ningún usuario encontrado", status: 401 };
+          }
+
+          console.log("Pasó la comprobación 2");
+
+          //Check if Password is correct
+          const passwordMatch = await compare(
+            credentials.password,
+            existingUser.password
+          );
+          if (!passwordMatch) {
+            console.log("Contraseña incorrecta");
+            throw { error: "Contraseña incorrecta", status: 401 };
+          }
+          console.log("Pase 3 marcado");
+          const user = {
+            id: existingUser.id,
+            name: existingUser.name,
+            email: existingUser.email,
+            role: existingUser.role,
+            image: existingUser.image,
+            emailVerified: existingUser.emailVerified,
+          };
+          //
+          console.log("Compilada por el usuario");
+          // console.log(user);
+          return user;
+        } catch (error) {
+          console.log("Todo falló");
+          console.log(error);
+          throw { error: "Algo salió mal", status: 401 };
+        }
+      },
+    }),
+  ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token) {
+        console.log("TOKEN", token, "en sesión");
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.role = token.role;
+        session.user.image = token.picture;
+        session.user.emailVerified = token.emailVerified;
+      }
+      console.log("SESSION:", session.user);
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.role = user.role;
+        token.image = user.picture;
+        token.emailVerified = user.emailVerified;
+      }
+      console.log("TOKEN:", token);
+      return token;
+    },
+  },
+};
