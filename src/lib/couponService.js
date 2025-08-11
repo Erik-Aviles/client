@@ -17,7 +17,7 @@ export async function findCoupon(code) {
   // Aquí podrías hacer fetch real a tu backend o DB en producción
 
   // Por ahora devuelve de la lista simulada
-  const coupon = coupons.find((c) => c.code === normalizedCode); 
+  const coupon = coupons.find((c) => c.name === normalizedCode); 
 
   return coupon || null;
 }

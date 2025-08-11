@@ -10,7 +10,7 @@ const AddRemoveCart = ({ product }) => {
   const dispatch = useDispatch();
 
   const cartItem = useSelector((state) =>
-    state.cart.find((item) => item.id === product.id)
+    state.cart.items.find((item) => item.id === product.id)
   );
   const qty = cartItem?.qty || 0;
 

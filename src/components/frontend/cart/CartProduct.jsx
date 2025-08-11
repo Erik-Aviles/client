@@ -68,8 +68,9 @@ export default function CartProduct({ cartItems, subTotal }) {
           </span>
         </button>
         <p className="text-sm md:text-lg font-medium text-center  text-gray-800 dark:text-gray-200">
-          Total estimado:{" "}
-          <span className="font-bold">${subTotal.toFixed(2)}</span>
+          Total estimado:
+          <span className="px-2 font-bold">${subTotal.toFixed(2)}</span>
+          <span className="text-xs">(inc. iva)</span>
         </p>
       </div>
     </div>

@@ -1,36 +1,63 @@
+import { companyData } from "@/utils/general/companyData";
+
 const { createSlice } = require("@reduxjs/toolkit");
 
 // --- Helpers ---
 const loadCart = () => {
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return { items: [], totals: {} };
   try {
     const saved = localStorage.getItem("cart");
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : { items: [], totals: {} };
   } catch {
-    return [];
+    return { items: [], totals: {} };
   }
 };
 
 const persistCart = (state) => {
   if (typeof window === "undefined") return;
-  localStorage.setItem("cart", JSON.stringify([...state]));
+  const cartData = {
+    items: state.items,
+    totals: state.totals,
+  };
+  localStorage.setItem("cart", JSON.stringify(cartData));
+};
+
+const recalculateTotals = (state) => {
+  const subtotal = state.items.reduce((acc, item) => {
+    const price = item.salePrice ?? item.price;
+    return acc + price * item.qty;
+  }, 0);
+
+  const discountAmount = (subtotal * (state.totals.coupon.percent || 0)) / 100;
+
+  const taxTotal = (subtotal * (state.totals.tax || 0)) / 100;
+  const taxableBase = Math.max(0, subtotal - discountAmount);
+
+  state.totals.subtotal = subtotal;
+  state.totals.subtotalWithoutTax = subtotal - taxTotal;
+  state.totals.discountAmount = discountAmount;
+  state.totals.taxTotal = taxTotal;
+  state.totals.taxableBase = taxableBase;
+  state.totals.total = taxableBase + state.totals.shippingCost;
 };
 
 // --- Estado inicial ---
-const initialState = loadCart();
-/* const initialState = [
-  {
-    id: 2,
-    title: "Otro producto",
-    brand: "Marca ABC",
-    salePrice: 40.0,
-    price: 40.0,
-    qty: 4,
-    imageUrl: "",
-    slug: "colas-feas",
-    stock: 6,
+const initialProducts = loadCart();
+
+const initialState = {
+  items: initialProducts.items || [],
+  totals: {
+    subtotal: 0,
+    tax: companyData?.tax || 0,
+    coupon: { name: "", percent: 0 },
+    shippingCost: 0,
+    discountAmount: 0,
+    subtotalWithoutTax: 0,
+    taxTotal: 0,
+    total: 0,
+    ...initialProducts.totals,
   },
-]; */
+};
 
 // --- Slice ---
 const cartSlice = createSlice({
@@ -40,14 +67,14 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       const { id, title, salePrice, price, brand, imageUrl, stock } =
         action.payload;
-      const existingItem = state.find((item) => item.id === id);
+      const existingItem = state.items.find((item) => item.id === id);
 
       if (existingItem) {
         if (existingItem.qty < stock) {
           existingItem.qty += 1;
         }
       } else {
-        state.push({
+        state.items.push({
           id,
           title,
           price,
@@ -60,36 +87,39 @@ const cartSlice = createSlice({
       }
 
       persistCart(state);
+      recalculateTotals(state);
     },
 
     removeFromCart: (state, action) => {
       const cartId = action.payload;
-      const newState = state.filter((item) => item.id !== cartId);
-      persistCart(newState);
-      return newState;
+      state.items = state.items.filter((item) => item.id !== cartId);
+      persistCart(state);
+      recalculateTotals(state);
     },
 
     incrementQty: (state, action) => {
       const cartId = action.payload;
-      const cartItem = state.find((item) => item.id === cartId);
+      const cartItem = state.items.find((item) => item.id === cartId);
       if (cartItem && cartItem.qty < cartItem.stock) {
         cartItem.qty += 1;
+        recalculateTotals(state);
         persistCart(state);
       }
     },
 
     decrementQty: (state, action) => {
       const cartId = action.payload;
-      const cartItem = state.find((item) => item.id === cartId);
+      const cartItem = state.items.find((item) => item.id === cartId);
       if (cartItem && cartItem.qty > 1) {
         cartItem.qty -= 1;
+        recalculateTotals(state);
         persistCart(state);
       }
     },
 
     setQty: (state, action) => {
       const { id, qty } = action.payload;
-      const cartItem = state.find((i) => i.id === id);
+      const cartItem = state.items.find((i) => i.id === id);
       if (!cartItem) return;
 
       const parsedQty = parseInt(qty, 10);
@@ -97,11 +127,28 @@ const cartSlice = createSlice({
         return;
 
       cartItem.qty = parsedQty;
+      recalculateTotals(state);
       persistCart(state);
     },
 
     emptyCart: (state) => {
-      state.length = 0;
+      state.items = [];
+      state.totals = {
+        subtotal: 0,
+        tax: companyData?.tax || 0,
+        coupon: { name: "", percent: 0 },
+        shippingCost: 0,
+        discountAmount: 0,
+        subtotalWithoutTax: 0,
+        taxTotal: 0,
+        total: 0,
+      };
+      persistCart(state);
+    },
+
+    updateCartTotals: (state, action) => {
+      state.totals = { ...state.totals, ...action.payload };
+      recalculateTotals(state);
       persistCart(state);
     },
   },
@@ -114,6 +161,7 @@ export const {
   decrementQty,
   setQty,
   emptyCart,
+  updateCartTotals,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

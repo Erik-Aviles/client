@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { ShoppingCart } from "lucide-react";
 
 export default function CartCount() {
-  const cartItems = useSelector((store) => store.cart);
+  const cartItems = useSelector((store) => store.cart.items);
   return (
     <Link
       href="/cart"

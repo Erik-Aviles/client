@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { CheckCircle2, X, XCircle } from "lucide-react";
 
-export default function CouponInput({ onApply, onClear }) {
-  const [code, setCode] = useState("");
+export default function CouponInput({code, setCode, onApply, onClear }) {
+
   const [applied, setApplied] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleApply = async () => {
-    if (!code.trim()) {
+    if (!code?.trim()) {
       setError("Ingresa un código válido");
       return;
     }
@@ -74,20 +74,16 @@ export default function CouponInput({ onApply, onClear }) {
           )}
         </div>
         <button
+          type="button"
           onClick={handleApply}
-          disabled={isLoading}
+          disabled={isLoading || applied}
           className="bg-lime-600 hover:bg-lime-500 text-white text-sm px-4 py-2 rounded-lg disabled:opacity-50"
         >
           {isLoading ? "Aplicando..." : "Aplicar"}
         </button>
       </div>
 
-      {applied && !error && (
-        <p className="flex items-center text-lime-600 text-xs" id="couponHelp">
-          <CheckCircle2 className="w-4 h-4 mr-1" />
-          Cupón aplicado con éxito
-        </p>
-      )}
+      
       {error && (
         <p className="flex items-center text-red-600 text-xs" id="couponHelp">
           <XCircle className="w-4 h-4 mr-1" />

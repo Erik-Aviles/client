@@ -1,16 +1,15 @@
-import { Value } from "sass";
 
 export const coupons = [
   {
-    code: "DESCUENTO10",
-    value: 10, 
+    name: "DESCUENTO10",
+    percent: 10, 
   },
   {
-    code: "DESCUENTO5USD",
-    value: 15, 
+    name: "DESCUENTO5USD",
+    percent: 15, 
   },
   {
-    code: "ENVIOGRATIS",
-    value: 25, 
+    name: "ENVIOGRATIS",
+    percent: 25, 
   },
 ];

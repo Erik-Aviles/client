@@ -28,10 +28,10 @@ export default function TextInput({
           title={readOnly ? "Solo de lectura" : null}
           defaultValue={defaultValue}
           autoComplete={name}
-          className={`block w-full bg-white border rounded-lg  transition-all duration-300  ${classNameInput} ${
+          className={`block w-full text-xs bg-white border rounded-lg  transition-all duration-300  ${classNameInput} ${
             readOnly && "cursor-not-allowed"
           }`}
-          placeholder={placeholder || `${label.toLowerCase()}`}
+          placeholder={placeholder || `${label}`}
           readOnly={readOnly}
         />
         {errors[`${name}`] && (

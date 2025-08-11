@@ -5,7 +5,7 @@ import React from "react";
 
 export default function SearchForm({
   placeholder,
-  className = "text-slate-800 dark:bg-slate-700 rounded-lg p-4",
+  className = "text-slate-800 dark:bg-slate-700 rounded-lg",
   value = "",
   onChange = () => {},
 }) {
@@ -25,7 +25,7 @@ export default function SearchForm({
             id="voice-search"
             value={value}
             onChange={onChange}
-            className="py-2 px-8 text-sm text-slate-800 border border-slate-300 w-full rounded-lg bg-slate-50 focus:ring-amber-600 focus:border-amber-600 dark:bg-slate-800  dark:placeholder-slate-500 dark:text-white "
+            className="py-2 px-8 text-xs md:text-sm text-slate-800 border border-slate-300 w-full rounded-lg bg-slate-50 focus:ring-amber-600 focus:border-amber-600 dark:bg-slate-800  dark:placeholder-slate-500 dark:text-white "
             placeholder={placeholder}
             required
           />

@@ -38,7 +38,7 @@ export default function CartItems({ item }) {
   );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-center border-b pb-4">
+    <div className="grid grid-cols-1 md:grid-cols-6 space-y-1 items-center border-b dark:border-b-slate-500 py-4">
       {/* Imagen + info escritorio */}
       <div className="hidden md:col-span-3 md:flex items-center space-x-4">
         <Link
