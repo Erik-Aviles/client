@@ -10,8 +10,10 @@ import {
   nextStep,
   setPersonalInfo,
 } from "../../../../redux/slices/checkoutSlice";
+import { useSession } from "next-auth/react";
 
 export default function PersonaDetailsForm() {
+  const { data: session, status } = useSession();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const personalInfo = useSelector((state) => state.checkout.personalInfo);
@@ -28,6 +30,7 @@ export default function PersonaDetailsForm() {
 
   /* {id, firstName, lastName, expiryDate, isActive} */
   async function proccessData(data) {
+    data.userId = status === "authenticated" ? session.user.id : null;
     setLoading(true);
     dispatch(setPersonalInfo(data));
     dispatch(nextStep());
@@ -39,7 +42,7 @@ export default function PersonaDetailsForm() {
       <Notification
         title="Esta información se utilizará para el envio del pedido"
         text="Por favor, lea cuidadosamente si los campos con la información guardada
-            son los correctos, caso contrario pueden ser editados y guardados."
+            son los requeridos, caso contrario pueden ser editados."
       />
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 pt-4 pb-8">
         <TextInput

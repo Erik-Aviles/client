@@ -9,6 +9,7 @@ export default async function page() {
   const data = await getData("coupons");
 
   const fieldsToSearch = ["title", "id"];
+  console.log(data)
 
   return (
     <div className="h-[calc(100vh-40px)] flex flex-col gap-3">

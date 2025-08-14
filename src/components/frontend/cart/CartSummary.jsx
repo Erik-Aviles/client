@@ -1,66 +1,36 @@
+import React from "react";
 import Link from "next/link";
 import SummaryLine from "./SummaryLine";
 import CouponInput from "./CouponInput";
-import { findCoupon } from "@/lib/couponService";
+import { useSelector } from "react-redux";
 import Notification from "@/components/Notification";
-import React, { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateCartTotals } from "../../../../redux/slices/cartSlice";
-import toast from "react-hot-toast";
+import { ChevronRight } from "lucide-react";
 
 export default function CartSummary() {
-  const dispatch = useDispatch();
-  const { subtotal,subtotalWithoutTax, tax, coupon, discountAmount,taxableBase, taxTotal, total } =
-    useSelector((store) => store.cart.totals);
-
-  const [couponApplied, setCouponApplied] = useState(coupon?.name || "");
-
-
-  const handleApplyCoupon = useCallback(
-    async (codeInput) => {
-      const couponFound = await findCoupon(codeInput);
-      if (!couponFound) {
-        setCouponApplied("");
-        dispatch(updateCartTotals({ coupon: { name: "", percent: 0 } }));
-        toast.error("Cupón no válido");
-        return false;
-      }
-      setCouponApplied(couponFound.name);
-      dispatch(
-        updateCartTotals({
-         coupon: { name: couponFound.name, percent: couponFound.percent },
-        })
-      );
-      toast.success("Cupón aplicado con éxito");
-      return true;
-    },
-    [dispatch]
-  );
-
-  const handleClearCoupon = useCallback(() => {
-    setCouponApplied("");
-    dispatch(updateCartTotals({ coupon: { name: "", percent: 0 } }));
-  }, [dispatch]);
+  const {
+    subtotal,
+    subtotalWithoutTax,
+    tax,
+    coupon,
+    discountAmount,
+    taxableBase,
+    taxTotal,
+  } = useSelector((store) => store.cart.totals);
 
   return (
     <div className="h-min md:col-span-full lg:col-span-4 bg-white border rounded-lg dark:bg-slate-800 text-slate-800 overflow-hidden px-6 py-4 lg:p-7">
-      <h2 className="dark:text-slate-300 text-xl font-semibold mb-4">
+      <h2 className="dark:text-slate-300 text-xl fon t-semibold mb-4">
         Resumen del pedido
       </h2>
       <div className="space-y-1 text-sm text-gray-700 dark:text-gray-300">
-        <SummaryLine label="Subtotal" value={subtotalWithoutTax} />
+        <SummaryLine label="Subtotal (sin impuestos)" value={subtotalWithoutTax} />
         <SummaryLine label={`Impuesto (${tax}%)`} value={taxTotal} />
         <div className="pt-2">
-          <CouponInput
-            code={couponApplied}
-            setCode={setCouponApplied}
-            onApply={handleApplyCoupon}
-            onClear={handleClearCoupon}
-          />
+          <CouponInput coupon={coupon.couponCode} />
         </div>
         {discountAmount > 0 && (
           <div className="flex justify-between border-b pb-2 text-lime-600 font-medium text-xs">
-            <span>Cupon: ({couponApplied})</span>
+            <span>Cupon: ({coupon.couponCode})</span>
             <span className="font-bold">- ${discountAmount.toFixed(2)}</span>
           </div>
         )}
@@ -75,16 +45,16 @@ export default function CartSummary() {
           )}
           <div className="flex justify-between text-base font-semibold text-gray-800 dark:text-gray-200 py-1">
             <span>
-              {coupon.percent > 0
+              {coupon.value > 0
                 ? "Total estimado con descuento"
                 : "Total estimado"}
             </span>
-            <span>${taxableBase.toFixed(2)}</span>
+            <span>${taxableBase?.toFixed(2)}</span>
           </div>
 
           <Notification
             title="Costo total estimado"
-            text="El precio final se calcula según el método de pago y el costo por envío."
+            text="El precio final se calculará en el momento del pago. Total estimado incluye impuesto y descuento (si aplica)"
           />
         </div>
       </div>
@@ -92,9 +62,10 @@ export default function CartSummary() {
       <div className="mt-6 flex gap-3">
         <Link
           href={"/checkout"}
-          className="w-full text-center font-semibold px-6 py-3 bg-blue-600 dark:bg-white text-white dark:text-slate-900 rounded-lg hover:bg-blue-700 dark:hover:bg-slate-200"
+          className="w-full inline-flex items-end gap-1 justify-center px-6 py-3 font-bold transition-all duration-200 bg-blue-600 dark:bg-white text-white dark:text-slate-900 rounded-lg hover:bg-blue-700 dark:hover:bg-slate-200"
         >
-          Continuar a pagar
+          <span>Continuar</span>
+          <ChevronRight className="w-5 h-5" />
         </Link>
       </div>
     </div>

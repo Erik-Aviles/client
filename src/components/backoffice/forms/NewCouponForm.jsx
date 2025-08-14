@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
@@ -102,6 +102,14 @@ export default function NewCouponForm({ initialData = {} }) {
         <TextInput
           label="Nombre de la campaña"
           name="title"
+          register={register}
+          errors={errors}
+          className="w-full"
+        />
+        <TextInput
+          type="number"
+          label="Valor del cupón"
+          name="value"
           register={register}
           errors={errors}
           className="w-full"

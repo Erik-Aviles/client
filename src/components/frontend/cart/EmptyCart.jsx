@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+
 export default function EmptyCart() {
   return (
     <div className="text-center py-16">

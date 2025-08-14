@@ -18,6 +18,7 @@ export async function makePostRequest(
       },
       body: JSON.stringify(data),
     });
+    const responseData = await response.json();
 
     if (response.ok) {
       setLoading(false);
@@ -27,9 +28,9 @@ export async function makePostRequest(
     } else {
       setLoading(false);
       if (response.status === 409) {
-        toast.error("El stock de Giving Warehouse NO es suficiente");
+        toast.error(`${responseData.message}`);
       } else {
-        toast.error("Algo salió mal");
+        toast.error("Algo salió mal, Por favor intenta nuevamente");
       }
     }
   } catch (error) {

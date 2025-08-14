@@ -48,6 +48,14 @@ export const columns = [
     },
   },
   {
+    accessorKey: "value",
+    header: () => <div className="whitespace-nowrap">Valor</div>,
+    cell: ({ row }) => {
+      const value = row.getValue("value");
+      return <small>{value}</small>;
+    },
+  },
+  {
     accessorKey: "expiryDate",
     header: ({ column }) => (
       <SortableColumn column={column} title="Fecha de expiración" />

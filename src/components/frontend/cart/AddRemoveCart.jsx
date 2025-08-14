@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
 import { CheckCheck } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../../../redux/slices/cartSlice";
-import toast from "react-hot-toast";
 
 const AddRemoveCart = ({ product }) => {
   const dispatch = useDispatch();
-
   const cartItem = useSelector((state) =>
     state.cart.items.find((item) => item.id === product.id)
   );

@@ -22,7 +22,10 @@ export default function CartBanner() {
                 el carrito.
               </p>
               <p className="ml-1 md:ml-3 text-xs md:text-base font-normal ">
-                El total estimado es <span className="font-bold">${taxableBase.toFixed(2)}</span>
+                El total estimado es{" "}
+                <span className="font-bold">
+                  ${taxableBase ? taxableBase.toFixed(2) : "0.00"}
+                </span>
               </p>
             </div>
           </div>

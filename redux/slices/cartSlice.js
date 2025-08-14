@@ -28,7 +28,7 @@ const recalculateTotals = (state) => {
     return acc + price * item.qty;
   }, 0);
 
-  const discountAmount = (subtotal * (state.totals.coupon.percent || 0)) / 100;
+  const discountAmount = (subtotal * (state.totals.coupon.value || 0)) / 100;
 
   const taxTotal = (subtotal * (state.totals.tax || 0)) / 100;
   const taxableBase = Math.max(0, subtotal - discountAmount);
@@ -49,7 +49,7 @@ const initialState = {
   totals: {
     subtotal: 0,
     tax: companyData?.tax || 0,
-    coupon: { name: "", percent: 0 },
+    coupon: { couponCode: "", value: 0 },
     shippingCost: 0,
     discountAmount: 0,
     subtotalWithoutTax: 0,
@@ -65,7 +65,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const { id, title, salePrice, price, brand, imageUrl, stock } =
+      const { id, title, salePrice, price, brand, imageUrl, stock, code } =
         action.payload;
       const existingItem = state.items.find((item) => item.id === id);
 
@@ -83,18 +83,36 @@ const cartSlice = createSlice({
           brand,
           imageUrl,
           stock,
+          code,
         });
       }
 
-      persistCart(state);
       recalculateTotals(state);
+      persistCart(state);
     },
 
     removeFromCart: (state, action) => {
       const cartId = action.payload;
       state.items = state.items.filter((item) => item.id !== cartId);
-      persistCart(state);
-      recalculateTotals(state);
+
+      if (state.items.length === 0) {
+        // Solo actualizamos el estado, nada de efectos secundarios
+        state.items = [];
+        state.totals = {
+          subtotal: 0,
+          tax: companyData?.tax || 0,
+          coupon: { couponCode: "", value: 0 },
+          shippingCost: 0,
+          discountAmount: 0,
+          subtotalWithoutTax: 0,
+          taxTotal: 0,
+          total: 0,
+        };
+      } else {
+        recalculateTotals(state);
+      }
+
+      persistCart(state); // guardar estado actualizado en localStorage
     },
 
     incrementQty: (state, action) => {
@@ -136,7 +154,7 @@ const cartSlice = createSlice({
       state.totals = {
         subtotal: 0,
         tax: companyData?.tax || 0,
-        coupon: { name: "", percent: 0 },
+        coupon: { couponCode: "", value: 0 },
         shippingCost: 0,
         discountAmount: 0,
         subtotalWithoutTax: 0,

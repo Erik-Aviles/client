@@ -17,19 +17,6 @@ datasource db {
 // TABLAS
 
 /**
- * {id, title, code, expiryDate, isActive,}
- */
-model Coupon {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
-  couponCode String
-  expiryDate DateTime
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-/**
  * {id, title, link, imageUrl, isActive}
  */
 model Banner {
@@ -61,40 +48,6 @@ model Category {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-/**
- * {id, title, sku, slug, code, barcode, description, price, salePrice, quantity, stock, tags, hasDiscount, imageUrl, isActive, categoryId, userId,}
- */
-model Product {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  sku         String?
-  slug        String   @unique
-  code        String   @unique
-  barcode     String?
-  description String?
-  price       Float
-  salePrice   Float?
-  quantity    Int?
-  stock       Int?
-  tags        String[]
-  imageUrl    String?
-  isActive    Boolean  @default(true)
-  hasDiscount Boolean  @default(true)
-
-  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categoryId String?   @db.ObjectId
-
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String? @db.ObjectId
-
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-  SupplierProfile   SupplierProfile? @relation(fields: [supplierProfileId], references: [id])
-  supplierProfileId String?          @db.ObjectId
-  StaffProfile      StaffProfile?    @relation(fields: [staffProfileId], references: [id])
-  staffProfileId    String?          @db.ObjectId
 }
 
 /**
@@ -160,6 +113,7 @@ model User {
   passwordResetTokenExpires DateTime?
 
   products Product[]
+  orders   Order[]
 
   supplierProfile SupplierProfile?
   staffProfile    StaffProfile?
@@ -232,4 +186,135 @@ model StaffProfile {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Product   Product[]
+}
+
+/**
+ * {id, title, sku, slug, code, barcode, description, price, salePrice, quantity, stock, tags, hasDiscount, imageUrl, isActive, categoryId, userId,}
+ */
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  sku         String?
+  slug        String   @unique
+  code        String   @unique
+  barcode     String?
+  description String?
+  price       Float
+  salePrice   Float?
+  quantity    Int?
+  stock       Int?
+  tags        String[]
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  hasDiscount Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categoryId        String? @db.ObjectId
+  userId            String? @db.ObjectId
+  supplierProfileId String? @db.ObjectId
+  staffProfileId    String? @db.ObjectId
+
+  category        Category?        @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user            User?            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  SupplierProfile SupplierProfile? @relation(fields: [supplierProfileId], references: [id])
+  StaffProfile    StaffProfile?    @relation(fields: [staffProfileId], references: [id])
+  OrderItem       OrderItem[]
+}
+
+/**
+ * {id, title, code, expiryDate, isActive,}
+ */
+model Coupon {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  couponCode String
+  expiryDate DateTime
+  usageLimit Int?
+  value      Float    @default(0.00)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  orders Order[]
+}
+
+/**
+ * {id, userId, firstName, lastName, emailAddress, phoneNumber, streetAddress, city, country, zipCode, discountAmount, shippingCost, subtotal, total, paymentStatus, paymentMethod, paymentToken, orderStatus, notes, createdAt, updatedAt}
+ */
+model Order {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId String? @db.ObjectId
+
+  firstName    String
+  lastName     String
+  emailAddress String?
+  phoneNumber  String?
+
+  streetAddress String
+  city          String
+  country       String
+  zipCode       String
+
+  subtotal       Float @default(0.00)
+  discountAmount Float @default(0.00)
+  shippingCost   Float @default(0.00)
+  total          Float @default(0.00)
+
+  paymentMethod PaymentMethod?
+  paymentStatus PaymentStatus  @default(UNPAID)
+  paymentToken  String?
+
+  couponId String? @db.ObjectId
+
+  notes       String?
+  orderStatus OrderStatus @default(PENDING)
+
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  coupon Coupon? @relation(fields: [couponId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model OrderItem {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String @db.ObjectId
+  productId String @db.ObjectId
+  title     String
+  code      String
+  price     Float  @default(0.00)
+  quantity  Int
+  total     Float  @default(0.00)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+enum OrderStatus {
+  PENDING // Pendiente
+  PROCESSING // En proceso
+  SHIPPED // Enviado
+  DELIVERED // Entregado
+  CANCELED // Cancelado
+}
+
+enum PaymentStatus {
+  UNPAID // No pagado
+  PARTIAL // Pagado parcialmente
+  PAID // Pagado
+  REFUNDED // Reembolsado
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  TRANSFER
+  OTHER
 }

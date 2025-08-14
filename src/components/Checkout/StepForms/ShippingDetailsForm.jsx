@@ -20,7 +20,6 @@ export default function ShippingDetailsForm() {
   const dispatch = useDispatch();
   const shippingInfo = useSelector((state) => state.checkout.shippingInfo);
   const shippingCost = useSelector((state) => state.cart.totals.shippingCost);
-  console.log("Shipping cost from store:", shippingCost);
 
   const {
     register,

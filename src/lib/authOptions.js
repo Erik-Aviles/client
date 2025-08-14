@@ -77,7 +77,6 @@ export const authOptions = {
   callbacks: {
     async session({ session, token }) {
       if (token) {
-        console.log("TOKEN", token, "en sesión");
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
@@ -85,7 +84,6 @@ export const authOptions = {
         session.user.image = token.picture;
         session.user.emailVerified = token.emailVerified;
       }
-      console.log("SESSION:", session.user);
       return session;
     },
     async jwt({ token, user }) {
@@ -97,7 +95,6 @@ export const authOptions = {
         token.image = user.picture;
         token.emailVerified = user.emailVerified;
       }
-      console.log("TOKEN:", token);
       return token;
     },
   },

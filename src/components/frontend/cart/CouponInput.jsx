@@ -1,47 +1,59 @@
 "use client";
 
-import { useState } from "react";
-import { CheckCircle2, X, XCircle } from "lucide-react";
+import { useCallback, useState } from "react";
+import { X, XCircle } from "lucide-react";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { findCoupon } from "@/lib/couponService";
+import { updateCartTotals } from "../../../../redux/slices/cartSlice";
 
-export default function CouponInput({code, setCode, onApply, onClear }) {
-
-  const [applied, setApplied] = useState(false);
+export default function CouponInput({ coupon }) {
+  const [codeInput, setCodeInput] = useState("");
+  const [couponApplied, setCouponApplied] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleApply = async () => {
-    if (!code?.trim()) {
-      setError("Ingresa un código válido");
-      return;
-    }
-
+  const handleApplyCoupon = useCallback(async () => {
     setIsLoading(true);
-    setError("");
-    setApplied(false);
-
     try {
-      const success = await onApply(code.trim());
+      const response = await findCoupon(codeInput.trim());
 
-      if (success) {
-        setApplied(true);
-        setError("");
-      } else {
-        setApplied(false);
-        setError("Cupón inválido o expirado");
+      if (!response.valid) {
+        setError(response.message || "Cupón inválido");
+        setCouponApplied("");
+        dispatch(updateCartTotals({ coupon: { couponCode: "", value: 0 } }));
+        return false;
       }
-    } catch (err) {
-      setError("Error al aplicar el cupón");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
-  const handleClear = () => {
-    setCode("");
-    setApplied(false);
+      const value = Number(response.coupon.value) || 0;
+
+      setCouponApplied(response.coupon.couponCode);
+      setError("");
+      dispatch(
+        updateCartTotals({
+          coupon: {
+            couponCode: response.coupon.couponCode,
+            value: value,
+          },
+        })
+      );
+      toast.success(response.message || "Cupón aplicado con éxito");
+      return true;
+    } catch (error) {
+      setError("Error al validar el cupón");
+      return false;
+    } finally {
+      setIsLoading(false); // Fin carga siempre
+    }
+  }, [codeInput, dispatch]);
+
+  const handleClear = useCallback(() => {
+    setCouponApplied("");
+    setCodeInput("");
     setError("");
-    if (onClear) onClear();
-  };
+    dispatch(updateCartTotals({ coupon: { couponCode: "", value: 0 } }));
+  }, [dispatch]);
 
   return (
     <form className="space-y-2">
@@ -56,40 +68,40 @@ export default function CouponInput({code, setCode, onApply, onClear }) {
           <input
             id="coupon"
             type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
+            value={codeInput || coupon || ""}
+            onChange={(e) => setCodeInput(e.target.value)}
             className="w-full pr-10 rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-800 dark:text-white"
             placeholder="Ingrese un código..."
             aria-describedby="couponHelp"
           />
-          {code && (
-            <button
-              type="button"
-              onClick={handleClear}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600"
-              title="Quitar cupón"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
         </div>
-        <button
-          type="button"
-          onClick={handleApply}
-          disabled={isLoading || applied}
-          className="bg-lime-600 hover:bg-lime-500 text-white text-sm px-4 py-2 rounded-lg disabled:opacity-50"
-        >
-          {isLoading ? "Aplicando..." : "Aplicar"}
-        </button>
+        {coupon || error ? (
+          <button
+            type="button"
+            onClick={handleClear}
+            className="flex items-center gap-2 bg-red-500 text-whitetext-sm px-4 py-2 rounded-lg"
+            title="Quitar cupón"
+          >
+            Quitar
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleApplyCoupon}
+            disabled={isLoading || couponApplied}
+            className="bg-lime-600 hover:bg-lime-500 text-white text-sm px-4 py-2 rounded-lg"
+          >
+            {isLoading ? "Aplicando..." : "Aplicar"}
+          </button>
+        )}
       </div>
 
-      
-      {error && (
+      {error ? (
         <p className="flex items-center text-red-600 text-xs" id="couponHelp">
           <XCircle className="w-4 h-4 mr-1" />
           {error}
         </p>
-      )}
+      ) : null}
     </form>
   );
 }

@@ -34,7 +34,6 @@ export default function PaymentMethodForm() {
     dispatch(setPaymentInfo(data));
     dispatch(nextStep());
     setLoading(false);
-
   }
 
   return (
@@ -50,7 +49,7 @@ export default function PaymentMethodForm() {
           message="Por favor escojer una opcion de pago."
           options={[
             {
-              value: "cash",
+              value: "CASH",
               title: "Efectivo",
               subTitle: "Pago en Efectivo",
               description: "Contra entrega al recibir el producto",
@@ -58,7 +57,7 @@ export default function PaymentMethodForm() {
               iconRight: MoveRight,
             },
             {
-              value: "creditCard",
+              value: "CARD",
               title: "Tarjeta",
               subTitle: "Pago con Tarjeta de Credito",
               description: "El banco procesa el pago",

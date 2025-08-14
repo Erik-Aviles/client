@@ -1,46 +1,75 @@
 "use client";
 
-import { useSelector } from "react-redux";
-import React, { useState } from "react";
-import CartItems from "@/components/frontend/cart/CartItems";
-import SummaryLine from "@/components/frontend/cart/SummaryLine";
-import SubTitle3 from "@/components/backoffice/styledComponent/SubTitle3";
+import React, { startTransition, useState } from "react";
+import toast from "react-hot-toast";
 import NavButtons from "../NavButtons";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import CartItems from "@/components/frontend/cart/CartItems";
+import { emptyCart } from "../../../../redux/slices/cartSlice";
+import SummaryLine from "@/components/frontend/cart/SummaryLine";
+import { resetCheckout } from "../../../../redux/slices/checkoutSlice";
+import SubTitle3 from "@/components/backoffice/styledComponent/SubTitle3";
 
 export default function OrderSummary() {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const cartItems = useSelector((store) => store.cart.items);
+  const { personalInfo, paymentInfo, shippingInfo } = useSelector(
+    (state) => state.checkout
+  );
+  const cart = useSelector((state) => state.cart);
   const {
     subtotal,
     tax,
     taxableBase,
     taxTotal,
     total,
+    coupon,
     discountAmount,
     shippingCost,
     subtotalWithoutTax,
-  } = useSelector((state) => state.cart.totals);
-
-  const { personalInfo, paymentInfo, shippingInfo } = useSelector(
-    (state) => state.checkout
-  );
-  const cart = useSelector((state) => state.cart);
+  } = cart.totals;
 
   async function submitData() {
-    setLoading(true);
     const orderData = {
       personalInfo,
-      paymentInfo,
       shippingInfo,
+      paymentInfo,
       cart,
     };
-    setLoading(false);
-    console.log("Order Data:", orderData);
+    try {
+      setLoading(true);
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const response = await fetch(`${baseUrl}/api/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        setLoading(false);
+        toast.success(`Pedido enviado exitosamente`);
+        dispatch(emptyCart());
+        dispatch(resetCheckout());
+        startTransition(() => {
+          router.push("/order-confirmation");
+        });
+      } else {
+        setLoading(false);
+        toast.error("Algo salió mal, Por favor intenta nuevamente");
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   }
 
   return (
     <div className="flex flex-col gap-4">
-      {cartItems?.map((item, i) => {
+      {cart.items?.map((item, i) => {
         return <CartItems key={item.id + i} item={item} />;
       })}
       <div>
@@ -50,7 +79,7 @@ export default function OrderSummary() {
         />
         <div className="text-xs md:text-sm text-gray-700 dark:text-gray-300 py-2">
           <SummaryLine
-            label={`Subtotal (sin impuesto)`}
+            label={`Subtotal (antes de impuesto)`}
             value={subtotalWithoutTax}
           />
           <SummaryLine
@@ -60,7 +89,7 @@ export default function OrderSummary() {
           />
           <SummaryLine label="Subtotal (Con imp)" value={subtotal} />
           <SummaryLine
-            label="Desc. aplicado"
+            label={`Desc. aplicado (${coupon.value}%)`}
             value={discountAmount}
             className={discountAmount > 0 ? "border border-b-slate-700" : ""}
           />

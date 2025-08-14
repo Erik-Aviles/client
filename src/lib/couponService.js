@@ -1,23 +1,19 @@
-// lib/couponService.js (ejemplo en lib, porque maneja "consulta externa")
-
-import { coupons } from "@/utils/general/coupons";
-
-
-/**
- * Simula una consulta asíncrona a base de datos para buscar un cupón por código.
- * @param {string} code Código del cupón
- * @returns {Promise<object|null>} Devuelve el cupón o null si no existe
- */
 export async function findCoupon(code) {
-  // Simulación de delay para imitar llamada a API o DB
-  await new Promise((resolve) => setTimeout(resolve, 300));
+  try {
+    const res = await fetch("/api/coupons/validate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code }),
+    });
 
-  const normalizedCode = code.trim().toUpperCase();
+    const data = await res.json();
 
-  // Aquí podrías hacer fetch real a tu backend o DB en producción
+    if (!res.ok)
+      return { valid: false, message: data.message || "Error desconocido" };
 
-  // Por ahora devuelve de la lista simulada
-  const coupon = coupons.find((c) => c.name === normalizedCode); 
-
-  return coupon || null;
+    return data;
+  } catch (error) {
+    console.error("Error en fetch findCoupon:", error);
+    return { valid: false, message: "Error de red al validar cupón" };
+  }
 }

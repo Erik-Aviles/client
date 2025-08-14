@@ -48,7 +48,8 @@ export async function DELETE(request, { params: { id } }) {
 
 export async function PUT(request, { params: { id } }) {
   try {
-    const { title, couponCode, expiryDate, isActive } = await request.json();
+    const { title, couponCode, expiryDate, value, isActive } =
+      await request.json();
 
     const existingCoupon = await db.coupon.findUnique({
       where: { id },
@@ -67,12 +68,13 @@ export async function PUT(request, { params: { id } }) {
         title,
         couponCode,
         expiryDate,
+        usageLimit: null,
+        value: value !== null && value !== undefined ? Number(value) : 5,
         isActive,
       },
     });
 
-    console.log("Nueva cupón creado:", updateCoupon);
-    return NextResponse.json(updateCoupon, { status: 201 });
+    return NextResponse.json(updateCoupon, { status: 200 });
   } catch (error) {
     console.error("Error al actualizar cupón:", error);
     return NextResponse.json(
