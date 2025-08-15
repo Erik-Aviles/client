@@ -48,6 +48,7 @@ export default function OrderSummary() {
         },
         body: JSON.stringify(orderData),
       });
+      const responseData = await response.json();
 
       if (response.ok) {
         setLoading(false);
@@ -55,7 +56,7 @@ export default function OrderSummary() {
         dispatch(emptyCart());
         dispatch(resetCheckout());
         startTransition(() => {
-          router.push("/order-confirmation");
+          router.push(`/order-confirmation/${responseData.id}`);
         });
       } else {
         setLoading(false);
@@ -77,32 +78,20 @@ export default function OrderSummary() {
           title="Resumen de pago"
           className="text-base md:text-xl font-semibold mb-1"
         />
-        <div className="text-xs md:text-sm text-gray-700 dark:text-gray-300 py-2">
+        <div className="space-y-2 text-xs md:text-sm text-gray-700 dark:text-gray-300 py-2">
+          <SummaryLine label={`Subtotal (a.imp.)`} value={subtotalWithoutTax} />
+          <SummaryLine label={`Impuesto (${tax}%)`} value={taxTotal} />
+          <SummaryLine label="Subtotal (d.imp.)" value={subtotal} />
           <SummaryLine
-            label={`Subtotal (antes de impuesto)`}
-            value={subtotalWithoutTax}
-          />
-          <SummaryLine
-            label={`Impuesto (${tax}%)`}
-            value={taxTotal}
-            className="border border-b-slate-700"
-          />
-          <SummaryLine label="Subtotal (Con imp)" value={subtotal} />
-          <SummaryLine
-            label={`Desc. aplicado (${coupon.value}%)`}
+            label={`Descuento (${coupon.value}%)`}
             value={discountAmount}
-            className={discountAmount > 0 ? "border border-b-slate-700" : ""}
           />
           {discountAmount > 0 && (
             <SummaryLine label="Subtotal (con desc.)" value={taxableBase} />
           )}
           <SummaryLine label="Costo de envío" value={shippingCost} />
         </div>
-        <SummaryLine
-          label="Total a pagar"
-          value={total}
-          className="text-sm md:text-xl border-t dark:border-t-slate-300 py-2 font-semibold"
-        />
+        <SummaryLine label="Total a pagar" value={total} strong big />
       </div>
       <NavButtons onSubmit={submitData} loading={loading} />
     </div>

@@ -1,5 +1,6 @@
 import db from "@/lib/db";
 import { NextResponse } from "next/server";
+import { generateOrderNumber } from "@/lib/orders/generateOrderNumber";
 
 export async function GET(request) {
   try {
@@ -64,10 +65,10 @@ export async function POST(request) {
 
     // 4. Calcular subtotal sumando precio * cantidad
     const subtotal = items.reduce((acc, item) => {
-      if (!(item.price || item.salePrice) || !item.qty || item.qty < 1) {
+      if (!item.price || !item.qty || item.qty < 1) {
         throw new Error("Producto con precio o cantidad inválidos.");
       }
-      return acc + (item.price || item.salePrice) * item.qty;
+      return acc + item.price * item.qty;
     }, 0);
 
     // 5. Calcular descuento: si hay cupón, usar valor del cupón
@@ -85,11 +86,15 @@ export async function POST(request) {
       subtotal + (totals.shippingCost || 0) - discountAmount
     );
 
+    // 7. Generar número de orden
+    const orderNumber = await generateOrderNumber();
+
     // 8. Crear orden y items en una transacción atómica
     const createdOrder = await db.$transaction(async (tx) => {
       const order = await tx.order.create({
         data: {
           userId: personalInfo.userId,
+          orderNumber,
           firstName: personalInfo.firstName,
           lastName: personalInfo.lastName,
           emailAddress: personalInfo.email,
@@ -98,6 +103,7 @@ export async function POST(request) {
           city: shippingInfo.city,
           country: shippingInfo.country,
           zipCode: shippingInfo.zipCode,
+          tax: parseInt(totals.tax || 0),
           subtotal: parseFloat(subtotal),
           discountAmount: parseFloat(discountAmount),
           shippingCost: parseFloat(totals.shippingCost || 0),
@@ -113,6 +119,8 @@ export async function POST(request) {
               price: parseFloat(item.price),
               quantity: parseInt(item.qty),
               total: parseFloat(item.price * item.qty),
+              brand: item.brand,
+              imageUrl: item.imageUrl,
             })),
           },
         },
@@ -122,7 +130,7 @@ export async function POST(request) {
         },
       });
 
-      // Puedes aquí actualizar stock o hacer otras operaciones relacionadas
+      // Actualizar stock o hacer otras operaciones relacionadas
 
       return order;
     });

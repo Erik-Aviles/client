@@ -97,6 +97,28 @@ enum UserRole {
   MODERATOR
 }
 
+enum OrderStatus {
+  PENDING // Pendiente
+  PROCESSING // En proceso
+  SHIPPED // Enviado
+  DELIVERED // Entregado
+  CANCELED // Cancelado
+}
+
+enum PaymentStatus {
+  UNPAID // No pagado
+  PARTIAL // Pagado parcialmente
+  PAID // Pagado
+  REFUNDED // Reembolsado
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  TRANSFER
+  OTHER
+}
+
 /**
  * {id, name, email, password, emailVerified, role, isActive,}
  */
@@ -244,8 +266,9 @@ model Coupon {
  * {id, userId, firstName, lastName, emailAddress, phoneNumber, streetAddress, city, country, zipCode, discountAmount, shippingCost, subtotal, total, paymentStatus, paymentMethod, paymentToken, orderStatus, notes, createdAt, updatedAt}
  */
 model Order {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId String? @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String? @db.ObjectId
+  orderNumber String  @unique
 
   firstName    String
   lastName     String
@@ -257,6 +280,7 @@ model Order {
   country       String
   zipCode       String
 
+  tax            Int   @default(0)
   subtotal       Float @default(0.00)
   discountAmount Float @default(0.00)
   shippingCost   Float @default(0.00)
@@ -277,44 +301,24 @@ model Order {
   updatedAt DateTime @updatedAt
 
   coupon Coupon? @relation(fields: [couponId], references: [id])
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user   User?   @relation(fields: [userId], references: [id])
 }
 
 model OrderItem {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  orderId   String @db.ObjectId
-  productId String @db.ObjectId
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String  @db.ObjectId
+  productId String  @db.ObjectId
   title     String
   code      String
-  price     Float  @default(0.00)
-  quantity  Int
-  total     Float  @default(0.00)
+  price     Float   @default(0.00)
+  quantity  Int     @default(0)
+  total     Float   @default(0.00)
+  brand     String?
+  imageUrl  String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   order   Order   @relation(fields: [orderId], references: [id])
   product Product @relation(fields: [productId], references: [id])
-}
-
-enum OrderStatus {
-  PENDING // Pendiente
-  PROCESSING // En proceso
-  SHIPPED // Enviado
-  DELIVERED // Entregado
-  CANCELED // Cancelado
-}
-
-enum PaymentStatus {
-  UNPAID // No pagado
-  PARTIAL // Pagado parcialmente
-  PAID // Pagado
-  REFUNDED // Reembolsado
-}
-
-enum PaymentMethod {
-  CASH
-  CARD
-  TRANSFER
-  OTHER
 }

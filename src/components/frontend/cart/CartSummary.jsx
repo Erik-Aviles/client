@@ -18,47 +18,53 @@ export default function CartSummary() {
   } = useSelector((store) => store.cart.totals);
 
   return (
-    <div className="h-min md:col-span-full lg:col-span-4 bg-white border rounded-lg dark:bg-slate-800 text-slate-800 overflow-hidden px-6 py-4 lg:p-7">
-      <h2 className="dark:text-slate-300 text-xl fon t-semibold mb-4">
+    <div className="h-min md:col-span-full lg:col-span-4 bg-slate-50 border rounded-lg dark:bg-slate-800 text-slate-800 overflow-hidden px-6 py-4 lg:p-7">
+      <h2 className="dark:text-slate-300 text-xl font-bold mb-4">
         Resumen del pedido
       </h2>
-      <div className="space-y-1 text-sm text-gray-700 dark:text-gray-300">
-        <SummaryLine label="Subtotal (sin impuestos)" value={subtotalWithoutTax} />
+      <div className="mt-4 space-y-2 text-sm">
+        <SummaryLine
+          label="Subtotal (sin impuestos)"
+          value={subtotalWithoutTax}
+        />
         <SummaryLine label={`Impuesto (${tax}%)`} value={taxTotal} />
         <div className="pt-2">
           <CouponInput coupon={coupon.couponCode} />
         </div>
         {discountAmount > 0 && (
-          <div className="flex justify-between border-b pb-2 text-lime-600 font-medium text-xs">
-            <span>Cupon: ({coupon.couponCode})</span>
-            <span className="font-bold">- ${discountAmount.toFixed(2)}</span>
-          </div>
-        )}
-
-        {/* Totales finales */}
-        <div className="space-y-1 pt-2">
-          {discountAmount > 0 && (
-            <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
-              <span>Total estimado sin descuento</span>
-              <span className="line-through">${subtotal.toFixed(2)}</span>
-            </div>
-          )}
-          <div className="flex justify-between text-base font-semibold text-gray-800 dark:text-gray-200 py-1">
-            <span>
-              {coupon.value > 0
-                ? "Total estimado con descuento"
-                : "Total estimado"}
-            </span>
-            <span>${taxableBase?.toFixed(2)}</span>
-          </div>
-
-          <Notification
-            title="Costo total estimado"
-            text="El precio final se calculará en el momento del pago. Total estimado incluye impuesto y descuento (si aplica)"
+          <SummaryLine
+            label={`Cupon: (${coupon.couponCode})`}
+            value={-Math.abs(discountAmount)}
+            emphasis
           />
-        </div>
-      </div>
+        )}
+        {/* Totales finales */}
 
+        {discountAmount > 0 && (
+          <>
+            <div className="my-3 border-slate-200 dark:border-slate-700">
+              <SummaryLine
+                label="Total estimado sin descuento"
+                value={subtotal}
+                crossed
+              />
+            </div>
+            <div className="my-3 border-t border-slate-200 dark:border-slate-700" />
+          </>
+        )}
+        <SummaryLine
+          label={
+            coupon.value > 0 ? "Total estimado con descuento" : "Total estimado"
+          }
+          value={taxableBase}
+          big
+          strong
+        />
+      </div>
+      <Notification
+        title="Costo total estimado"
+        text="El precio final se calculará en el momento del pago. Total estimado incluye impuesto y descuento (si aplica)"
+      />
       <div className="mt-6 flex gap-3">
         <Link
           href={"/checkout"}

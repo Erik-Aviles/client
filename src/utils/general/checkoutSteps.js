@@ -20,9 +20,4 @@ export const checkoutSteps = [
     name: "order-summary",
     title: "Resumen del pedido",
   },
-  {
-    id: 5,
-    name: "confirmation",
-    title: "Confirmación",
-  },
 ];

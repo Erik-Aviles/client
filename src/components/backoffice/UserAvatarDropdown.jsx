@@ -54,7 +54,7 @@ export default function UserAvatarDropdown({ user }) {
               {email}
             </div>
           </div>
-          <ul className="py-2 text-xs text-gray-700 dark:text-gray-200">
+          <ul className="py-2 flex flex-col gap-3 text-xs text-gray-700 dark:text-gray-200">
             <li>
               <Link
                 href="/dashboard"
@@ -73,15 +73,17 @@ export default function UserAvatarDropdown({ user }) {
                 <span>Perfil</span>
               </Link>
             </li>
-            <li>
-              <Link
-                href="/dashboard/orders"
-                className="flex items-center space-x-2 px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                <Package className="w-4 h-4" />
-                <span>Pedidos</span>
-              </Link>
-            </li>
+            {user?.role === "USER" && (
+              <li>
+                <Link
+                  href="/dashboard/orders"
+                  className="flex items-center space-x-2 px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  <Package className="w-4 h-4" />
+                  <span>Mis pedidos</span>
+                </Link>
+              </li>
+            )}
           </ul>
 
           <div className="py-3">

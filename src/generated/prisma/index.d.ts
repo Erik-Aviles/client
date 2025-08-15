@@ -13157,6 +13157,7 @@ export namespace Prisma {
   }
 
   export type OrderAvgAggregateOutputType = {
+    tax: number | null
     subtotal: number | null
     discountAmount: number | null
     shippingCost: number | null
@@ -13164,6 +13165,7 @@ export namespace Prisma {
   }
 
   export type OrderSumAggregateOutputType = {
+    tax: number | null
     subtotal: number | null
     discountAmount: number | null
     shippingCost: number | null
@@ -13173,6 +13175,7 @@ export namespace Prisma {
   export type OrderMinAggregateOutputType = {
     id: string | null
     userId: string | null
+    orderNumber: string | null
     firstName: string | null
     lastName: string | null
     emailAddress: string | null
@@ -13181,6 +13184,7 @@ export namespace Prisma {
     city: string | null
     country: string | null
     zipCode: string | null
+    tax: number | null
     subtotal: number | null
     discountAmount: number | null
     shippingCost: number | null
@@ -13198,6 +13202,7 @@ export namespace Prisma {
   export type OrderMaxAggregateOutputType = {
     id: string | null
     userId: string | null
+    orderNumber: string | null
     firstName: string | null
     lastName: string | null
     emailAddress: string | null
@@ -13206,6 +13211,7 @@ export namespace Prisma {
     city: string | null
     country: string | null
     zipCode: string | null
+    tax: number | null
     subtotal: number | null
     discountAmount: number | null
     shippingCost: number | null
@@ -13223,6 +13229,7 @@ export namespace Prisma {
   export type OrderCountAggregateOutputType = {
     id: number
     userId: number
+    orderNumber: number
     firstName: number
     lastName: number
     emailAddress: number
@@ -13231,6 +13238,7 @@ export namespace Prisma {
     city: number
     country: number
     zipCode: number
+    tax: number
     subtotal: number
     discountAmount: number
     shippingCost: number
@@ -13248,6 +13256,7 @@ export namespace Prisma {
 
 
   export type OrderAvgAggregateInputType = {
+    tax?: true
     subtotal?: true
     discountAmount?: true
     shippingCost?: true
@@ -13255,6 +13264,7 @@ export namespace Prisma {
   }
 
   export type OrderSumAggregateInputType = {
+    tax?: true
     subtotal?: true
     discountAmount?: true
     shippingCost?: true
@@ -13264,6 +13274,7 @@ export namespace Prisma {
   export type OrderMinAggregateInputType = {
     id?: true
     userId?: true
+    orderNumber?: true
     firstName?: true
     lastName?: true
     emailAddress?: true
@@ -13272,6 +13283,7 @@ export namespace Prisma {
     city?: true
     country?: true
     zipCode?: true
+    tax?: true
     subtotal?: true
     discountAmount?: true
     shippingCost?: true
@@ -13289,6 +13301,7 @@ export namespace Prisma {
   export type OrderMaxAggregateInputType = {
     id?: true
     userId?: true
+    orderNumber?: true
     firstName?: true
     lastName?: true
     emailAddress?: true
@@ -13297,6 +13310,7 @@ export namespace Prisma {
     city?: true
     country?: true
     zipCode?: true
+    tax?: true
     subtotal?: true
     discountAmount?: true
     shippingCost?: true
@@ -13314,6 +13328,7 @@ export namespace Prisma {
   export type OrderCountAggregateInputType = {
     id?: true
     userId?: true
+    orderNumber?: true
     firstName?: true
     lastName?: true
     emailAddress?: true
@@ -13322,6 +13337,7 @@ export namespace Prisma {
     city?: true
     country?: true
     zipCode?: true
+    tax?: true
     subtotal?: true
     discountAmount?: true
     shippingCost?: true
@@ -13426,6 +13442,7 @@ export namespace Prisma {
   export type OrderGroupByOutputType = {
     id: string
     userId: string | null
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress: string | null
@@ -13434,6 +13451,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax: number
     subtotal: number
     discountAmount: number
     shippingCost: number
@@ -13470,6 +13488,7 @@ export namespace Prisma {
   export type OrderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    orderNumber?: boolean
     firstName?: boolean
     lastName?: boolean
     emailAddress?: boolean
@@ -13478,6 +13497,7 @@ export namespace Prisma {
     city?: boolean
     country?: boolean
     zipCode?: boolean
+    tax?: boolean
     subtotal?: boolean
     discountAmount?: boolean
     shippingCost?: boolean
@@ -13501,6 +13521,7 @@ export namespace Prisma {
   export type OrderSelectScalar = {
     id?: boolean
     userId?: boolean
+    orderNumber?: boolean
     firstName?: boolean
     lastName?: boolean
     emailAddress?: boolean
@@ -13509,6 +13530,7 @@ export namespace Prisma {
     city?: boolean
     country?: boolean
     zipCode?: boolean
+    tax?: boolean
     subtotal?: boolean
     discountAmount?: boolean
     shippingCost?: boolean
@@ -13523,7 +13545,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "firstName" | "lastName" | "emailAddress" | "phoneNumber" | "streetAddress" | "city" | "country" | "zipCode" | "subtotal" | "discountAmount" | "shippingCost" | "total" | "paymentMethod" | "paymentStatus" | "paymentToken" | "couponId" | "notes" | "orderStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "orderNumber" | "firstName" | "lastName" | "emailAddress" | "phoneNumber" | "streetAddress" | "city" | "country" | "zipCode" | "tax" | "subtotal" | "discountAmount" | "shippingCost" | "total" | "paymentMethod" | "paymentStatus" | "paymentToken" | "couponId" | "notes" | "orderStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderItems?: boolean | Order$orderItemsArgs<ExtArgs>
     coupon?: boolean | Order$couponArgs<ExtArgs>
@@ -13541,6 +13563,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string | null
+      orderNumber: string
       firstName: string
       lastName: string
       emailAddress: string | null
@@ -13549,6 +13572,7 @@ export namespace Prisma {
       city: string
       country: string
       zipCode: string
+      tax: number
       subtotal: number
       discountAmount: number
       shippingCost: number
@@ -13958,6 +13982,7 @@ export namespace Prisma {
   interface OrderFieldRefs {
     readonly id: FieldRef<"Order", 'String'>
     readonly userId: FieldRef<"Order", 'String'>
+    readonly orderNumber: FieldRef<"Order", 'String'>
     readonly firstName: FieldRef<"Order", 'String'>
     readonly lastName: FieldRef<"Order", 'String'>
     readonly emailAddress: FieldRef<"Order", 'String'>
@@ -13966,6 +13991,7 @@ export namespace Prisma {
     readonly city: FieldRef<"Order", 'String'>
     readonly country: FieldRef<"Order", 'String'>
     readonly zipCode: FieldRef<"Order", 'String'>
+    readonly tax: FieldRef<"Order", 'Int'>
     readonly subtotal: FieldRef<"Order", 'Float'>
     readonly discountAmount: FieldRef<"Order", 'Float'>
     readonly shippingCost: FieldRef<"Order", 'Float'>
@@ -14461,6 +14487,8 @@ export namespace Prisma {
     price: number | null
     quantity: number | null
     total: number | null
+    brand: string | null
+    imageUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14474,6 +14502,8 @@ export namespace Prisma {
     price: number | null
     quantity: number | null
     total: number | null
+    brand: string | null
+    imageUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14487,6 +14517,8 @@ export namespace Prisma {
     price: number
     quantity: number
     total: number
+    brand: number
+    imageUrl: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -14514,6 +14546,8 @@ export namespace Prisma {
     price?: true
     quantity?: true
     total?: true
+    brand?: true
+    imageUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14527,6 +14561,8 @@ export namespace Prisma {
     price?: true
     quantity?: true
     total?: true
+    brand?: true
+    imageUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14540,6 +14576,8 @@ export namespace Prisma {
     price?: true
     quantity?: true
     total?: true
+    brand?: true
+    imageUrl?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -14640,6 +14678,8 @@ export namespace Prisma {
     price: number
     quantity: number
     total: number
+    brand: string | null
+    imageUrl: string | null
     createdAt: Date
     updatedAt: Date
     _count: OrderItemCountAggregateOutputType | null
@@ -14672,6 +14712,8 @@ export namespace Prisma {
     price?: boolean
     quantity?: boolean
     total?: boolean
+    brand?: boolean
+    imageUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
@@ -14689,11 +14731,13 @@ export namespace Prisma {
     price?: boolean
     quantity?: boolean
     total?: boolean
+    brand?: boolean
+    imageUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "productId" | "title" | "code" | "price" | "quantity" | "total" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
+  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "productId" | "title" | "code" | "price" | "quantity" | "total" | "brand" | "imageUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
   export type OrderItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
@@ -14714,6 +14758,8 @@ export namespace Prisma {
       price: number
       quantity: number
       total: number
+      brand: string | null
+      imageUrl: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["orderItem"]>
@@ -15118,6 +15164,8 @@ export namespace Prisma {
     readonly price: FieldRef<"OrderItem", 'Float'>
     readonly quantity: FieldRef<"OrderItem", 'Int'>
     readonly total: FieldRef<"OrderItem", 'Float'>
+    readonly brand: FieldRef<"OrderItem", 'String'>
+    readonly imageUrl: FieldRef<"OrderItem", 'String'>
     readonly createdAt: FieldRef<"OrderItem", 'DateTime'>
     readonly updatedAt: FieldRef<"OrderItem", 'DateTime'>
   }
@@ -15689,6 +15737,7 @@ export namespace Prisma {
   export const OrderScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
+    orderNumber: 'orderNumber',
     firstName: 'firstName',
     lastName: 'lastName',
     emailAddress: 'emailAddress',
@@ -15697,6 +15746,7 @@ export namespace Prisma {
     city: 'city',
     country: 'country',
     zipCode: 'zipCode',
+    tax: 'tax',
     subtotal: 'subtotal',
     discountAmount: 'discountAmount',
     shippingCost: 'shippingCost',
@@ -15723,6 +15773,8 @@ export namespace Prisma {
     price: 'price',
     quantity: 'quantity',
     total: 'total',
+    brand: 'brand',
+    imageUrl: 'imageUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16786,6 +16838,7 @@ export namespace Prisma {
     NOT?: OrderWhereInput | OrderWhereInput[]
     id?: StringFilter<"Order"> | string
     userId?: StringNullableFilter<"Order"> | string | null
+    orderNumber?: StringFilter<"Order"> | string
     firstName?: StringFilter<"Order"> | string
     lastName?: StringFilter<"Order"> | string
     emailAddress?: StringNullableFilter<"Order"> | string | null
@@ -16794,6 +16847,7 @@ export namespace Prisma {
     city?: StringFilter<"Order"> | string
     country?: StringFilter<"Order"> | string
     zipCode?: StringFilter<"Order"> | string
+    tax?: IntFilter<"Order"> | number
     subtotal?: FloatFilter<"Order"> | number
     discountAmount?: FloatFilter<"Order"> | number
     shippingCost?: FloatFilter<"Order"> | number
@@ -16814,6 +16868,7 @@ export namespace Prisma {
   export type OrderOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
+    orderNumber?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     emailAddress?: SortOrder
@@ -16822,6 +16877,7 @@ export namespace Prisma {
     city?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
+    tax?: SortOrder
     subtotal?: SortOrder
     discountAmount?: SortOrder
     shippingCost?: SortOrder
@@ -16841,6 +16897,7 @@ export namespace Prisma {
 
   export type OrderWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    orderNumber?: string
     AND?: OrderWhereInput | OrderWhereInput[]
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
@@ -16853,6 +16910,7 @@ export namespace Prisma {
     city?: StringFilter<"Order"> | string
     country?: StringFilter<"Order"> | string
     zipCode?: StringFilter<"Order"> | string
+    tax?: IntFilter<"Order"> | number
     subtotal?: FloatFilter<"Order"> | number
     discountAmount?: FloatFilter<"Order"> | number
     shippingCost?: FloatFilter<"Order"> | number
@@ -16868,11 +16926,12 @@ export namespace Prisma {
     orderItems?: OrderItemListRelationFilter
     coupon?: XOR<CouponNullableScalarRelationFilter, CouponWhereInput> | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }, "id">
+  }, "id" | "orderNumber">
 
   export type OrderOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
+    orderNumber?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     emailAddress?: SortOrder
@@ -16881,6 +16940,7 @@ export namespace Prisma {
     city?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
+    tax?: SortOrder
     subtotal?: SortOrder
     discountAmount?: SortOrder
     shippingCost?: SortOrder
@@ -16906,6 +16966,7 @@ export namespace Prisma {
     NOT?: OrderScalarWhereWithAggregatesInput | OrderScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Order"> | string
     userId?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    orderNumber?: StringWithAggregatesFilter<"Order"> | string
     firstName?: StringWithAggregatesFilter<"Order"> | string
     lastName?: StringWithAggregatesFilter<"Order"> | string
     emailAddress?: StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -16914,6 +16975,7 @@ export namespace Prisma {
     city?: StringWithAggregatesFilter<"Order"> | string
     country?: StringWithAggregatesFilter<"Order"> | string
     zipCode?: StringWithAggregatesFilter<"Order"> | string
+    tax?: IntWithAggregatesFilter<"Order"> | number
     subtotal?: FloatWithAggregatesFilter<"Order"> | number
     discountAmount?: FloatWithAggregatesFilter<"Order"> | number
     shippingCost?: FloatWithAggregatesFilter<"Order"> | number
@@ -16940,6 +17002,8 @@ export namespace Prisma {
     price?: FloatFilter<"OrderItem"> | number
     quantity?: IntFilter<"OrderItem"> | number
     total?: FloatFilter<"OrderItem"> | number
+    brand?: StringNullableFilter<"OrderItem"> | string | null
+    imageUrl?: StringNullableFilter<"OrderItem"> | string | null
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
@@ -16955,6 +17019,8 @@ export namespace Prisma {
     price?: SortOrder
     quantity?: SortOrder
     total?: SortOrder
+    brand?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     order?: OrderOrderByWithRelationInput
@@ -16973,6 +17039,8 @@ export namespace Prisma {
     price?: FloatFilter<"OrderItem"> | number
     quantity?: IntFilter<"OrderItem"> | number
     total?: FloatFilter<"OrderItem"> | number
+    brand?: StringNullableFilter<"OrderItem"> | string | null
+    imageUrl?: StringNullableFilter<"OrderItem"> | string | null
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
@@ -16988,6 +17056,8 @@ export namespace Prisma {
     price?: SortOrder
     quantity?: SortOrder
     total?: SortOrder
+    brand?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: OrderItemCountOrderByAggregateInput
@@ -17009,6 +17079,8 @@ export namespace Prisma {
     price?: FloatWithAggregatesFilter<"OrderItem"> | number
     quantity?: IntWithAggregatesFilter<"OrderItem"> | number
     total?: FloatWithAggregatesFilter<"OrderItem"> | number
+    brand?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+    imageUrl?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
   }
@@ -18021,6 +18093,7 @@ export namespace Prisma {
 
   export type OrderCreateInput = {
     id?: string
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -18029,6 +18102,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -18048,6 +18122,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateInput = {
     id?: string
     userId?: string | null
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -18056,6 +18131,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -18072,6 +18148,7 @@ export namespace Prisma {
   }
 
   export type OrderUpdateInput = {
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18080,6 +18157,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -18098,6 +18176,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateInput = {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18106,6 +18185,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -18124,6 +18204,7 @@ export namespace Prisma {
   export type OrderCreateManyInput = {
     id?: string
     userId?: string | null
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -18132,6 +18213,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -18147,6 +18229,7 @@ export namespace Prisma {
   }
 
   export type OrderUpdateManyMutationInput = {
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18155,6 +18238,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -18170,6 +18254,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateManyInput = {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18178,6 +18263,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -18197,8 +18283,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     order: OrderCreateNestedOneWithoutOrderItemsInput
@@ -18212,8 +18300,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18224,6 +18314,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
@@ -18238,6 +18330,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18249,8 +18343,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18261,6 +18357,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18273,6 +18371,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19060,6 +19160,17 @@ export namespace Prisma {
     value?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type EnumPaymentMethodNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel> | null
     in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel> | null
@@ -19090,6 +19201,7 @@ export namespace Prisma {
   export type OrderCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    orderNumber?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     emailAddress?: SortOrder
@@ -19098,6 +19210,7 @@ export namespace Prisma {
     city?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
+    tax?: SortOrder
     subtotal?: SortOrder
     discountAmount?: SortOrder
     shippingCost?: SortOrder
@@ -19113,6 +19226,7 @@ export namespace Prisma {
   }
 
   export type OrderAvgOrderByAggregateInput = {
+    tax?: SortOrder
     subtotal?: SortOrder
     discountAmount?: SortOrder
     shippingCost?: SortOrder
@@ -19122,6 +19236,7 @@ export namespace Prisma {
   export type OrderMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    orderNumber?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     emailAddress?: SortOrder
@@ -19130,6 +19245,7 @@ export namespace Prisma {
     city?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
+    tax?: SortOrder
     subtotal?: SortOrder
     discountAmount?: SortOrder
     shippingCost?: SortOrder
@@ -19147,6 +19263,7 @@ export namespace Prisma {
   export type OrderMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    orderNumber?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     emailAddress?: SortOrder
@@ -19155,6 +19272,7 @@ export namespace Prisma {
     city?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
+    tax?: SortOrder
     subtotal?: SortOrder
     discountAmount?: SortOrder
     shippingCost?: SortOrder
@@ -19170,10 +19288,27 @@ export namespace Prisma {
   }
 
   export type OrderSumOrderByAggregateInput = {
+    tax?: SortOrder
     subtotal?: SortOrder
     discountAmount?: SortOrder
     shippingCost?: SortOrder
     total?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumPaymentMethodNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19207,17 +19342,6 @@ export namespace Prisma {
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type OrderScalarRelationFilter = {
     is?: OrderWhereInput
     isNot?: OrderWhereInput
@@ -19237,6 +19361,8 @@ export namespace Prisma {
     price?: SortOrder
     quantity?: SortOrder
     total?: SortOrder
+    brand?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19256,6 +19382,8 @@ export namespace Prisma {
     price?: SortOrder
     quantity?: SortOrder
     total?: SortOrder
+    brand?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19269,6 +19397,8 @@ export namespace Prisma {
     price?: SortOrder
     quantity?: SortOrder
     total?: SortOrder
+    brand?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19277,22 +19407,6 @@ export namespace Prisma {
     price?: SortOrder
     quantity?: SortOrder
     total?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -20030,6 +20144,14 @@ export namespace Prisma {
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NullableEnumPaymentMethodFieldUpdateOperationsInput = {
     set?: $Enums.PaymentMethod | null
     unset?: boolean
@@ -20101,14 +20223,6 @@ export namespace Prisma {
     create?: XOR<ProductCreateWithoutOrderItemInput, ProductUncheckedCreateWithoutOrderItemInput>
     connectOrCreate?: ProductCreateOrConnectWithoutOrderItemInput
     connect?: ProductWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type OrderUpdateOneRequiredWithoutOrderItemsNestedInput = {
@@ -20391,6 +20505,22 @@ export namespace Prisma {
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type NestedEnumPaymentMethodNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel> | null
     in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel> | null
@@ -20420,22 +20550,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumOrderStatusFilter<$PrismaModel>
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type ProductCreateWithoutCategoryInput = {
@@ -20855,6 +20969,7 @@ export namespace Prisma {
 
   export type OrderCreateWithoutUserInput = {
     id?: string
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -20863,6 +20978,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -20880,6 +20996,7 @@ export namespace Prisma {
 
   export type OrderUncheckedCreateWithoutUserInput = {
     id?: string
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -20888,6 +21005,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -21055,6 +21173,7 @@ export namespace Prisma {
     NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
     id?: StringFilter<"Order"> | string
     userId?: StringNullableFilter<"Order"> | string | null
+    orderNumber?: StringFilter<"Order"> | string
     firstName?: StringFilter<"Order"> | string
     lastName?: StringFilter<"Order"> | string
     emailAddress?: StringNullableFilter<"Order"> | string | null
@@ -21063,6 +21182,7 @@ export namespace Prisma {
     city?: StringFilter<"Order"> | string
     country?: StringFilter<"Order"> | string
     zipCode?: StringFilter<"Order"> | string
+    tax?: IntFilter<"Order"> | number
     subtotal?: FloatFilter<"Order"> | number
     discountAmount?: FloatFilter<"Order"> | number
     shippingCost?: FloatFilter<"Order"> | number
@@ -21764,8 +21884,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     order: OrderCreateNestedOneWithoutOrderItemsInput
@@ -21777,8 +21899,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -21997,12 +22121,15 @@ export namespace Prisma {
     price?: FloatFilter<"OrderItem"> | number
     quantity?: IntFilter<"OrderItem"> | number
     total?: FloatFilter<"OrderItem"> | number
+    brand?: StringNullableFilter<"OrderItem"> | string | null
+    imageUrl?: StringNullableFilter<"OrderItem"> | string | null
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     updatedAt?: DateTimeFilter<"OrderItem"> | Date | string
   }
 
   export type OrderCreateWithoutCouponInput = {
     id?: string
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -22011,6 +22138,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -22029,6 +22157,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutCouponInput = {
     id?: string
     userId?: string | null
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -22037,6 +22166,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -22081,8 +22211,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     product: ProductCreateNestedOneWithoutOrderItemInput
@@ -22094,8 +22226,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22275,6 +22409,7 @@ export namespace Prisma {
 
   export type OrderCreateWithoutOrderItemsInput = {
     id?: string
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -22283,6 +22418,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -22301,6 +22437,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutOrderItemsInput = {
     id?: string
     userId?: string | null
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -22309,6 +22446,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -22393,6 +22531,7 @@ export namespace Prisma {
   }
 
   export type OrderUpdateWithoutOrderItemsInput = {
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22401,6 +22540,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -22418,6 +22558,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateWithoutOrderItemsInput = {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22426,6 +22567,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -22729,6 +22871,7 @@ export namespace Prisma {
 
   export type OrderCreateManyUserInput = {
     id?: string
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -22737,6 +22880,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -22820,6 +22964,7 @@ export namespace Prisma {
   }
 
   export type OrderUpdateWithoutUserInput = {
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22828,6 +22973,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -22844,6 +22990,7 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedUpdateWithoutUserInput = {
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22852,6 +22999,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -22868,6 +23016,7 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedUpdateManyWithoutUserInput = {
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22876,6 +23025,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -23078,8 +23228,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23090,6 +23242,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
@@ -23102,6 +23256,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23113,6 +23269,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23120,6 +23278,7 @@ export namespace Prisma {
   export type OrderCreateManyCouponInput = {
     id?: string
     userId?: string | null
+    orderNumber: string
     firstName: string
     lastName: string
     emailAddress?: string | null
@@ -23128,6 +23287,7 @@ export namespace Prisma {
     city: string
     country: string
     zipCode: string
+    tax?: number
     subtotal?: number
     discountAmount?: number
     shippingCost?: number
@@ -23142,6 +23302,7 @@ export namespace Prisma {
   }
 
   export type OrderUpdateWithoutCouponInput = {
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23150,6 +23311,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -23167,6 +23329,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateWithoutCouponInput = {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23175,6 +23338,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -23191,6 +23355,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateManyWithoutCouponInput = {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     emailAddress?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23199,6 +23364,7 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     zipCode?: StringFieldUpdateOperationsInput | string
+    tax?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     discountAmount?: FloatFieldUpdateOperationsInput | number
     shippingCost?: FloatFieldUpdateOperationsInput | number
@@ -23218,8 +23384,10 @@ export namespace Prisma {
     title: string
     code: string
     price?: number
-    quantity: number
+    quantity?: number
     total?: number
+    brand?: string | null
+    imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23230,6 +23398,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: ProductUpdateOneRequiredWithoutOrderItemNestedInput
@@ -23242,6 +23412,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23253,6 +23425,8 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

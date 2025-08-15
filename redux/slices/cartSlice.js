@@ -77,8 +77,7 @@ const cartSlice = createSlice({
         state.items.push({
           id,
           title,
-          price,
-          salePrice,
+          price: salePrice > 0 ? salePrice : price,
           qty: 1,
           brand,
           imageUrl,
