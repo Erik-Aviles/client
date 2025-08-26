@@ -12,7 +12,7 @@ const nameCompany = companyData?.name;
 export async function POST(request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
-    const { name, email, password, role } = await request.json();
+    const { lastName, firstName, email, password, role } = await request.json();
     const existingUser = await db.user.findUnique({
       where: { email },
     });
@@ -27,19 +27,18 @@ export async function POST(request) {
 
     //Generate Token
     const rawToken = uuidv4();
-    console.log(rawToken);
     const token = base64url.encode(rawToken);
 
     const newUser = await db.user.create({
       data: {
-        name,
+        lastName,
+        firstName,
         email,
         password: hasedPassword,
         role,
         verificationToken: token,
       },
     });
-    console.log("Nuevo usuario registrado: ", newUser);
 
     if (role === "SUPPLIER") {
       const userId = newUser.id;
@@ -53,15 +52,14 @@ export async function POST(request) {
         to: "boderoracing2016@gmail.com",
         subject: subject,
         react: EmailTemplate({
-          name,
+          firstName,
+          lastName,
           redirectUrl,
           linkText,
           description,
           subject,
         }),
       });
-
-      console.log(sendMail);
     }
 
     return NextResponse.json(

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getData } from "@/lib/getData";
-import { CheckCircle2, Home } from "lucide-react";
+import { CheckCircle2, Home, XCircle } from "lucide-react";
 import calcularImpuesto from "@/lib/calcularImpuesto";
 import { fmt } from "@/utils/formats/currencyFormat";
 import SummaryLine from "@/components/frontend/cart/SummaryLine";
@@ -9,20 +9,46 @@ import SubTitle3 from "@/components/backoffice/styledComponent/SubTitle3";
 import { formatDateToEcuador } from "@/utils/formats/formatDateToEcuador";
 
 export default async function OrderConfirmationPage({ params }) {
-  const { id } = await params;
-  const order = await getData(`orders/${id}`);
-  console.log("Mi orden", order);
+ const { id } = await params;
+
+  let order = null;
+  try {
+    order = await getData(`orders/${id}`);
+  } catch (error) {
+    console.error("Error cargando pedido:", error);
+  }
+
+  if (!order) {
+    return (
+      <section className="min-h-[70vh] flex items-center justify-center">
+        <div className="text-center">
+          <XCircle className="h-12 w-12 text-red-500 mx-auto mb-3" />
+          <h1 className="text-xl font-bold mb-2">Pedido no encontrado</h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            Puede que el pedido haya sido cancelado o el enlace no sea válido.
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/40"
+          >
+            <Home className="h-4 w-4" />
+            Volver al inicio
+          </Link>
+        </div>
+      </section>
+    );
+  }
 
   // --- Derivados / defensivos ---
-  const taxTotal = calcularImpuesto(order.subtotal, order.tax || 15);
-  const subtotalWithoutTax = Math.max(0, order.subtotal - taxTotal);
+  const taxTotal = calcularImpuesto(order?.subtotal, order?.tax || 15);
+  const subtotalWithoutTax = Math.max(0, order?.subtotal - taxTotal);
 
   const safeTotals = {
-    tax: Number(order.tax || 15),
+    tax: Number(order?.tax || 15),
     taxTotal: Number(taxTotal ?? 0),
     subtotal: Number(order?.subtotal ?? 0),
     subtotalWithoutTax: Number(subtotalWithoutTax ?? 0),
-    discount: Number(order?.coupon.value ?? 0),
+    discount: Number(order?.coupon?.value ?? 0),
     discountAmount: Number(order?.discountAmount ?? 0),
     shippingCost: Number(order?.shippingCost ?? 0),
     total: Number(order?.total ?? 0),
@@ -52,19 +78,19 @@ export default async function OrderConfirmationPage({ params }) {
             <div className=" p-5 md:p-6">
               <SubTitle3
                 title=" Artículos del pedido"
-                className="text-sm md:text-base leading-2 font-bold opacity-50 uppercase"
+                className="dark:text-amber-500 text-sm md:text-base leading-2 font-bold uppercase"
               />
 
               {order?.orderItems?.length > 0 ? (
                 <ul className="mt-4 divide-y divide-slate-200 dark:divide-slate-700">
                   {order?.orderItems.map((it) => {
-                    const imageUrl = it.imageUrl || "/logo.png";
+                    const imageUrl = it?.imageUrl || "/logo.png";
                     return (
-                      <li key={it.id} className="flex items-center gap-4 py-4">
+                      <li key={it?.id} className="flex items-center gap-4 py-4">
                         <div className="h-16 w-16 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50">
                           <Image
                             src={imageUrl}
-                            alt={it.title}
+                            alt={it?.title}
                             width={64}
                             height={64}
                             className="h-full w-full object-cover"
@@ -72,14 +98,14 @@ export default async function OrderConfirmationPage({ params }) {
                         </div>
                         <div className="flex-1">
                           <p className="text-sm md:text-base font-medium text-slate-900 dark:text-slate-100">
-                            {it.title}
+                            {it?.title}
                           </p>
                           <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                            x{it.quantity} {it.brand ? `• ${it.brand}` : ""}
+                            x{it?.quantity} {it?.brand ? `• ${it?.brand}` : ""}
                           </p>
                         </div>
                         <div className="text-sm md:text-base font-semibold text-slate-900 dark:text-slate-100">
-                          {fmt(it.price * it.quantity)}
+                          {fmt(it?.price * it?.quantity)}
                         </div>
                       </li>
                     );
@@ -91,10 +117,10 @@ export default async function OrderConfirmationPage({ params }) {
                 </p>
               )}
             </div>
-            <div className="p-5 md:p-6 ">
+            <div className="p-5 md:p-6">
               <SubTitle3
                 title="Resumen de pago"
-                className="text-sm md:text-base leading-2 font-bold opacity-50 uppercase  pt-8  border-t  border-slate-200 dark:border-slate-700  "
+                className="dark:text-amber-500 text-sm md:text-base leading-2 font-bold uppercase  pt-8  border-t  border-slate-200 dark:border-slate-700  "
               />
               <div className="mt-4 space-y-2 text-xs md:text-sm">
                 <SummaryLine
@@ -151,7 +177,7 @@ export default async function OrderConfirmationPage({ params }) {
               <div className="border-b dark:border-slate-600 pb-4">
                 <SubTitle3
                   title="Informacion del pedido"
-                  className="text-sm md:text-base leading-2 font-bold opacity-50 uppercase"
+                  className="dark:text-amber-500 text-sm md:text-base leading-2 font-bold uppercase"
                 />
                 <div className="mt-3 text-sm text-slate-600 dark:text-slate-300 space-y-1">
                   <p>
@@ -194,7 +220,7 @@ export default async function OrderConfirmationPage({ params }) {
               <div className="border-b dark:border-slate-600 pb-4">
                 <SubTitle3
                   title="Datos de envío"
-                  className="text-sm md:text-base leading-2 font-bold opacity-50 uppercase"
+                  className="text-sm md:text-base leading-2 font-bold dark:text-amber-500 uppercase"
                 />
                 <div className="mt-3 text-sm text-slate-600 dark:text-slate-300 space-y-1">
                   <p>
@@ -216,7 +242,7 @@ export default async function OrderConfirmationPage({ params }) {
               <div className="border-b dark:border-slate-600 pb-4">
                 <SubTitle3
                   title="Direccion de facturación"
-                  className="text-sm md:text-base leading-2 font-bold opacity-50 uppercase "
+                  className="text-sm md:text-base leading-2 font-bold dark:text-amber-500 uppercase "
                 />
                 <div className="mt-3 text-sm text-slate-600 dark:text-slate-300 space-y-1">
                   <p>
@@ -236,15 +262,15 @@ export default async function OrderConfirmationPage({ params }) {
               <div className="border-b dark:border-slate-600 pb-4">
                 <SubTitle3
                   title=" Método de pago"
-                  className="text-sm md:text-base leading-2 font-bold opacity-50 uppercase"
+                  className="text-sm md:text-base leading-2 font-bold dark:text-amber-500 uppercase"
                 />
                 <div className="mt-3 text-sm text-slate-600 dark:text-slate-300 space-y-1">
                   <p>
                     {{
-                      CASH: "Efectivo",
-                      CARD: "Tarjeta de crédito",
-                      TRANSFER: "Transferencia",
-                      OTHER: "Otros",
+                      CASH: "EFECTIVO",
+                      CARD: "TARJETA DE CREDITO",
+                      TRANSFER: "TRANSFERENCIA",
+                      OTHER: "OTROS",
                     }[order.paymentMethod] ||
                       order.paymentMethod ||
                       "—"}

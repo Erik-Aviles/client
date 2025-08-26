@@ -1,10 +1,8 @@
-import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import { compare } from "bcrypt";
 import db from "./db";
-// import { UserRole } from "@prisma/client";
 
 export const authOptions = {
   adapter: PrismaAdapter(db),
@@ -24,51 +22,34 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          console.log(
-            "La función de autorización recibió credenciales:",
-            credentials
-          );
-
           if (!credentials?.email || !credentials?.password) {
             throw { error: "No se encontraron entradas", status: 401 };
           }
-          console.log("Passed Check 1 ");
-
           const existingUser = await db.user.findUnique({
             where: { email: credentials.email },
           });
           if (!existingUser) {
-            console.log("Ningún usuario encontrado");
             throw { error: "Ningún usuario encontrado", status: 401 };
           }
 
-          console.log("Pasó la comprobación 2");
-
-          //Check if Password is correct
           const passwordMatch = await compare(
             credentials.password,
             existingUser.password
           );
           if (!passwordMatch) {
-            console.log("Contraseña incorrecta");
             throw { error: "Contraseña incorrecta", status: 401 };
           }
-          console.log("Pase 3 marcado");
           const user = {
             id: existingUser.id,
-            name: existingUser.name,
             email: existingUser.email,
+            firstName: existingUser.firstName,
+            lastName: existingUser.lastName,
             role: existingUser.role,
-            image: existingUser.image,
+            imageUrl: existingUser.imageUrl,
             emailVerified: existingUser.emailVerified,
           };
-          //
-          console.log("Compilada por el usuario");
-          // console.log(user);
           return user;
         } catch (error) {
-          console.log("Todo falló");
-          console.log(error);
           throw { error: "Algo salió mal", status: 401 };
         }
       },
@@ -78,10 +59,11 @@ export const authOptions = {
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id;
-        session.user.name = token.name;
+        session.user.firstName = token.firstName;
+        session.user.lastName = token.lastName;
         session.user.email = token.email;
         session.user.role = token.role;
-        session.user.image = token.picture;
+        session.user.imageUrl = token.imageUrl;
         session.user.emailVerified = token.emailVerified;
       }
       return session;
@@ -89,10 +71,11 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.name = user.name;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
         token.email = user.email;
         token.role = user.role;
-        token.image = user.picture;
+        token.imageUrl = user.imageUrl;
         token.emailVerified = user.emailVerified;
       }
       return token;

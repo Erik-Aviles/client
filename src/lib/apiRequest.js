@@ -44,7 +44,8 @@ export async function makePutRequest(
   endpoint,
   data,
   resourceName,
-  redirect
+  redirect,
+  reset
 ) {
   try {
     setLoading(true);
@@ -57,10 +58,10 @@ export async function makePutRequest(
       body: JSON.stringify(data),
     });
     if (response.ok) {
-      console.log(response);
       setLoading(false);
       toast.success(`${resourceName} Actualizado con éxito`);
       redirect();
+      reset();
     } else {
       setLoading(false);
       toast.error("Algo salió mal");

@@ -1,14 +1,11 @@
-export function generateInicials(text = "") {
-  if (!text.trim()) return "";
+export function generateInicials(firstName = "", lastName = "") {
+  const firstWord = firstName.trim().split(/\s+/)[0] || "";
+  const lastWord = lastName.trim().split(/\s+/)[0] || "";
 
-  const words = text.trim().split(/\s+/);
+  const first = firstWord[0] || "";
+  const last = lastWord[0] || "";
 
-  if (words.length === 1) {
-    return words[0][0].toLowerCase();
-  }
-
-  const first = words[0][0];
-  const last = words[words.length - 1][0];
+  if (!first && !last) return "";
 
   return (first + last).toUpperCase();
 }

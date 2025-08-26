@@ -3,10 +3,10 @@ import { parseNumberOrNull } from "@/lib/parseNumberOrNull";
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
-  const { id } = await params;
+  const { slug } = await params;
   try {
     const product = await db.product.findUnique({
-      where: { id },
+      where: { slug },
     });
 
     return NextResponse.json(product, { status: 200 });

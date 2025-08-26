@@ -9,7 +9,7 @@ import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import SelectInput from "@/components/FormInputs/SelectInput";
 import CancelButton from "@/components/FormInputs/CancelButton";
@@ -21,31 +21,26 @@ export default function NewProductForm({
 }) {
   const router = useRouter();
   const datapath = "products";
-  const id = initialData?.id ?? "";
-
-  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl ?? "");
-  const [loading, setLoading] = useState(false);
-  const [tags, setTags] = useState(initialData?.tags ?? []);
+  const isEditing = Boolean(initialData?.id);
 
   const {
     register,
     handleSubmit,
+    control,
     reset,
     watch,
-    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
       ...(initialData || {}),
-      isActive: initialData?.isActive ?? true,
-      imageUrl: initialData?.imageUrl ?? "",
-      supplierId: initialData?.userId ?? "",
-      categoryId: initialData?.categoryId ?? "",
-      hasDiscount: initialData?.hasDiscount ?? false,
       tags: initialData?.tags ?? [],
+      suppliers: initialData?.userId,
     },
   });
 
+  const [loading, setLoading] = useState(false);
+
+  // Watches ----------------------------------------------------------
   const isActive = watch("isActive");
   const hasDiscount = watch("hasDiscount");
 
@@ -53,50 +48,31 @@ export default function NewProductForm({
     router.push(`/dashboard/${datapath}`);
   }
 
-  useEffect(() => {
-    setValue("imageUrl", imageUrl);
-  }, [imageUrl, setValue]);
-
-  useEffect(() => {
-    setValue("tags", tags);
-  }, [tags, setValue]);
-
   async function onSubmit(data) {
-    /* {id, title, sku, slug, barcode, description, price, salePrice, quantity, tags, hasDiscount, imageUrl, isActive, categoryId, supplierId} */
     const slug = generateSlug(data.title);
-    const isUpdating = !!id;
 
     const formattedData = {
       ...data,
       slug,
-      imageUrl,
-      tags,
-      isActive,
-      hasDiscount,
-      userId: data.supplierId?.trim() ? data.supplierId : null,
-      categoryId: data.categoryId?.trim() ? data.categoryId : null,
     };
-    delete formattedData.supplierId;
 
-    if (isUpdating) {
+    if (isEditing) {
       delete formattedData.code;
     }
 
-    const requestFn = isUpdating ? makePutRequest : makePostRequest;
-    const endpoint = isUpdating ? `api/${datapath}/${id}` : `api/${datapath}`;
+    const requestFn = isEditing ? makePutRequest : makePostRequest;
+    const endpoint = isEditing
+      ? `api/${datapath}/${initialData?.id}`
+      : `api/${datapath}`;
 
-    requestFn(
+    await requestFn(
       setLoading,
       endpoint,
       formattedData,
       "Producto",
       redirect,
-      isUpdating ? null : reset
+      reset
     );
-    if (!isUpdating) {
-      setImageUrl("");
-      setTags([]);
-    }
   }
 
   return (
@@ -118,9 +94,9 @@ export default function NewProductForm({
           name="title"
           register={register}
           errors={errors}
-          className={id ? "w-full" : "sm:col-span-2"}
+          className={isEditing ? "w-full" : "sm:col-span-2"}
         />
-        {id && (
+        {isEditing && (
           <TextInput
             label="Codigo"
             name="code"
@@ -216,18 +192,40 @@ export default function NewProductForm({
         />
 
         {/* Tags */}
-        <ArrayItemsInput setItems={setTags} items={tags} itemTitle="etiqueta" />
+        <Controller
+          control={control}
+          name="tags"
+          render={({ field }) => (
+            <ArrayItemsInput
+              {...field}
+              setItems={field.onChange}
+              items={field.value}
+              itemTitle="Etiquetas"
+            />
+          )}
+        />
 
-        <ImageInput
-          imageUrl={imageUrl}
-          setImageUrl={setImageUrl}
-          endpoint="productImageUploader"
-          label="Imagen del producto"
+        <Controller
+          control={control}
+          name="imageUrl"
+          render={({ field }) => (
+            <ImageInput
+              {...field}
+              setImageUrl={field.onChange}
+              imageUrl={field.value}
+              endpoint="productImageUploader"
+              label="Imagen del producto"
+            />
+          )}
         />
       </div>
       <div className="sm:col-span-2 flex gap-3 justify-end py-4">
         <CancelButton onClick={redirect} />
-        <SubmitButton isLoading={loading} isEditing={id} itemName="producto" />
+        <SubmitButton
+          isLoading={loading}
+          isEditing={isEditing}
+          itemName="producto"
+        />
       </div>
     </form>
   );

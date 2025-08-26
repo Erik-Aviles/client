@@ -25,6 +25,7 @@ const initialState = loadCheckout() || {
   personalInfo: {},
   shippingInfo: {},
   paymentInfo: {},
+  completed: false,
 };
 
 // --- Slice ---
@@ -63,6 +64,10 @@ const checkoutSlice = createSlice({
       state.paymentInfo = action.payload;
       persistCheckout(state);
     },
+    setCompleted: (state, action) => {
+      state.completed = action.payload;
+      persistCheckout(state);
+    },
 
     resetCheckout: () => {
       const newState = {
@@ -85,6 +90,7 @@ export const {
   setPersonalInfo,
   setShippingInfo,
   setPaymentInfo,
+  setCompleted,
   resetCheckout,
 } = checkoutSlice.actions;
 

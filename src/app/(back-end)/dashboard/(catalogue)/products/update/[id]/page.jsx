@@ -7,7 +7,7 @@ export default async function UpdateProdutc({ params }) {
   const { id } = await params;
   const product = await getData(`products/${id}`);
   const categoriesData = await getData("categories");
-  const usersData = await getData("users");
+  const suppliersData = await getData("suppliers");
 
   const categories = categoriesData?.map((caterory) => {
     return {
@@ -16,12 +16,12 @@ export default async function UpdateProdutc({ params }) {
     };
   });
 
-  const suppliers = usersData
-    ?.filter((user) => user.role === "SUPPLIER")
-    ?.map((supplier) => {
-      return { id: supplier.id, title: supplier.name };
-    });
-
+  const suppliers = suppliersData.map((supplier) => {
+    return {
+      id: supplier.id,
+      title: `${supplier.firstName} ${supplier.lastName}`,
+    };
+  });
   return (
     <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
       <FormHeader title="Editar Producto" />

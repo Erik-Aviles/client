@@ -1,4 +1,6 @@
+import { authOptions } from "@/lib/authOptions";
 import db from "@/lib/db";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
@@ -6,7 +8,34 @@ export async function GET(request, { params }) {
   try {
     const supplier = await db.user.findUnique({
       where: { id },
-      include: { supplierProfile: true },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        imageUrl: true,
+        idDocument: true,
+        role: true,
+        emailVerified: true,
+        supplierProfile: {
+          where: { userId: id },
+          select: {
+            id: true,
+            userId: true,
+            name: true,
+            codeSupplier: true,
+            phone: true,
+            logoUrl: true,
+            address: true,
+            contactPerson: true,
+            contactPersonPhone: true,
+            paymentTerms: true,
+            notes: true,
+            isActive: true,
+            products: true,
+          },
+        },
+      },
     });
 
     if (!supplier) {
@@ -28,8 +57,16 @@ export async function GET(request, { params }) {
 
 export async function DELETE(request, { params }) {
   const { id } = await params;
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ message: "No autenticado" }, { status: 401 });
+  }
+  if (session.user.role !== "ADMIN") {
+    return NextResponse.json({ message: "No autorizado" }, { status: 403 });
+  }
+
   try {
-    const existingSupplier = await db.supplierProfile.findUnique({
+    const existingSupplier = await db.user.findUnique({
       where: { id },
     });
 
@@ -42,8 +79,8 @@ export async function DELETE(request, { params }) {
         { status: 404 }
       );
     }
-    const deletedSupplier = await db.supplierProfile.delete({
-      where: { id: supplierId },
+    const deletedSupplier = await db.user.delete({
+      where: { id },
     });
 
     return NextResponse.json(
@@ -60,8 +97,18 @@ export async function DELETE(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
-  const supplierId = await params.id;
-  const data = await request.json();
+  const supplierId = params.id;
+  const session = await getServerSession(authOptions);
+
+  // El user autenticado debe ser el mismo que intenta completar su perfil O el admin
+  if (
+    (!supplierId || session.user.id !== supplierId) &&
+    session.user.role !== "ADMIN"
+  ) {
+    return NextResponse.json({ message: "No autorizado" }, { status: 403 });
+  }
+
+  const supplierData = await request.json();
 
   try {
     if (!supplierId) {
@@ -72,8 +119,8 @@ export async function PUT(request, { params }) {
     }
 
     // Verificar si el proveedor existe
-    const existingSupplier = await db.supplierProfile.findUnique({
-      where: { id: supplierId },
+    const existingSupplier = await db.user.findUnique({
+      where: { id: supplierData.userId },
     });
 
     if (!existingSupplier) {
@@ -82,25 +129,33 @@ export async function PUT(request, { params }) {
         { status: 404 }
       );
     }
+    await db.user.update({
+      where: { id: supplierData.userId },
+      data: {
+        firstName: supplierData.firstName ?? existingSupplier.firstName,
+        lastName: supplierData.lastName ?? existingSupplier.lastName,
+        email: supplierData.email ?? existingSupplier.email,
+        idDocument: supplierData.idDocument ?? existingSupplier.idDocument,
+        imageUrl: supplierData.imageUrl ?? existingSupplier.imageUrl,
+      },
+    });
 
     // Actualizar los datos del proveedor
     const updatedSupplier = await db.supplierProfile.update({
       where: { id: supplierId },
       data: {
-        name: data.name,
-        idDocument: data.idDocument,
-        codeSupplier: data.codeSupplier,
-        phone: data.phone,
-        profileImageUrl: data.profileImageUrl,
-        email: data.email,
-        role: data.role ?? "SUPPLIER",
-        address: data.address,
-        contactPerson: data.contactPerson,
-        contactPersonPhone: data.contactPersonPhone,
-        paymentTerms: data.paymentTerms,
-        notes: data.notes,
-        isActive: data.isActive,
-        products: data.products ?? [],
+        name: supplierData.name,
+        codeSupplier: supplierData.codeSupplier,
+        phone: supplierData.phone,
+        logoUrl: supplierData.logoUrl,
+        contactPerson: supplierData.contactPerson,
+        contactPersonPhone: supplierData.contactPersonPhone,
+        paymentTerms: supplierData.paymentTerms,
+        notes: supplierData.notes,
+        isActive: supplierData.isActive,
+        products: Array.isArray(supplierData.products)
+          ? supplierData.products
+          : undefined,
       },
     });
 

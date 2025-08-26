@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavButtons from "../NavButtons";
 import { useForm } from "react-hook-form";
 import { MoveRight, Truck } from "lucide-react";
@@ -15,28 +15,49 @@ import {
 import { companyData } from "@/utils/general/companyData";
 import { updateCartTotals } from "../../../../redux/slices/cartSlice";
 
-export default function ShippingDetailsForm() {
-  const [loading, setLoading] = useState(false);
+export default function ShippingDetailsForm({ user, isLoading }) {
   const dispatch = useDispatch();
   const shippingInfo = useSelector((state) => state.checkout.shippingInfo);
   const shippingCost = useSelector((state) => state.cart.totals.shippingCost);
+  const [loading, setLoading] = useState(false);
+  const [initialized, setInitialized] = useState(false);
+  const profile = user
+    ? (user.profile ?? user.supplierProfile ?? user.staffProfile ?? null)
+    : null;
 
   const {
     register,
     handleSubmit,
-    watch,
-    reset,
-    setValue,
     control,
+    reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      ...(shippingInfo || {}),
-      shippingCost: shippingCost.toString() || "",
-    },
-  });
+  } = useForm();
 
-  /* {streetAddress, city, country, zipCode} */
+  useEffect(() => {
+    const hasShippingInfo =
+      shippingInfo && Object.keys(shippingInfo).length > 0;
+    const hasProfile = profile && Object.keys(profile).length > 0;
+
+    if (!initialized && !isLoading && (hasShippingInfo || hasProfile)) {
+      reset(
+        hasShippingInfo
+          ? {
+              ...(shippingInfo || {}),
+              shippingCost: String(shippingCost ?? ""),
+            }
+          : {
+              streetAddress: profile?.address ?? "",
+              city: profile?.city ?? "",
+              province: profile?.province ?? "",
+              country: profile?.country ?? "",
+              zipCode: profile?.zipCode ?? "",
+              shippingCost: String(shippingCost ?? ""),
+            }
+      );
+      setInitialized(true);
+    }
+  }, [profile, shippingInfo, shippingCost, isLoading, initialized, reset]);
+
   async function proccessData(data) {
     setLoading(true);
 
@@ -54,7 +75,7 @@ export default function ShippingDetailsForm() {
   return (
     <form onSubmit={handleSubmit(proccessData)}>
       <Notification
-        title="Esta información se utilizará para el envio y/o la facturacion del pedido."
+        title="Esta información se utilizará para el envio y/o la facturación del pedido."
         text="Por favor, lea cuidadosamente si los campos con la información guardada
       son los correctos, caso contrario pueden ser editados y guardados."
       />
@@ -77,7 +98,7 @@ export default function ShippingDetailsForm() {
           />
           <TextInput
             label="Provincia"
-            name="city"
+            name="province"
             register={register}
             errors={errors}
             className="w-full"

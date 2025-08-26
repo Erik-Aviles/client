@@ -11,7 +11,10 @@ export async function GET(request) {
   } catch (error) {
     console.error("Error al obtener los datos de las capacitaciones:", error);
     return NextResponse.json(
-      { message: "No se pudieron obtener los datos de las capacitaciones", error },
+      {
+        message: "No se pudieron obtener los datos de las capacitaciones",
+        error,
+      },
       { status: 500 }
     );
   }
@@ -39,7 +42,6 @@ export async function POST(request) {
         isActive,
       },
     });
-    console.log("Nueva capacitación creada:", newTraining);
     return NextResponse.json(newTraining, { status: 201 });
   } catch (error) {
     console.error("Error al crear capacitación:", error);

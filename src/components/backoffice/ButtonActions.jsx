@@ -21,17 +21,18 @@ export default function ButtonActions({ title, endpoint }) {
         <Download className="w-4 h-4" />
         <span className="hidden lg:inline">{"Importar"}</span>
       </button>
+
       <button
         title={`Eliminar ${title}`}
         type="button"
         className="capitalize text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-bg-red-400/50 focus:outline-none font-medium rounded-lg text-xs px-3 py-2 text-center inline-flex gap-2 items-center dark:focus:ring-red-bg-red/50"
       >
         <Trash2 className="w-4 h-4" />
-        <span className="hidden lg:inline">"Eliminar"</span>
+        <span className="hidden lg:inline">Eliminar</span>
       </button>
-
-      {/* Boton de agregar */}
-      <AddBtn endpoint={endpoint} title={title} />
+      {endpoint !== "suppliers" ? (
+        <AddBtn endpoint={endpoint} title={title} />
+      ) : null}
     </div>
   );
 }

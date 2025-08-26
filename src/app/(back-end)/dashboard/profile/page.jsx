@@ -8,11 +8,13 @@ export default async function Profile() {
 
   if (!session) return;
 
-  const name = session?.user?.name;
+  const firstName = session?.user?.firstName;
+  const lastName = session?.user?.lastName;
+  const fullName = `${firstName} ${lastName}`;
   return (
     <div className="h-[calc(100vh-48px)] flex flex-col gap-3 px-4 md:px-6">
       <Heading title="Mi cuenta" />
-      <h2 className="text-white capitalize">Bienvenida! {name}.</h2>
+      <h2 className="text-white capitalize">Bienvenid@! {fullName}.</h2>
       <div className="flex-1">
         <div className="overflow-auto ">hola</div>
       </div>

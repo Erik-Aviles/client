@@ -1,10 +1,10 @@
 "use cliente";
 
 import React, { useState } from "react";
-import { Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { LoadingIcon } from "@/components/Icons/Loading";
 import { capitalizeFirstWord, cropText } from "@/utils/formats/normalized";
 
@@ -29,7 +29,6 @@ export default function DeleteBtn({ id, endpoint, title }) {
         const res = await fetch(`${baseUrl}/api/${endpoint}/${id}`, {
           method: "DELETE",
         });
-        console.log(res);
         if (res.ok) {
           router.refresh();
           setLoading(false);

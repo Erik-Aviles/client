@@ -6,7 +6,6 @@ export async function GET(request) {
     const coupons = await db.coupon.findMany({
       orderBy: { createdAt: "desc" },
     });
-    console.log("Cupones obtenidos:", coupons);
     return NextResponse.json(coupons, { status: 200 });
   } catch (error) {
     console.error("Error al obtener los cupones:", error);
@@ -33,7 +32,6 @@ export async function POST(request) {
       },
     });
 
-    console.log("Nueva cupón creado:", newCoupon);
     return NextResponse.json(newCoupon, { status: 201 });
   } catch (error) {
     console.error("Error al crear cupón:", error);

@@ -32,7 +32,7 @@ export async function POST(request) {
         { status: 409 }
       );
     }
-    
+
     const newMarket = await db.market.create({
       data: {
         title,
@@ -44,7 +44,6 @@ export async function POST(request) {
         isActive,
       },
     });
-    console.log("Nueva mercado creado:", newMarket);
     return NextResponse.json(newMarket, { status: 201 });
   } catch (error) {
     console.error("Error al crear mercado:", error);

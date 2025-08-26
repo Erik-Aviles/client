@@ -6,8 +6,35 @@ export async function GET(request, { params }) {
     const { id } = await params;
     const user = await db.user.findUnique({
       where: { id },
-      include: { supplierProfile: true, products: true },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        imageUrl: true,
+        idDocument: true,
+        role: true,
+        emailVerified: true,
+        createdAt: true,
+        updatedAt: true,
+        profile: true,
+        supplierProfile: {
+          include: {
+            products: true,
+          },
+        },
+        staffProfile: true,
+        profile: true,
+        orders: true,
+      },
     });
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "Usuario no encontrado" },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(user, { status: 200 });
   } catch (error) {

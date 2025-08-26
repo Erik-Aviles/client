@@ -21,7 +21,6 @@ export default function ForgotPasswordForm() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(data) {
-    console.log(data);
     try {
       setLoading(true);
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -33,9 +32,6 @@ export default function ForgotPasswordForm() {
         },
         body: JSON.stringify(data),
       });
-      console.log(data);
-      console.log(response);
-      console.log(response?.statusText);
       if (response.ok) {
         setLoading(false);
         setShowNotification(true);
@@ -58,9 +54,11 @@ export default function ForgotPasswordForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       {showNotification && (
         <Alert color="failure" icon={HiInformationCircle}>
-          <span className="font-medium">Por favor revise su correo electrónico!</span> Le hemos
-          enviado un enlace para restablecer su contraseña. Haga clic en él para
-          crear una nueva.
+          <span className="font-medium">
+            Por favor revise su correo electrónico!
+          </span>{" "}
+          Le hemos enviado un enlace para restablecer su contraseña. Haga clic
+          en él para crear una nueva.
         </Alert>
       )}
       <div className="my-4 flex flex-col gap-3">

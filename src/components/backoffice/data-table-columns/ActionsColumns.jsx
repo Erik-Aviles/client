@@ -13,7 +13,7 @@ import DeleteBtn from "../Actions/DeleteBtn";
 import EditBtn from "../Actions/EditBtn";
 
 export default function ActionsColumns({ row, endpoint, title }) {
-  const showTitle = row.getValue(title);
+  const showTitle = row.original[title];
   const id = row.original.id;
   return (
     <DropdownMenu>

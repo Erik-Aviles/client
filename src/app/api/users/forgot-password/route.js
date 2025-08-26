@@ -51,7 +51,6 @@ export async function PUT(request) {
     const linkText = "Restablecer contraseña";
     const subject = `Restablecer tu contraseña - ${nameCompany}`;
     const redirectUrl = `reset-password?token=${token}&id=${userId}`;
-    console.log(userId, name, redirectUrl);
     const sendMail = await resend.emails.send({
       from: `${nameCompany} <brd@resend.dev>`,
       to: "boderoracing2016@gmail.com",

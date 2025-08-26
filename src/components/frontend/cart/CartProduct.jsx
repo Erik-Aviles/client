@@ -6,6 +6,7 @@ import CartItems from "./CartItems";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { emptyCart } from "../../../../redux/slices/cartSlice";
+import { resetCheckout } from "../../../../redux/slices/checkoutSlice";
 
 export default function CartProduct({ cartItems, subTotal }) {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function CartProduct({ cartItems, subTotal }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         dispatch(emptyCart());
+        dispatch(resetCheckout());
         toast.success("Carrito vaciado");
       }
     });

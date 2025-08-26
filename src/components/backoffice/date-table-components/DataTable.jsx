@@ -82,7 +82,7 @@ export function DataTable({
 
       {/* TABLA */}
       <div className="overflow-auto">
-        <div className="h-[calc(100vh-292.67px)] md:h-[calc(100vh-224.67px)] ">
+        <div className="h-[calc(100vh-292.67px)] md:h-[calc(100vh-224.67px)]">
           <div className="min-w-max overflow-x-auto pb-2">
             <Table className="border dark:bg-slate-900 rounded-lg">
               <TableHeader>

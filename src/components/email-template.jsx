@@ -16,17 +16,16 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const addressCompany = companyData?.address;
 
 export const EmailTemplate = ({
-  name = "",
+  firstName = "",
+  lastName = "",
   redirectUrl = "/login",
   linkText,
   description,
-  subject
+  subject,
 }) => (
   <Html>
     <Head />
-    <Preview>
-      {subject}
-    </Preview>
+    <Preview>{subject}</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
@@ -40,7 +39,11 @@ export const EmailTemplate = ({
 
         <Section style={section}>
           <Text style={text}>
-            Hola <strong>{name},</strong>!
+            Hola{" "}
+            <strong>
+              {firstName} {lastName},
+            </strong>
+            !
           </Text>
           <Text style={text}>{description}</Text>
 
@@ -75,6 +78,7 @@ const container = {
 const title = {
   fontSize: "24px",
   lineHeight: 1.25,
+  textTransform: "capitalize",
 };
 
 const section = {

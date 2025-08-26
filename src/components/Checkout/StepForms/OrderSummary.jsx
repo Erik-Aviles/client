@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import NavButtons from "../NavButtons";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import CartItems from "@/components/frontend/cart/CartItems";
 import { emptyCart } from "../../../../redux/slices/cartSlice";
 import SummaryLine from "@/components/frontend/cart/SummaryLine";
-import { resetCheckout } from "../../../../redux/slices/checkoutSlice";
+import {
+  resetCheckout,
+  setCompleted,
+} from "../../../../redux/slices/checkoutSlice";
 import SubTitle3 from "@/components/backoffice/styledComponent/SubTitle3";
 
 export default function OrderSummary() {
@@ -40,8 +43,7 @@ export default function OrderSummary() {
     };
     try {
       setLoading(true);
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-      const response = await fetch(`${baseUrl}/api/orders`, {
+      const response = await fetch(`/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,22 +51,20 @@ export default function OrderSummary() {
         body: JSON.stringify(orderData),
       });
       const responseData = await response.json();
-
       if (response.ok) {
         setLoading(false);
+        router.push(`/order-confirmation/${responseData?.id}`);
         toast.success(`Pedido enviado exitosamente`);
-        dispatch(emptyCart());
-        dispatch(resetCheckout());
-        startTransition(() => {
-          router.push(`/order-confirmation/${responseData.id}`);
-        });
+        setTimeout(() => {
+          dispatch(emptyCart());
+          dispatch(resetCheckout());
+        }, 500);
       } else {
         setLoading(false);
         toast.error("Algo salió mal, Por favor intenta nuevamente");
       }
     } catch (error) {
       setLoading(false);
-      console.log(error);
     }
   }
 

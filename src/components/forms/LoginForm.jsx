@@ -22,15 +22,12 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(data) {
-    console.log(data);
     try {
       setLoading(true);
-      console.log("Intentando iniciar sesión con credenciales:", data);
       const loginData = await signIn("credentials", {
         ...data,
         redirect: false,
       });
-      console.log("Respuesta de inicio de sesión:", loginData);
       if (loginData?.error) {
         setLoading(false);
         toast.error("Error de inicio de sesión: Verifique sus credenciales");

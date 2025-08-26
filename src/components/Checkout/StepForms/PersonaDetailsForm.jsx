@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavButtons from "../NavButtons";
 import { useForm } from "react-hook-form";
 import Notification from "@/components/Notification";
@@ -10,32 +10,51 @@ import {
   nextStep,
   setPersonalInfo,
 } from "../../../../redux/slices/checkoutSlice";
-import { useSession } from "next-auth/react";
 
-export default function PersonaDetailsForm() {
-  const { data: session, status } = useSession();
+export default function PersonaDetailsForm({ user, isLoading }) {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const personalInfo = useSelector((state) => state.checkout.personalInfo);
+
+  const [loading, setLoading] = useState(false);
+  const [initialized, setInitialized] = useState(false);
+  const profile = user
+    ? (user.profile ?? user.supplierProfile ?? user.staffProfile ?? null)
+    : null;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      ...(personalInfo || {}),
-    },
-  });
+    reset,
+  } = useForm();
 
-  /* {id, firstName, lastName, expiryDate, isActive} */
+  useEffect(() => {
+    const hasPersonalInfo =
+      personalInfo && Object.keys(personalInfo).length > 0;
+
+    if (!initialized && !isLoading && (hasPersonalInfo || user)) {
+      reset(
+        hasPersonalInfo
+          ? personalInfo
+          : {
+              firstName: user.firstName ?? "",
+              lastName: user.lastName ?? "",
+              email: user.email ?? "",
+              phone: profile?.phone ?? "",
+            }
+      );
+      setInitialized(true);
+    }
+  }, [personalInfo, user, isLoading, initialized, reset]);
+
   async function proccessData(data) {
-    data.userId = status === "authenticated" ? session.user.id : null;
+    data.userId = user?.id ?? null;
     setLoading(true);
     dispatch(setPersonalInfo(data));
     dispatch(nextStep());
     setLoading(false);
   }
+  if (isLoading) return <p>Cargando datos del usuario...</p>;
 
   return (
     <form onSubmit={handleSubmit(proccessData)}>
@@ -52,6 +71,7 @@ export default function PersonaDetailsForm() {
           errors={errors}
           className="w-full"
           placeholder="Primer nombre"
+          format="capitalize"
         />
         <TextInput
           label="Apellido"
@@ -60,6 +80,7 @@ export default function PersonaDetailsForm() {
           errors={errors}
           className="w-full"
           placeholder="Primer Apellido"
+          format="capitalize"
         />
         <TextInput
           label="Correo Electrónico"
@@ -68,6 +89,7 @@ export default function PersonaDetailsForm() {
           register={register}
           errors={errors}
           className="w-full"
+          format="lowercase"
         />
         <TextInput
           label="Número telefónico"
@@ -76,6 +98,7 @@ export default function PersonaDetailsForm() {
           register={register}
           errors={errors}
           className="w-full"
+          format="capitalize"
         />
       </div>
       <NavButtons loading={loading} />

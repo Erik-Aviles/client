@@ -90,8 +90,8 @@ export async function POST(request) {
     const orderNumber = await generateOrderNumber();
 
     // 8. Crear orden y items en una transacción atómica
-    const createdOrder = await db.$transaction(async (tx) => {
-      const order = await tx.order.create({
+    const result = await db.$transaction(async (tx) => {
+      const newOrder = await tx.order.create({
         data: {
           userId: personalInfo.userId,
           orderNumber,
@@ -102,6 +102,7 @@ export async function POST(request) {
           streetAddress: shippingInfo.streetAddress,
           city: shippingInfo.city,
           country: shippingInfo.country,
+          province: shippingInfo.province,
           zipCode: shippingInfo.zipCode,
           tax: parseInt(totals.tax || 0),
           subtotal: parseFloat(subtotal),
@@ -111,31 +112,48 @@ export async function POST(request) {
           paymentMethod: paymentInfo.paymentMethod,
           couponId: coupon ? coupon.id : null,
           notes: personalInfo.notes || "",
-          orderItems: {
-            create: items.map((item) => ({
-              productId: item.id,
-              title: item.title,
-              code: item.code,
-              price: parseFloat(item.price),
-              quantity: parseInt(item.qty),
-              total: parseFloat(item.price * item.qty),
-              brand: item.brand,
-              imageUrl: item.imageUrl,
-            })),
-          },
-        },
-        include: {
-          orderItems: true,
-          coupon: true,
         },
       });
+      const newOrderItems = await tx.orderItem.createMany({
+        data: items.map((item) => ({
+          orderId: newOrder.id,
+          productId: item.id,
+          vendorId: item.vendorId, //ojo: si falla, cambiar a "id"
+          title: item.title,
+          code: item.code,
+          price: parseFloat(item.price),
+          quantity: parseInt(item.qty),
+          total: parseFloat(item.price * item.qty),
+          brand: item.brand,
+          imageUrl: item.imageUrl,
+        })),
+      });
+      const sales = await Promise.all(
+        items.map(async (item) => {
+          const totalAmount = parseFloat(item.price) * parseInt(item.qty);
 
+          const newSale = await tx.sale.create({
+            data: {
+              orderId: newOrder.id,
+              productId: item.id,
+              vendorId: item.vendorId,
+              productTitle: item.title,
+              productImageUrl: item.imageUrl,
+              productQuantity: parseInt(item.qty),
+              productPrice: parseFloat(item.price),
+              total: totalAmount,
+            },
+          });
+
+          return newSale;
+        })
+      );
       // Actualizar stock o hacer otras operaciones relacionadas
 
-      return order;
+      return { newOrder, newOrderItems, sales };
     });
 
-    return NextResponse.json(createdOrder, { status: 201 });
+    return NextResponse.json(result.newOrder, { status: 201 });
   } catch (error) {
     console.error("Error al crear la orden:", error);
     return NextResponse.json(

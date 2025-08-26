@@ -52,7 +52,6 @@ export async function POST(request) {
         isActive,
       },
     });
-    console.log("Nuevo personal creado:", newStaff);
     return NextResponse.json(newStaff, { status: 200 });
   } catch (error) {
     console.error("Error al registrar el personal:", error);

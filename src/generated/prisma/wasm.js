@@ -163,34 +163,43 @@ exports.Prisma.TrainingScalarFieldEnum = {
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   email: 'email',
   password: 'password',
-  emailVerified: 'emailVerified',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  imageUrl: 'imageUrl',
+  idDocument: 'idDocument',
   role: 'role',
+  emailVerified: 'emailVerified',
   verificationToken: 'verificationToken',
+  verificationTokenExpires: 'verificationTokenExpires',
   passwordResetToken: 'passwordResetToken',
   passwordResetTokenExpires: 'passwordResetTokenExpires',
+  passwordChangedAt: 'passwordChangedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.UserProfileScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   dateOfBirth: 'dateOfBirth',
-  address: 'address'
+  address: 'address',
+  city: 'city',
+  country: 'country',
+  zipCode: 'zipCode',
+  phone: 'phone',
+  loyaltyPoints: 'loyaltyPoints',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SupplierProfileScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  idDocument: 'idDocument',
   codeSupplier: 'codeSupplier',
   phone: 'phone',
-  profileImageUrl: 'profileImageUrl',
-  email: 'email',
-  role: 'role',
+  logoUrl: 'logoUrl',
   address: 'address',
   contactPerson: 'contactPerson',
   contactPersonPhone: 'contactPersonPhone',
@@ -204,11 +213,7 @@ exports.Prisma.SupplierProfileScalarFieldEnum = {
 
 exports.Prisma.StaffProfileScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  idDocument: 'idDocument',
   codeUser: 'codeUser',
-  role: 'role',
-  email: 'email',
   phone: 'phone',
   address: 'address',
   dob: 'dob',
@@ -237,12 +242,10 @@ exports.Prisma.ProductScalarFieldEnum = {
   imageUrl: 'imageUrl',
   isActive: 'isActive',
   hasDiscount: 'hasDiscount',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   categoryId: 'categoryId',
   userId: 'userId',
-  supplierProfileId: 'supplierProfileId',
-  staffProfileId: 'staffProfileId'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CouponScalarFieldEnum = {
@@ -259,7 +262,6 @@ exports.Prisma.CouponScalarFieldEnum = {
 
 exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   orderNumber: 'orderNumber',
   firstName: 'firstName',
   lastName: 'lastName',
@@ -268,6 +270,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   streetAddress: 'streetAddress',
   city: 'city',
   country: 'country',
+  province: 'province',
   zipCode: 'zipCode',
   tax: 'tax',
   subtotal: 'subtotal',
@@ -277,24 +280,40 @@ exports.Prisma.OrderScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   paymentStatus: 'paymentStatus',
   paymentToken: 'paymentToken',
-  couponId: 'couponId',
   notes: 'notes',
   orderStatus: 'orderStatus',
+  couponId: 'couponId',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
   id: 'id',
-  orderId: 'orderId',
-  productId: 'productId',
   title: 'title',
   code: 'code',
-  price: 'price',
-  quantity: 'quantity',
-  total: 'total',
-  brand: 'brand',
   imageUrl: 'imageUrl',
+  brand: 'brand',
+  quantity: 'quantity',
+  price: 'price',
+  total: 'total',
+  vendorId: 'vendorId',
+  orderId: 'orderId',
+  productId: 'productId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SaleScalarFieldEnum = {
+  id: 'id',
+  productTitle: 'productTitle',
+  productImageUrl: 'productImageUrl',
+  productQuantity: 'productQuantity',
+  productPrice: 'productPrice',
+  total: 'total',
+  orderId: 'orderId',
+  productId: 'productId',
+  vendorId: 'vendorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -309,11 +328,10 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 exports.UserRole = exports.$Enums.UserRole = {
-  ADMIN: 'ADMIN',
   USER: 'USER',
   SUPPLIER: 'SUPPLIER',
-  CUSTOMER: 'CUSTOMER',
-  MODERATOR: 'MODERATOR'
+  MODERATOR: 'MODERATOR',
+  ADMIN: 'ADMIN'
 };
 
 exports.PaymentMethod = exports.$Enums.PaymentMethod = {
@@ -350,7 +368,8 @@ exports.Prisma.ModelName = {
   Product: 'Product',
   Coupon: 'Coupon',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  Sale: 'Sale'
 };
 
 /**

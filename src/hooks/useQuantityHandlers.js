@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   decrementQty,
   incrementQty,
@@ -7,9 +7,11 @@ import {
   setQty,
 } from "../../redux/slices/cartSlice";
 import toast from "react-hot-toast";
+import { resetCheckout } from "../../redux/slices/checkoutSlice";
 
 export default function useQuantityHandlers({ id, qty, stock = 1 }) {
   const dispatch = useDispatch();
+  const cartLength = useSelector((state) => state.cart.items.length);
   const [inputQty, setInputQty] = useState(qty);
 
   useEffect(() => {
@@ -17,8 +19,14 @@ export default function useQuantityHandlers({ id, qty, stock = 1 }) {
   }, [qty]);
 
   const handleCartDelete = () => {
-    dispatch(removeFromCart(id));
-    toast.success("Producto eliminado exitosamente")
+    if (cartLength === 1) {
+      toast.success("Sin productos en el carrito");
+      dispatch(removeFromCart(id));
+      dispatch(resetCheckout());
+    } else {
+      dispatch(removeFromCart(id));
+      toast.success("Producto eliminado del carrito");
+    }
   };
 
   const handleIncrementQty = () => {
@@ -29,6 +37,10 @@ export default function useQuantityHandlers({ id, qty, stock = 1 }) {
 
   const handleDecrementQty = () => {
     dispatch(decrementQty(id));
+    if (cartLength === 0) {
+      dispatch(resetCheckout());
+      toast.success("Sin productos en el carrito");
+    }
   };
 
   const handleManualChange = (e) => {

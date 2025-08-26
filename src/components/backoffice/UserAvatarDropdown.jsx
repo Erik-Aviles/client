@@ -4,16 +4,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { LogoutButton } from "../LogoutButton";
-import { generateInicials } from "@/lib/generateInicials";
 import { LayoutDashboard, Package, User } from "lucide-react";
+import { generateInicials } from "@/lib/generateInicials";
 
 export default function UserAvatarDropdown({ user }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const name = user?.name;
-  const image = user?.image;
+  const firstName = user?.firstName;
+  const lastName = user?.lastName;
+  const image = user?.imageUrl;
   const email = user?.email;
-  const inicials = generateInicials(name);
+  const inicials = generateInicials(firstName, lastName);
 
   return (
     <div className="relative">
@@ -28,7 +29,7 @@ export default function UserAvatarDropdown({ user }) {
         {image ? (
           <Image
             src={image}
-            alt={name}
+            alt={user ? `${firstName} ${lastName}` : "Usuario"}
             width={28}
             height={28}
             className="rounded-full w-8 h-8"
@@ -45,10 +46,10 @@ export default function UserAvatarDropdown({ user }) {
         <div className="absolute z-20 right-0 mt-6 w-72 bg-white divide-y divide-gray-100 rounded-lg shadow-sm border dark:bg-slate-800 dark:divide-slate-500 border-slate-200 dark:border-slate-600">
           <div className="px-4 py-4 text-gray-700 bg-slate-300 dark:bg-transparent dark:text-white">
             <div
-              title={name}
+              title={`${firstName} ${lastName}`}
               className="text-sm font-semibold text-slate-900 dark:text-white capitalize truncate"
             >
-              {name}
+              {firstName} {lastName}
             </div>
             <div className="text-xs text-gray-900 dark:text-slate-400 truncate">
               {email}

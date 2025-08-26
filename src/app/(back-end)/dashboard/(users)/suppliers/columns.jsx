@@ -8,7 +8,6 @@ import { SortableColumn } from "@/components/backoffice/data-table-columns/Sorta
 import {
   TextLongColumn,
   TextShortColumn,
-  TitleColumn,
 } from "@/components/backoffice/data-table-columns/TextColumn";
 
 export const columns = [
@@ -35,20 +34,31 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
-    header: ({ column }) => <SortableColumn column={column} title="Nombre" />,
+    accessorKey: "firstName",
+    header: ({ column }) => <SortableColumn column={column} title="Nombres" />,
     cell: ({ row }) => {
       const email = row.original.email;
-      const phone = row.original.phone;
+      const phone = row.original.supplierProfile?.phone;
+      const firstName = row.getValue("firstName");
+      const lastName = row.original.lastName;
+      const fullName = firstName + " " + lastName;
       return (
         <>
-          <TitleColumn row={row} column="name" />
+          <div className="ml-2 min-w-44 max-w-48">
+            <small className={`capitalize ${!firstName && "text-red-600"}`}>
+              {fullName || "Sin registro"}
+            </small>
+          </div>
           <div className="pl-2 flex flex-col gap-2 whitespace-nowrap">
             <div className="leading-none">
               <p className="text-xs font-semibold text-slate-700 dark:text-slate-500">
                 Correo:
               </p>
-              <TextShortColumn row={row} fallback={email} />
+              <TextShortColumn
+                row={row}
+                fallback={email}
+                className="lowercase"
+              />
             </div>
             <div className="leading-none">
               <p className="text-xs font-semibold text-slate-700 dark:text-slate-500">
@@ -62,10 +72,14 @@ export const columns = [
     },
   },
   {
-    accessorKey: "profileImageUrl",
+    accessorKey: "imageUrl",
     header: "Imagen",
     cell: ({ row }) => (
-      <ImageColumns row={row} imageTitle="profileImageUrl" title="name" />
+      <ImageColumns
+        row={row}
+        imageUrl={row.original.imageUrl}
+        title="firstName"
+      />
     ),
   },
   {
@@ -74,7 +88,7 @@ export const columns = [
       <SortableColumn column={column} title="Identificacion" />
     ),
     cell: ({ row }) => {
-      const codeSupplier = row.original.codeSupplier;
+      const codeSupplier = row.original.supplierProfile?.codeSupplier;
       return (
         <div className="pl-2 flex flex-col gap-2 whitespace-nowrap">
           <div className="leading-none">
@@ -102,14 +116,15 @@ export const columns = [
     accessorKey: "contactPerson",
     header: ({ column }) => <SortableColumn column={column} title="Contacto" />,
     cell: ({ row }) => {
-      const phone = row.original.contactPersonPhone;
+      const phone = row.original.supplierProfile?.contactPersonPhone;
+      const name = row.original.supplierProfile?.contactPerson;
       return (
         <div className="flex flex-col gap-2 whitespace-nowrap">
           <div className="leading-none">
             <p className="text-xs font-semibold text-slate-700 dark:text-slate-500">
-              Contacto:
+              Nombre:
             </p>
-            <TextShortColumn row={row} column="contactPerson" />
+            <TextShortColumn row={row} fallback={name} />
           </div>
           <div className="leading-none">
             <p className="text-xs font-semibold text-slate-700 dark:text-slate-500">
@@ -122,9 +137,39 @@ export const columns = [
     },
   },
   {
+    accessorKey: "logoUrl",
+    header: "Logo de la empresa",
+    cell: ({ row }) => {
+      const logoUrl = row.original.supplierProfile?.logoUrl;
+      const name = row.original.supplierProfile?.name;
+      return (
+        <ImageColumns row={row} imageUrl={logoUrl} fallback={name} />
+      );
+    },
+  },
+  {
+    accessorKey: "address",
+    header: "Direccion",
+    cell: ({ row }) => {
+      const address = row.original.supplierProfile?.address;
+      return <TextLongColumn row={row} fallback={address} />;
+    },
+  },
+  {
+    accessorKey: "paymentTerms",
+    header: "Terminos de pago",
+    cell: ({ row }) => {
+      const paymentTerms = row.original.supplierProfile?.paymentTerms;
+      return <TextLongColumn row={row} fallback={paymentTerms} />;
+    },
+  },
+  {
     accessorKey: "notes",
     header: "Observacion",
-    cell: ({ row }) => <TextLongColumn row={row} column="notes" />,
+    cell: ({ row }) => {
+      const notes = row.original.supplierProfile?.notes;
+      return <TextLongColumn row={row} fallback={notes} />;
+    },
   },
   {
     accessorKey: "createdAt",
@@ -140,7 +185,7 @@ export const columns = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => (
-      <ActionsColumns row={row} endpoint="suppliers" title="name" />
+      <ActionsColumns row={row} endpoint="suppliers" title="lastName" />
     ),
   },
 ];

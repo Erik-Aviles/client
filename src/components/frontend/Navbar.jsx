@@ -18,7 +18,6 @@ export default function Navbar() {
 
   return (
     <div className="flex flex-col dark:bg-slate-700 ">
-      {/* <div className=" flex items-center justify-between py-3 max-w-6xl mx-auto px-8 gap-8"> */}
       <div className="w-full flex items-center justify-between py-1 px-6 md:max-w-7xl md:mx-auto gap-8 shadow-md lg:shadow-none">
         <div className="flex items-center justify-center space-x-1">
           {/* Logo */}
@@ -35,7 +34,6 @@ export default function Navbar() {
           <SearchForm placeholder="Buscar productos, marca y categorias..." />
         </div>
         <ThemeSwitcherBtn />
-
         <HelpModal />
         <CartCount />
         {status === "loading" ? (

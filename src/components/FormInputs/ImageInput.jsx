@@ -51,18 +51,16 @@ export default function ImageInput({
           endpoint={endpoint}
           onClientUploadComplete={(res) => {
             setImageUrl(res[0].ufsUrl);
-            // Do something with the response
             toast.success("Imagen cargada exitosamente");
-            console.log("Files: ", res);
-            console.log("Imagen cargada exitosamente");
           }}
           onUploadError={(error) => {
             // Do something with the error.
             if (error.message.includes("File too large")) {
-              toast.error("El archivo excede el tamaño máximo permitido de 1MB");
+              toast.error(
+                "El archivo excede el tamaño máximo permitido de 1MB"
+              );
             } else {
               toast.error("Fallo en la carga, Intenta de nuevo");
-              console.log(`ERROR! ${error.message}`, error);
             }
           }}
         />

@@ -5,12 +5,14 @@ import toast from "react-hot-toast";
 import { CheckCheck } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../../../redux/slices/cartSlice";
+import { resetCheckout } from "../../../../redux/slices/checkoutSlice";
 
 const AddRemoveCart = ({ product }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector((state) =>
     state.cart.items.find((item) => item.id === product.id)
   );
+  const cartLength = useSelector((state) => state.cart.items.length);
   const qty = cartItem?.qty || 0;
 
   const handleToggleCart = () => {
@@ -18,8 +20,14 @@ const AddRemoveCart = ({ product }) => {
       dispatch(addToCart(product));
       toast.success("Producto agregado al carrito");
     } else {
-      dispatch(removeFromCart(product.id));
-      toast.success("Producto eliminado del carrito");
+      if (cartLength === 1) {
+        toast.success("Producto eliminado del carrito");
+        dispatch(removeFromCart(product.id));
+        dispatch(resetCheckout());
+      } else {
+        dispatch(removeFromCart(product.id));
+        toast.success("Producto eliminado del carrito");
+      }
     }
   };
 

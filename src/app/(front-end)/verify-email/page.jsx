@@ -1,4 +1,5 @@
 import { Info } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 export default function VerifyMail() {
@@ -18,25 +19,17 @@ export default function VerifyMail() {
         </div>
         <div className="mt-2 mb-4 text-sm">
           Gracias por crear una cuenta con nosotros. Hemos enviado un correo
-          electrónico con un enlace de verifiacion a tu correo registrado, ingresa en tu bandeja de entrada para completar el
-          proceso de verifiación.
+          electrónico con un enlace de verifiacion a su correo registrado,
+          ingresa en tu bandeja de entrada para completar el proceso de
+          verifiación.
         </div>
         <div className="flex">
-          <button
-            type="button"
+          <Link
+            href="/"
             className="text-white bg-amber-800 hover:bg-amber-900 focus:ring-4 focus:outline-none focus:ring-amber-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
           >
-            <svg
-              className="me-2 h-3 w-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 14"
-            >
-              <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-            </svg>
-            View more
-          </button>
+            Ir al inicio
+          </Link>
         </div>
       </div>
     </section>

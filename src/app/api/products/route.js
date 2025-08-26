@@ -82,10 +82,9 @@ export async function POST(request) {
         price,
         salePrice,
         categoryId: productsData.categoryId || null,
-        userId: productsData.userId || null,
+        userId: productsData.supplierId || null,
       },
     });
-    console.log("LO QUE SE GUARDO: ", newProduct);
     return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {
     console.error("Error al registrar el producto:", error);

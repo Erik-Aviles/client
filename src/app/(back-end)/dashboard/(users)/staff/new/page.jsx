@@ -63,9 +63,7 @@ export default function NewStaff({ initialData = {}, isUpdate = false }) {
   }, [staffCodeGenerated, setValue]);
 
   async function onSubmit(data) {
-    /* {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,} */
     data.imageUrl = imageUrl;
-    console.log(data);
     makePostRequest(
       setLoading,
       `api/${datapath}`,

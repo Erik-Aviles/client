@@ -103,10 +103,24 @@ export const sideBarLinks = [
   },
   {
     key: "ordenes",
-    name: "ordenes",
+    name: "Ordenes",
     href: "/dashboard/orders",
     icon: ClipboardList,
-    roles: ["ADMIN", "SUPPLIER", "MODERADOR", "USER"],
+    roles: ["ADMIN", "SUPPLIER", "MODERADOR"],
+  },
+  {
+    key: "ordenes-user",
+    name: "Mis pedidos",
+    href: "/dashboard/orders",
+    icon: ClipboardList,
+    roles: ["USER"],
+  },
+  {
+    key: "sales",
+    name: "ventas",
+    href: "/dashboard/sales",
+    icon: ClipboardList,
+    roles: ["ADMIN", "SUPPLIER", "MODERADOR"],
   },
   {
     key: "capacitacion",

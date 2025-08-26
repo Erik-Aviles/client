@@ -1,14 +1,13 @@
 "use client";
 
-// import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import SubmitButton from "@/components/FormInputs/SubmitButton";
+import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import TextInput from "@/components/FormInputs/TextInput";
-// import { FaGithub, FaGoogle } from "react-icons/fa";
+import SubmitButton from "@/components/FormInputs/SubmitButton";
 
 export default function RegisterForm({ role = "USER" }) {
   const router = useRouter();
@@ -27,35 +26,48 @@ export default function RegisterForm({ role = "USER" }) {
 
   async function onSubmit(data) {
     try {
-      console.log(data);
       setLoading(true);
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
       const response = await fetch(`${baseUrl}/api/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, role }),
       });
 
       const responseData = await response.json();
+      
       if (response.ok) {
-        console.log("Usuario creado:", responseData);
         setLoading(false);
-        toast.success("Usuario creado correctamente");
         reset();
-        if (role === "USER") {
-          router.push(`/`);
-        } else {
+        
+        if (role === "SUPPLIER") {
           router.push(`/verify-email`);
+        } else if (role === "USER") {
+          const loginData = await signIn("credentials", {
+            email: data.email,
+            password: data.password,
+            redirect: false,
+          });
+          
+          if (loginData?.error) {
+            setLoading(false);
+            toast.error(
+              "Error de inicio de sesión: Verifique sus credenciales"
+            );
+          } else {
+            toast.success("Usuario creado correctamente");
+            toast.success("Inicio de sesión exitoso");
+            router.push("/");
+          }
         }
       } else {
         setLoading(false);
         if (response.status === 409) {
           setEmailErr("Usuario con este correo ya existe.");
-          toast.error("Usuario con este correo ya existe.");
         } else {
-          // Handle other errors
           console.error("Error del servidor:", responseData.error);
           toast.error("Oops Algo salió mal");
         }
@@ -71,8 +83,14 @@ export default function RegisterForm({ role = "USER" }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-4 flex flex-col gap-3">
         <TextInput
-          label="Nombre completo"
-          name="name"
+          label="Nombre"
+          name="firstName"
+          register={register}
+          errors={errors}
+        />
+        <TextInput
+          label="Apellido"
+          name="lastName"
           register={register}
           errors={errors}
         />

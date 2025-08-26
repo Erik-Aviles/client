@@ -5,7 +5,6 @@ import { useState } from "react";
 export default function EditBtn({ id, endpoint, title }) {
   const [loading, setLoading] = useState(false);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  console.log(title)
 
   return (
     <Link
