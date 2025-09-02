@@ -1,8 +1,14 @@
 export const companyData = {
   name: "Betimes Company",
-  logo: "/logo.png",
-  address:
-    "Av. Jaime Roldos Aguillera y cuadragesima septima - Quevedo, Los Rios, Ecuador. 120310",
+  email: "betimescompany23@gmail.com",
+  primaryColor: "#006279",
+  secondaryColor: "#6D41A1",
+  logo: "/betimesCompany.png",
+  streetAddress: "Av. Jaime Roldos Aguillera y cuadragesima septima",
+  city: " Quevedo",
+  province: "Los Rios",
+  country: "Ecuador",
+  postal: "120310",
   tax: 15,
   socialMedia: [
     { title: "facebook", href: "#" },

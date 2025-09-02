@@ -154,12 +154,12 @@ export default function OrderCard({ order }) {
               Ver pedido
             </button>
 
-            <button
-              type="button"
+            <Link
+              href={`/dashboard/orders/${order?.id}/invoice`}
               className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-bold text-gray-900 dark:text-white transition-all duration-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               Ver factura
-            </button>
+            </Link>
           </div>
         </div>
       </div>
