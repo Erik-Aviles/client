@@ -1,7 +1,7 @@
 import React from "react";
 import { getData } from "@/lib/getData";
 import FormHeader from "@/components/backoffice/FormHeader";
-import NewProductForm from "@/components/backoffice/forms/NewProductForm";
+import ProductForm from "@/components/backoffice/forms/ProductForm";
 
 export default async function NewProdutc() {
   const categoriesData = await getData("categories");
@@ -25,7 +25,7 @@ export default async function NewProdutc() {
     <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
       <FormHeader title="Nuevo Producto" />
       <div className="flex-1 overflow-auto">
-        <NewProductForm categories={categories} suppliers={suppliers} />
+        <ProductForm categories={categories} suppliers={suppliers} />
       </div>
     </div>
   );

@@ -45,3 +45,32 @@ export async function GET(request, { params }) {
     );
   }
 }
+
+export async function DELETE(request, { params }) {
+  const { id } = params;
+
+  try {
+    const existingUser = await db.user.findUnique({
+      where: { id },
+    });
+
+    if (!existingUser) {
+      return NextResponse.json(
+        { data: null, message: "Usuario no encontrado" },
+        { status: 404 }
+      );
+    }
+
+    const deleteUser = await db.user.delete({
+      where: { id },
+    });
+
+    return NextResponse.json(deleteUser, { status: 200 });
+  } catch (error) {
+    console.error("Error al eliminar el usuario:", error);
+    return NextResponse.json(
+      { message: "Fallo al eliminar el usuario", error: error.message },
+      { status: 500 }
+    );
+  }
+}

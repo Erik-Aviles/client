@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import CancelButton from "@/components/FormInputs/CancelButton";
 import ImageInput from "@/components/FormInputs/ImageInput";
+import SelectInput from "@/components/FormInputs/SelectInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInput from "@/components/FormInputs/TextInput";
@@ -9,14 +10,15 @@ import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import CancelButton from "@/components/FormInputs/CancelButton";
 
-export default function NewCategoryForm({ initialData = {} }) {
+export default function MarketForm({ initialData = {}, categories }) {
   const router = useRouter();
-  const datapath = "categories";
+  const datapath = "markets";
   const id = initialData?.id ?? "";
-  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl ?? "");
+
+  const [imageUrl, setImageUrl] = useState(initialData?.logoUrl ?? "");
   const [loading, setLoading] = useState(false);
 
   function redirect() {
@@ -33,34 +35,32 @@ export default function NewCategoryForm({ initialData = {} }) {
   } = useForm({
     defaultValues: {
       ...(initialData || {}),
-      isActive: initialData?.isActive ?? true,
-      imageUrl: initialData?.imageUrl ?? "",
+      imageUrl: initialData?.logoUrl ?? "",
+      isActive: true,
     },
   });
+  const isActive = watch("isActive");
 
   useEffect(() => {
     setValue("imageUrl", imageUrl);
   }, [imageUrl, setValue]);
 
-  const isActive = watch("isActive");
-
   async function onSubmit(data) {
-    /* {id, title, slug, description, imageUrl, marketIds, isActive} */
+    /* {id, title, motto, slug, logoUrl, description, categoryIds, isActive,} */
     const slug = generateSlug(data.title);
-    data.slug = slug;
-    data.imageUrl = imageUrl;
+    const isUpdating = !!id;
 
-    const isUpdating = !!data.id;
+    data.slug = slug;
+    data.logoUrl = imageUrl;
+
     const requestFn = isUpdating ? makePutRequest : makePostRequest;
-    const endpoint = isUpdating
-      ? `api/${datapath}/${data.id}`
-      : `api/${datapath}`;
+    const endpoint = isUpdating ? `api/${datapath}/${id}` : `api/${datapath}`;
 
     requestFn(
       setLoading,
       endpoint,
       data,
-      "Categoría",
+      "Mercado",
       redirect,
       isUpdating ? null : reset
     );
@@ -68,7 +68,6 @@ export default function NewCategoryForm({ initialData = {} }) {
       setImageUrl("");
     }
   }
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -76,7 +75,7 @@ export default function NewCategoryForm({ initialData = {} }) {
     >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <ToggleInput
-          label="Estado de la categoría"
+          label="Estado del Mercado"
           name="isActive"
           isActive={isActive}
           trueTitle="Activo"
@@ -84,28 +83,46 @@ export default function NewCategoryForm({ initialData = {} }) {
           register={register}
         />
         <TextInput
-          label="Nombre de categoría"
+          label="Nombre del mercado"
           name="title"
           register={register}
           errors={errors}
+          className="w-full"
         />
+        <SelectInput
+          label="seleccionar categorias"
+          name="categoryIds"
+          register={register}
+          errors={errors}
+          className="w-full"
+          options={categories}
+          multiple={true}
+        />
+        <TextInput
+          label="Lema del mercado"
+          name="motto"
+          register={register}
+          errors={errors}
+          isRequired={false}
+        />
+
         <TextareaInput
-          label="Descripción "
+          label="Descripción el mercado"
           name="description"
           register={register}
           errors={errors}
+          isRequired={false}
         />
         <ImageInput
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
-          endpoint="categoryImageUploader"
-          label="Imagen de categoria"
+          endpoint="marketLogoImageUploader"
+          label="Logo del mercado"
         />
-        <input type="hidden" {...register("imageUrl")} />
       </div>
       <div className="sm:col-span-2 flex gap-3 justify-end py-4">
         <CancelButton onClick={redirect} />
-        <SubmitButton isLoading={loading} isEditing={id} itemName="categoría" />
+        <SubmitButton isLoading={loading} isEditing={id} itemName="mercado" />
       </div>
     </form>
   );

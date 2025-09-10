@@ -1,23 +1,23 @@
 import React from "react";
-import { columns } from "./columns";
-import { getData } from "@/lib/getData";
+import { getSuppliers } from "./actions";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import Heading from "@/components/backoffice/styledComponent/Heading";
 import { DataTable } from "@/components/backoffice/date-table-components/DataTable";
+import { columns, fieldsToSearch, initialColumnVisibility } from "./columns";
 
 export default async function Supplier() {
-  const suppliersData = await getData("suppliers");
-  if (!suppliersData) {
-    return <div className="text-center">No hay datos disponibles</div>;
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return <p className="text-center text-gray-500">No autorizado</p>;
   }
 
-  const initialColumnVisibility = {
-    logoUrl: false,
-    address: false,
-    paymentTerms: false,
-    notes: false,
-    products: false,
-  };
-  const fieldsToSearch = ["firstName", "idDocument", "email", "id"];
+    const { success, data: suppliers, message } = await getSuppliers();
+
+  if (!success) {
+    return <p className="text-center text-red-500">{message || "Error cargando proveedores"}</p>;
+  }
+
 
   return (
     <div className="h-[calc(100vh-40px)] flex flex-col gap-3">
@@ -27,7 +27,7 @@ export default async function Supplier() {
       <div className="flex-1">
         <DataTable
           columns={columns}
-          data={suppliersData}
+          data={suppliers}
           initialColumnVisibility={initialColumnVisibility}
           fieldsToSearch={fieldsToSearch}
           inputPlaceholder="Buscar proveedor por nombre, cedula, email."

@@ -90,7 +90,7 @@ export default function ArrayItemsInput({
           </div>
         )}
 
-        <div className={` ${items.length === 0 ? " hidden " : " flex flex-wrap gap-2 "}`}>
+        <div className={` ${items?.length === 0 ? " hidden " : " flex flex-wrap gap-2"}`}>
           {items?.map((item, i) => {
             return (
               <div

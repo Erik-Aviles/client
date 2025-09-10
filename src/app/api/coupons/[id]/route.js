@@ -48,7 +48,7 @@ export async function DELETE(request, { params: { id } }) {
 
 export async function PUT(request, { params: { id } }) {
   try {
-    const { title, couponCode, expiryDate, value, isActive } =
+    const { title, couponCode, expiryDate, value, isActive, vendorId } =
       await request.json();
 
     const existingCoupon = await db.coupon.findUnique({
@@ -68,8 +68,9 @@ export async function PUT(request, { params: { id } }) {
         title,
         couponCode,
         expiryDate,
-        usageLimit: null,
+        usageLimit: value !== null && value !== undefined ? Number(value) : 10,
         value: value !== null && value !== undefined ? Number(value) : 5,
+        vendorId,
         isActive,
       },
     });

@@ -180,15 +180,17 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.UserProfileScalarFieldEnum = {
+exports.Prisma.CustomerProfileScalarFieldEnum = {
   id: 'id',
   dateOfBirth: 'dateOfBirth',
   address: 'address',
   city: 'city',
+  province: 'province',
   country: 'country',
   zipCode: 'zipCode',
   phone: 'phone',
   loyaltyPoints: 'loyaltyPoints',
+  isActive: 'isActive',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -215,11 +217,10 @@ exports.Prisma.StaffProfileScalarFieldEnum = {
   id: 'id',
   codeUser: 'codeUser',
   phone: 'phone',
-  address: 'address',
+  streetAddress: 'streetAddress',
   dob: 'dob',
   notes: 'notes',
   workScope: 'workScope',
-  imageUrl: 'imageUrl',
   isActive: 'isActive',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -256,6 +257,7 @@ exports.Prisma.CouponScalarFieldEnum = {
   usageLimit: 'usageLimit',
   value: 'value',
   isActive: 'isActive',
+  vendorId: 'vendorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -329,6 +331,7 @@ exports.Prisma.QueryMode = {
 };
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
+  CUSTOMER: 'CUSTOMER',
   SUPPLIER: 'SUPPLIER',
   MODERATOR: 'MODERATOR',
   ADMIN: 'ADMIN'
@@ -362,7 +365,7 @@ exports.Prisma.ModelName = {
   Market: 'Market',
   Training: 'Training',
   User: 'User',
-  UserProfile: 'UserProfile',
+  CustomerProfile: 'CustomerProfile',
   SupplierProfile: 'SupplierProfile',
   StaffProfile: 'StaffProfile',
   Product: 'Product',

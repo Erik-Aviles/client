@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import CancelButton from "@/components/FormInputs/CancelButton";
 import ImageInput from "@/components/FormInputs/ImageInput";
 
-export default function NewBannerForm({ initialData = {} }) {
+export default function BannerForm({ initialData = {} }) {
   const router = useRouter();
   const datapath = "banners";
   const id = initialData?.id ?? "";

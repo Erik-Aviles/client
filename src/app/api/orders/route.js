@@ -114,11 +114,11 @@ export async function POST(request) {
           notes: personalInfo.notes || "",
         },
       });
-      const newOrderItems = await tx.orderItem.createMany({
+      await tx.orderItem.createMany({
         data: items.map((item) => ({
           orderId: newOrder.id,
           productId: item.id,
-          vendorId: item.vendorId, //ojo: si falla, cambiar a "id"
+          vendorId: item.vendorId,
           title: item.title,
           code: item.code,
           price: parseFloat(item.price),
@@ -128,11 +128,9 @@ export async function POST(request) {
           imageUrl: item.imageUrl,
         })),
       });
-      const sales = await Promise.all(
-        items.map(async (item) => {
-          const totalAmount = parseFloat(item.price) * parseInt(item.qty);
-
-          const newSale = await tx.sale.create({
+      await Promise.all(
+        items.map((item) =>
+          tx.sale.create({
             data: {
               orderId: newOrder.id,
               productId: item.id,
@@ -141,16 +139,18 @@ export async function POST(request) {
               productImageUrl: item.imageUrl,
               productQuantity: parseInt(item.qty),
               productPrice: parseFloat(item.price),
-              total: totalAmount,
+              total: parseFloat(item.price) * parseInt(item.qty),
             },
-          });
-
-          return newSale;
-        })
+          })
+        )
       );
       // Actualizar stock o hacer otras operaciones relacionadas
+      await tx.user.update({
+        where: { id: personalInfo.userId },
+        data: { role: "CUSTOMER" },
+      });
 
-      return { newOrder, newOrderItems, sales };
+      return { newOrder };
     });
 
     return NextResponse.json(result.newOrder, { status: 201 });

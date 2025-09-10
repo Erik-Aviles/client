@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import FormHeader from "@/components/backoffice/FormHeader";
-import NewSupplierForm from "@/components/backoffice/forms/NewSupplierForm";
+import SupplierForm from "@/components/backoffice/forms/SupplierForm";
 
 export default async function NewSupplier() {
   const session = await getServerSession(authOptions);
@@ -10,7 +10,7 @@ export default async function NewSupplier() {
     <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
       <FormHeader title="Nuevo proveedor" />
       <div className="flex-1 overflow-auto px-4">
-        <NewSupplierForm currentRole={session?.user?.role} />
+        <SupplierForm currentRole={session?.user?.role} />
       </div>
     </div>
   );

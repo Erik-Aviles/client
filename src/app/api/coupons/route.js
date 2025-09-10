@@ -18,7 +18,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { title, couponCode, expiryDate, isActive, value } =
+    const { title, couponCode, expiryDate, isActive, value, vendorId } =
       await request.json();
 
     const newCoupon = await db.coupon.create({
@@ -26,9 +26,10 @@ export async function POST(request) {
         title,
         couponCode,
         expiryDate,
-        usageLimit: null,
+        usageLimit: 10,
         value: value !== null && value !== undefined ? Number(value) : 5,
         isActive,
+        vendorId,
       },
     });
 

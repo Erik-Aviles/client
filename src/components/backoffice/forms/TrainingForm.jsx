@@ -9,16 +9,27 @@ import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
+import { contentMain } from "@/utils/general/content";
+// import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function NewMarketForm({ initialData = {}, categories }) {
+// Cargar solo en cliente para evitar SSR
+// const RichTextEditorInput = dynamic(
+//   () => import("../FormInputs/RichTextEditorInput"),
+//   {
+//     ssr: false,
+//   }
+// );
+
+export default function TrainingForm({ initialData, categories }) {
   const router = useRouter();
-  const datapath = "markets";
+  const datapath = "trainings";
   const id = initialData?.id ?? "";
 
-  const [imageUrl, setImageUrl] = useState(initialData?.logoUrl ?? "");
+  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl ?? "");
+  const [content, setContent] = useState(initialData?.contentMain ?? "");
   const [loading, setLoading] = useState(false);
 
   function redirect() {
@@ -35,39 +46,48 @@ export default function NewMarketForm({ initialData = {}, categories }) {
   } = useForm({
     defaultValues: {
       ...(initialData || {}),
-      imageUrl: initialData?.logoUrl ?? "",
       isActive: true,
+      isActive: initialData?.isActive ?? true,
+      imageUrl: initialData?.imageUrl ?? "",
     },
   });
-  const isActive = watch("isActive");
 
   useEffect(() => {
     setValue("imageUrl", imageUrl);
   }, [imageUrl, setValue]);
 
+  useEffect(() => {
+    setValue("content", content);
+  }, [content, setValue]);
+
+  const isActive = watch("isActive");
+
   async function onSubmit(data) {
-    /* {id, title, motto, slug, logoUrl, description, categoryIds, isActive,} */
+    /* {id, title, categoryId, slug, description, content, imageUrl, isActive} */
     const slug = generateSlug(data.title);
-    const isUpdating = !!id;
-
     data.slug = slug;
-    data.logoUrl = imageUrl;
+    data.imageUrl = imageUrl;
+    data.content = content;
 
+    const isUpdating = !!data.id;
     const requestFn = isUpdating ? makePutRequest : makePostRequest;
-    const endpoint = isUpdating ? `api/${datapath}/${id}` : `api/${datapath}`;
-
+    const endpoint = isUpdating
+      ? `api/${datapath}/${data.id}`
+      : `api/${datapath}`;
     requestFn(
       setLoading,
       endpoint,
       data,
-      "Mercado",
+      "Capacitación",
       redirect,
       isUpdating ? null : reset
     );
     if (!isUpdating) {
       setImageUrl("");
+      setContent(contentMain);
     }
   }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -75,54 +95,58 @@ export default function NewMarketForm({ initialData = {}, categories }) {
     >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <ToggleInput
-          label="Estado del Mercado"
+          label="Estado de la Capacitación"
           name="isActive"
           isActive={isActive}
           trueTitle="Activo"
           falseTitle="Inactivo"
           register={register}
         />
+
         <TextInput
-          label="Nombre del mercado"
+          label="Título la capacitación"
           name="title"
           register={register}
           errors={errors}
           className="w-full"
         />
         <SelectInput
-          label="seleccionar categorias"
-          name="categoryIds"
+          label="seleccionar categoria"
+          name="categoryId"
           register={register}
           errors={errors}
           className="w-full"
           options={categories}
-          multiple={true}
         />
-        <TextInput
-          label="Lema del mercado"
-          name="motto"
-          register={register}
-          errors={errors}
-          isRequired={false}
-        />
-
         <TextareaInput
-          label="Descripción el mercado"
+          label="Descripción de la Capacitación"
           name="description"
           register={register}
           errors={errors}
-          isRequired={false}
         />
+
         <ImageInput
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
-          endpoint="marketLogoImageUploader"
-          label="Logo del mercado"
+          endpoint="trainingImageUploader"
+          label="Imagen de la capacitación"
         />
+        {/* content editor 
+            <RichTextEditorInput
+              label="Contenido de la capacitación"
+              content={content}
+              onChange={setContent}
+              placeholder="Escribe tu capacitación"
+            />*/}
       </div>
+
       <div className="sm:col-span-2 flex gap-3 justify-end py-4">
         <CancelButton onClick={redirect} />
-        <SubmitButton isLoading={loading} isEditing={id} itemName="mercado" />
+        <SubmitButton
+          isLoading={loading}
+          isEditing={id}
+          itemName="capacitación"
+        />
       </div>
     </form>
   );

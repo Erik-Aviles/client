@@ -10,3 +10,13 @@ export const formatDateToEcuador = (date) => {
     hour12: false,
   });
 };
+
+export const formatDateToEcuadorWithoutTime = (date) => {
+  if (!date) return "";
+  return new Date(date).toLocaleString("es-EC", {
+    timeZone: "America/Guayaquil",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};

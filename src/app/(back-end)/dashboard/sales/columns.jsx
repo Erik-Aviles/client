@@ -11,7 +11,7 @@ import {
 } from "@/components/backoffice/data-table-columns/TextColumn";
 import { fmt } from "@/utils/formats/currencyFormat";
 
-export const columns = [
+const columns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -105,11 +105,20 @@ export const columns = [
     header: ({ column }) => <SortableColumn column={column} title="Fechas" />,
     cell: ({ row }) => <AllDatesColumn row={row} />,
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => (
-      <ActionsColumns row={row} endpoint="sales" title="productTitle" />
-    ),
-  },
+  // {
+  //   id: "actions",
+  //   enableHiding: false,
+  //   cell: ({ row }) => (
+  //     <ActionsColumns row={row} endpoint="sales" title="productTitle" />
+  //   ),
+  // },
 ];
+
+const initialColumnVisibility = {
+  orderId: false,
+  productId: false,
+  vendorId: false,
+};
+const fieldsToSearch = ["title", "orderId", "vendorId", "id"];
+
+export { columns, initialColumnVisibility, fieldsToSearch };

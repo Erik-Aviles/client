@@ -1,6 +1,6 @@
 import React from "react";
 import { getData } from "@/lib/getData";
-import NewSupplierForm from "@/components/backoffice/forms/NewSupplierForm";
+import SupplierForm from "@/components/backoffice/forms/SupplierForm";
 
 export default async function OnboardingPage({ params }) {
   const { id } = await params;
@@ -19,7 +19,7 @@ export default async function OnboardingPage({ params }) {
         </span>
         , cuenta más sobre ti...
       </h2>
-      <NewSupplierForm initialData={user} />
+      <SupplierForm initialData={user} />
     </section>
   );
 }

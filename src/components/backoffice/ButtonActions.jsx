@@ -30,7 +30,12 @@ export default function ButtonActions({ title, endpoint }) {
         <Trash2 className="w-4 h-4" />
         <span className="hidden lg:inline">Eliminar</span>
       </button>
-      {endpoint !== "suppliers" ? (
+
+      {endpoint !== "suppliers" &&
+      endpoint !== "sales" &&
+      endpoint !== "orders-admin" &&
+      endpoint !== "users" &&
+      endpoint !== "customers" ? (
         <AddBtn endpoint={endpoint} title={title} />
       ) : null}
     </div>

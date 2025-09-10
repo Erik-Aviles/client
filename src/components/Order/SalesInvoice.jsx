@@ -13,10 +13,10 @@ const SalesInvoice = forwardRef(({ order }, ref) => {
   const taxTotal = calcularImpuesto(order?.subtotal, order?.tax);
   return (
     <div className="max-w-4xl mx-auto py-8">
-      <div className="relative border rounded-sm flex justify-center overflow-x-auto  bg-slate-50 dark:bg-slate-800 ">
+      <div className="relative border rounded-sm flex justify-center overflow-x-auto bg-slate-50 dark:bg-slate-800">
         <div
           ref={ref}
-          className="w-[800px] h-[1123px] pl-14 pr-10 py-14  flex flex-col"
+          className="w-[800px] h-[1123px] pl-14 pr-10 py-14 flex flex-col"
         >
           {/*  // Header */}
           <div className="text-xs md:text-sm flex gap-4 justify-between border-b border-gray-500 pb-8">

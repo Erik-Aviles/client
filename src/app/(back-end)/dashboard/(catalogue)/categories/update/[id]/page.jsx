@@ -1,7 +1,7 @@
 import React from "react";
 import { getData } from "@/lib/getData";
 import FormHeader from "@/components/backoffice/FormHeader";
-import NewCategoryForm from "@/components/backoffice/forms/NewCategoryForm";
+import CategoryForm from "@/components/backoffice/forms/CategoryForm";
 
 export default async function UpdateCategory({ params }) {
   const { id } = await params;
@@ -11,7 +11,7 @@ export default async function UpdateCategory({ params }) {
     <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
       <FormHeader title="Editar categoría" />
       <div className="flex-1 overflow-auto">
-        <NewCategoryForm initialData={category} />
+        <CategoryForm initialData={category} />
       </div>
     </div>
   );

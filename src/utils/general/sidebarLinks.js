@@ -15,6 +15,7 @@ import {
   BookOpenText,
   IdCard,
   UserRound,
+  UsersRound,
 } from "lucide-react";
 
 export const catalogueLinks = [
@@ -37,7 +38,7 @@ export const catalogueLinks = [
     name: "cupones",
     href: "/dashboard/coupons",
     icon: ScanSearch,
-    roles: ["ADMIN"],
+    roles: ["ADMIN", "SUPPLIER"],
   },
   {
     key: "banners",
@@ -53,15 +54,22 @@ export const usersLinks = [
     key: "clientes",
     name: "clientes",
     href: "/dashboard/customers",
+    icon: UsersRound,
+    roles: ["ADMIN", "MODERADOR"],
+  },
+  {
+    key: "usuarios",
+    name: "usuarios",
+    href: "/dashboard/users",
     icon: UserRound,
-    roles: ["ADMIN", "SUPPLIER"],
+    roles: ["ADMIN", "MODERADOR"],
   },
   {
     key: "proveedores",
     name: "proveedores",
     href: "/dashboard/suppliers",
     icon: Truck,
-    roles: ["ADMIN"],
+    roles: ["ADMIN", "MODERADOR"],
   },
   {
     key: "personal",
@@ -91,7 +99,7 @@ export const sideBarLinks = [
     key: "usuarios",
     name: "usuarios",
     icon: Users,
-    roles: ["ADMIN", "SUPPLIER"],
+    roles: ["ADMIN"],
     children: usersLinks,
   },
   {
@@ -103,17 +111,17 @@ export const sideBarLinks = [
   },
   {
     key: "ordenes",
-    name: "Ordenes",
-    href: "/dashboard/orders",
-    icon: ClipboardList,
-    roles: ["ADMIN", "SUPPLIER", "MODERADOR"],
-  },
-  {
-    key: "ordenes-user",
     name: "Mis pedidos",
     href: "/dashboard/orders",
     icon: ClipboardList,
     roles: ["USER"],
+  },
+  {
+    key: "ordenes-admin",
+    name: "Ordenes",
+    href: "/dashboard/orders-admin",
+    icon: ClipboardList,
+    roles: ["ADMIN", "MODERADOR"],
   },
   {
     key: "sales",

@@ -39,43 +39,37 @@ export type Market = $Result.DefaultSelection<Prisma.$MarketPayload>
 export type Training = $Result.DefaultSelection<Prisma.$TrainingPayload>
 /**
  * Model User
- * *
- *  * {id, name, email, password, emailVerified, role, isActive,}
+ * 
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
- * Model UserProfile
+ * Model CustomerProfile
  * 
  */
-export type UserProfile = $Result.DefaultSelection<Prisma.$UserProfilePayload>
+export type CustomerProfile = $Result.DefaultSelection<Prisma.$CustomerProfilePayload>
 /**
  * Model SupplierProfile
- * *
- *  * {id, name, idDocument, codeSupplier, phone, profileImageUrl, email, role, address, contactPerson, contactPersonPhone, paymentTerms, notes, isActive,}
+ * 
  */
 export type SupplierProfile = $Result.DefaultSelection<Prisma.$SupplierProfilePayload>
 /**
  * Model StaffProfile
- * *
- *  * {id, name, idDocument, codeUser, role, password, email, phone, address, dob, notes, workScope, imageUrl, isActive,}
+ * 
  */
 export type StaffProfile = $Result.DefaultSelection<Prisma.$StaffProfilePayload>
 /**
  * Model Product
- * *
- *  * {id, title, sku, slug, code, barcode, description, price, salePrice, quantity, stock, tags, hasDiscount, imageUrl, isActive, categoryId, userId,}
+ * 
  */
 export type Product = $Result.DefaultSelection<Prisma.$ProductPayload>
 /**
  * Model Coupon
- * *
- *  * {id, title, code, expiryDate, isActive,}
+ * 
  */
 export type Coupon = $Result.DefaultSelection<Prisma.$CouponPayload>
 /**
  * Model Order
- * *
- *  * {id, userId, firstName, lastName, emailAddress, phoneNumber, streetAddress, city, country, zipCode, discountAmount, shippingCost, subtotal, total, paymentStatus, paymentMethod, paymentToken, orderStatus, notes, createdAt, updatedAt}
+ * 
  */
 export type Order = $Result.DefaultSelection<Prisma.$OrderPayload>
 /**
@@ -126,6 +120,7 @@ export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
 
 export const UserRole: {
   USER: 'USER',
+  CUSTOMER: 'CUSTOMER',
   SUPPLIER: 'SUPPLIER',
   MODERATOR: 'MODERATOR',
   ADMIN: 'ADMIN'
@@ -294,14 +289,14 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.userProfile`: Exposes CRUD operations for the **UserProfile** model.
+   * `prisma.customerProfile`: Exposes CRUD operations for the **CustomerProfile** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more UserProfiles
-    * const userProfiles = await prisma.userProfile.findMany()
+    * // Fetch zero or more CustomerProfiles
+    * const customerProfiles = await prisma.customerProfile.findMany()
     * ```
     */
-  get userProfile(): Prisma.UserProfileDelegate<ExtArgs, ClientOptions>;
+  get customerProfile(): Prisma.CustomerProfileDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.supplierProfile`: Exposes CRUD operations for the **SupplierProfile** model.
@@ -817,7 +812,7 @@ export namespace Prisma {
     Market: 'Market',
     Training: 'Training',
     User: 'User',
-    UserProfile: 'UserProfile',
+    CustomerProfile: 'CustomerProfile',
     SupplierProfile: 'SupplierProfile',
     StaffProfile: 'StaffProfile',
     Product: 'Product',
@@ -843,7 +838,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "banner" | "category" | "market" | "training" | "user" | "userProfile" | "supplierProfile" | "staffProfile" | "product" | "coupon" | "order" | "orderItem" | "sale"
+      modelProps: "banner" | "category" | "market" | "training" | "user" | "customerProfile" | "supplierProfile" | "staffProfile" | "product" | "coupon" | "order" | "orderItem" | "sale"
       txIsolationLevel: never
     }
     model: {
@@ -1217,77 +1212,77 @@ export namespace Prisma {
           }
         }
       }
-      UserProfile: {
-        payload: Prisma.$UserProfilePayload<ExtArgs>
-        fields: Prisma.UserProfileFieldRefs
+      CustomerProfile: {
+        payload: Prisma.$CustomerProfilePayload<ExtArgs>
+        fields: Prisma.CustomerProfileFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.UserProfileFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload> | null
+            args: Prisma.CustomerProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.UserProfileFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload>
+            args: Prisma.CustomerProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload>
           }
           findFirst: {
-            args: Prisma.UserProfileFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload> | null
+            args: Prisma.CustomerProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.UserProfileFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload>
+            args: Prisma.CustomerProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload>
           }
           findMany: {
-            args: Prisma.UserProfileFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload>[]
+            args: Prisma.CustomerProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload>[]
           }
           create: {
-            args: Prisma.UserProfileCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload>
+            args: Prisma.CustomerProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload>
           }
           createMany: {
-            args: Prisma.UserProfileCreateManyArgs<ExtArgs>
+            args: Prisma.CustomerProfileCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           delete: {
-            args: Prisma.UserProfileDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload>
+            args: Prisma.CustomerProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload>
           }
           update: {
-            args: Prisma.UserProfileUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload>
+            args: Prisma.CustomerProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload>
           }
           deleteMany: {
-            args: Prisma.UserProfileDeleteManyArgs<ExtArgs>
+            args: Prisma.CustomerProfileDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.UserProfileUpdateManyArgs<ExtArgs>
+            args: Prisma.CustomerProfileUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           upsert: {
-            args: Prisma.UserProfileUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserProfilePayload>
+            args: Prisma.CustomerProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerProfilePayload>
           }
           aggregate: {
-            args: Prisma.UserProfileAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateUserProfile>
+            args: Prisma.CustomerProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCustomerProfile>
           }
           groupBy: {
-            args: Prisma.UserProfileGroupByArgs<ExtArgs>
-            result: $Utils.Optional<UserProfileGroupByOutputType>[]
+            args: Prisma.CustomerProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CustomerProfileGroupByOutputType>[]
           }
           findRaw: {
-            args: Prisma.UserProfileFindRawArgs<ExtArgs>
+            args: Prisma.CustomerProfileFindRawArgs<ExtArgs>
             result: JsonObject
           }
           aggregateRaw: {
-            args: Prisma.UserProfileAggregateRawArgs<ExtArgs>
+            args: Prisma.CustomerProfileAggregateRawArgs<ExtArgs>
             result: JsonObject
           }
           count: {
-            args: Prisma.UserProfileCountArgs<ExtArgs>
-            result: $Utils.Optional<UserProfileCountAggregateOutputType> | number
+            args: Prisma.CustomerProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<CustomerProfileCountAggregateOutputType> | number
           }
         }
       }
@@ -1885,7 +1880,7 @@ export namespace Prisma {
     market?: MarketOmit
     training?: TrainingOmit
     user?: UserOmit
-    userProfile?: UserProfileOmit
+    customerProfile?: CustomerProfileOmit
     supplierProfile?: SupplierProfileOmit
     staffProfile?: StaffProfileOmit
     product?: ProductOmit
@@ -2069,11 +2064,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     orders: number
     sales: number
+    coupons: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orders?: boolean | UserCountOutputTypeCountOrdersArgs
     sales?: boolean | UserCountOutputTypeCountSalesArgs
+    coupons?: boolean | UserCountOutputTypeCountCouponsArgs
   }
 
   // Custom InputTypes
@@ -2099,6 +2096,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSalesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SaleWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCouponsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CouponWhereInput
   }
 
 
@@ -6664,11 +6668,12 @@ export namespace Prisma {
     passwordChangedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    profile?: boolean | User$profileArgs<ExtArgs>
+    customerProfile?: boolean | User$customerProfileArgs<ExtArgs>
     supplierProfile?: boolean | User$supplierProfileArgs<ExtArgs>
     staffProfile?: boolean | User$staffProfileArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     sales?: boolean | User$salesArgs<ExtArgs>
+    coupons?: boolean | User$couponsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -6695,22 +6700,24 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "imageUrl" | "idDocument" | "role" | "emailVerified" | "verificationToken" | "verificationTokenExpires" | "passwordResetToken" | "passwordResetTokenExpires" | "passwordChangedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    profile?: boolean | User$profileArgs<ExtArgs>
+    customerProfile?: boolean | User$customerProfileArgs<ExtArgs>
     supplierProfile?: boolean | User$supplierProfileArgs<ExtArgs>
     staffProfile?: boolean | User$staffProfileArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     sales?: boolean | User$salesArgs<ExtArgs>
+    coupons?: boolean | User$couponsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      profile: Prisma.$UserProfilePayload<ExtArgs> | null
+      customerProfile: Prisma.$CustomerProfilePayload<ExtArgs> | null
       supplierProfile: Prisma.$SupplierProfilePayload<ExtArgs> | null
       staffProfile: Prisma.$StaffProfilePayload<ExtArgs> | null
       orders: Prisma.$OrderPayload<ExtArgs>[]
       sales: Prisma.$SalePayload<ExtArgs>[]
+      coupons: Prisma.$CouponPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7092,11 +7099,12 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    customerProfile<T extends User$customerProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$customerProfileArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     supplierProfile<T extends User$supplierProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$supplierProfileArgs<ExtArgs>>): Prisma__SupplierProfileClient<$Result.GetResult<Prisma.$SupplierProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     staffProfile<T extends User$staffProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$staffProfileArgs<ExtArgs>>): Prisma__StaffProfileClient<$Result.GetResult<Prisma.$StaffProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     orders<T extends User$ordersArgs<ExtArgs> = {}>(args?: Subset<T, User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sales<T extends User$salesArgs<ExtArgs> = {}>(args?: Subset<T, User$salesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    coupons<T extends User$couponsArgs<ExtArgs> = {}>(args?: Subset<T, User$couponsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7512,22 +7520,22 @@ export namespace Prisma {
   }
 
   /**
-   * User.profile
+   * User.customerProfile
    */
-  export type User$profileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$customerProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
-    where?: UserProfileWhereInput
+    include?: CustomerProfileInclude<ExtArgs> | null
+    where?: CustomerProfileWhereInput
   }
 
   /**
@@ -7617,6 +7625,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.coupons
+   */
+  export type User$couponsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CouponInclude<ExtArgs> | null
+    where?: CouponWhereInput
+    orderBy?: CouponOrderByWithRelationInput | CouponOrderByWithRelationInput[]
+    cursor?: CouponWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CouponScalarFieldEnum | CouponScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7636,62 +7668,68 @@ export namespace Prisma {
 
 
   /**
-   * Model UserProfile
+   * Model CustomerProfile
    */
 
-  export type AggregateUserProfile = {
-    _count: UserProfileCountAggregateOutputType | null
-    _avg: UserProfileAvgAggregateOutputType | null
-    _sum: UserProfileSumAggregateOutputType | null
-    _min: UserProfileMinAggregateOutputType | null
-    _max: UserProfileMaxAggregateOutputType | null
+  export type AggregateCustomerProfile = {
+    _count: CustomerProfileCountAggregateOutputType | null
+    _avg: CustomerProfileAvgAggregateOutputType | null
+    _sum: CustomerProfileSumAggregateOutputType | null
+    _min: CustomerProfileMinAggregateOutputType | null
+    _max: CustomerProfileMaxAggregateOutputType | null
   }
 
-  export type UserProfileAvgAggregateOutputType = {
+  export type CustomerProfileAvgAggregateOutputType = {
     loyaltyPoints: number | null
   }
 
-  export type UserProfileSumAggregateOutputType = {
+  export type CustomerProfileSumAggregateOutputType = {
     loyaltyPoints: number | null
   }
 
-  export type UserProfileMinAggregateOutputType = {
+  export type CustomerProfileMinAggregateOutputType = {
     id: string | null
     dateOfBirth: Date | null
     address: string | null
     city: string | null
+    province: string | null
     country: string | null
     zipCode: string | null
     phone: string | null
     loyaltyPoints: number | null
+    isActive: boolean | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type UserProfileMaxAggregateOutputType = {
+  export type CustomerProfileMaxAggregateOutputType = {
     id: string | null
     dateOfBirth: Date | null
     address: string | null
     city: string | null
+    province: string | null
     country: string | null
     zipCode: string | null
     phone: string | null
     loyaltyPoints: number | null
+    isActive: boolean | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type UserProfileCountAggregateOutputType = {
+  export type CustomerProfileCountAggregateOutputType = {
     id: number
     dateOfBirth: number
     address: number
     city: number
+    province: number
     country: number
     zipCode: number
     phone: number
     loyaltyPoints: number
+    isActive: number
     userId: number
     createdAt: number
     updatedAt: number
@@ -7699,214 +7737,226 @@ export namespace Prisma {
   }
 
 
-  export type UserProfileAvgAggregateInputType = {
+  export type CustomerProfileAvgAggregateInputType = {
     loyaltyPoints?: true
   }
 
-  export type UserProfileSumAggregateInputType = {
+  export type CustomerProfileSumAggregateInputType = {
     loyaltyPoints?: true
   }
 
-  export type UserProfileMinAggregateInputType = {
+  export type CustomerProfileMinAggregateInputType = {
     id?: true
     dateOfBirth?: true
     address?: true
     city?: true
+    province?: true
     country?: true
     zipCode?: true
     phone?: true
     loyaltyPoints?: true
+    isActive?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type UserProfileMaxAggregateInputType = {
+  export type CustomerProfileMaxAggregateInputType = {
     id?: true
     dateOfBirth?: true
     address?: true
     city?: true
+    province?: true
     country?: true
     zipCode?: true
     phone?: true
     loyaltyPoints?: true
+    isActive?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type UserProfileCountAggregateInputType = {
+  export type CustomerProfileCountAggregateInputType = {
     id?: true
     dateOfBirth?: true
     address?: true
     city?: true
+    province?: true
     country?: true
     zipCode?: true
     phone?: true
     loyaltyPoints?: true
+    isActive?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type UserProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which UserProfile to aggregate.
+     * Filter which CustomerProfile to aggregate.
      */
-    where?: UserProfileWhereInput
+    where?: CustomerProfileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserProfiles to fetch.
+     * Determine the order of CustomerProfiles to fetch.
      */
-    orderBy?: UserProfileOrderByWithRelationInput | UserProfileOrderByWithRelationInput[]
+    orderBy?: CustomerProfileOrderByWithRelationInput | CustomerProfileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: UserProfileWhereUniqueInput
+    cursor?: CustomerProfileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserProfiles from the position of the cursor.
+     * Take `±n` CustomerProfiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserProfiles.
+     * Skip the first `n` CustomerProfiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned UserProfiles
+     * Count returned CustomerProfiles
     **/
-    _count?: true | UserProfileCountAggregateInputType
+    _count?: true | CustomerProfileCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: UserProfileAvgAggregateInputType
+    _avg?: CustomerProfileAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: UserProfileSumAggregateInputType
+    _sum?: CustomerProfileSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: UserProfileMinAggregateInputType
+    _min?: CustomerProfileMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: UserProfileMaxAggregateInputType
+    _max?: CustomerProfileMaxAggregateInputType
   }
 
-  export type GetUserProfileAggregateType<T extends UserProfileAggregateArgs> = {
-        [P in keyof T & keyof AggregateUserProfile]: P extends '_count' | 'count'
+  export type GetCustomerProfileAggregateType<T extends CustomerProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateCustomerProfile]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateUserProfile[P]>
-      : GetScalarType<T[P], AggregateUserProfile[P]>
+        : GetScalarType<T[P], AggregateCustomerProfile[P]>
+      : GetScalarType<T[P], AggregateCustomerProfile[P]>
   }
 
 
 
 
-  export type UserProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserProfileWhereInput
-    orderBy?: UserProfileOrderByWithAggregationInput | UserProfileOrderByWithAggregationInput[]
-    by: UserProfileScalarFieldEnum[] | UserProfileScalarFieldEnum
-    having?: UserProfileScalarWhereWithAggregatesInput
+  export type CustomerProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerProfileWhereInput
+    orderBy?: CustomerProfileOrderByWithAggregationInput | CustomerProfileOrderByWithAggregationInput[]
+    by: CustomerProfileScalarFieldEnum[] | CustomerProfileScalarFieldEnum
+    having?: CustomerProfileScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: UserProfileCountAggregateInputType | true
-    _avg?: UserProfileAvgAggregateInputType
-    _sum?: UserProfileSumAggregateInputType
-    _min?: UserProfileMinAggregateInputType
-    _max?: UserProfileMaxAggregateInputType
+    _count?: CustomerProfileCountAggregateInputType | true
+    _avg?: CustomerProfileAvgAggregateInputType
+    _sum?: CustomerProfileSumAggregateInputType
+    _min?: CustomerProfileMinAggregateInputType
+    _max?: CustomerProfileMaxAggregateInputType
   }
 
-  export type UserProfileGroupByOutputType = {
+  export type CustomerProfileGroupByOutputType = {
     id: string
     dateOfBirth: Date | null
     address: string | null
     city: string | null
+    province: string | null
     country: string | null
     zipCode: string | null
     phone: string | null
     loyaltyPoints: number
+    isActive: boolean
     userId: string
     createdAt: Date
     updatedAt: Date
-    _count: UserProfileCountAggregateOutputType | null
-    _avg: UserProfileAvgAggregateOutputType | null
-    _sum: UserProfileSumAggregateOutputType | null
-    _min: UserProfileMinAggregateOutputType | null
-    _max: UserProfileMaxAggregateOutputType | null
+    _count: CustomerProfileCountAggregateOutputType | null
+    _avg: CustomerProfileAvgAggregateOutputType | null
+    _sum: CustomerProfileSumAggregateOutputType | null
+    _min: CustomerProfileMinAggregateOutputType | null
+    _max: CustomerProfileMaxAggregateOutputType | null
   }
 
-  type GetUserProfileGroupByPayload<T extends UserProfileGroupByArgs> = Prisma.PrismaPromise<
+  type GetCustomerProfileGroupByPayload<T extends CustomerProfileGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<UserProfileGroupByOutputType, T['by']> &
+      PickEnumerable<CustomerProfileGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof UserProfileGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CustomerProfileGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], UserProfileGroupByOutputType[P]>
-            : GetScalarType<T[P], UserProfileGroupByOutputType[P]>
+              : GetScalarType<T[P], CustomerProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], CustomerProfileGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type UserProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CustomerProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     dateOfBirth?: boolean
     address?: boolean
     city?: boolean
+    province?: boolean
     country?: boolean
     zipCode?: boolean
     phone?: boolean
     loyaltyPoints?: boolean
+    isActive?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userProfile"]>
+  }, ExtArgs["result"]["customerProfile"]>
 
 
 
-  export type UserProfileSelectScalar = {
+  export type CustomerProfileSelectScalar = {
     id?: boolean
     dateOfBirth?: boolean
     address?: boolean
     city?: boolean
+    province?: boolean
     country?: boolean
     zipCode?: boolean
     phone?: boolean
     loyaltyPoints?: boolean
+    isActive?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dateOfBirth" | "address" | "city" | "country" | "zipCode" | "phone" | "loyaltyPoints" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
-  export type UserProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dateOfBirth" | "address" | "city" | "province" | "country" | "zipCode" | "phone" | "loyaltyPoints" | "isActive" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["customerProfile"]>
+  export type CustomerProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $UserProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "UserProfile"
+  export type $CustomerProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CustomerProfile"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
     }
@@ -7915,150 +7965,152 @@ export namespace Prisma {
       dateOfBirth: Date | null
       address: string | null
       city: string | null
+      province: string | null
       country: string | null
       zipCode: string | null
       phone: string | null
       loyaltyPoints: number
+      isActive: boolean
       userId: string
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["userProfile"]>
+    }, ExtArgs["result"]["customerProfile"]>
     composites: {}
   }
 
-  type UserProfileGetPayload<S extends boolean | null | undefined | UserProfileDefaultArgs> = $Result.GetResult<Prisma.$UserProfilePayload, S>
+  type CustomerProfileGetPayload<S extends boolean | null | undefined | CustomerProfileDefaultArgs> = $Result.GetResult<Prisma.$CustomerProfilePayload, S>
 
-  type UserProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<UserProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: UserProfileCountAggregateInputType | true
+  type CustomerProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CustomerProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CustomerProfileCountAggregateInputType | true
     }
 
-  export interface UserProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserProfile'], meta: { name: 'UserProfile' } }
+  export interface CustomerProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CustomerProfile'], meta: { name: 'CustomerProfile' } }
     /**
-     * Find zero or one UserProfile that matches the filter.
-     * @param {UserProfileFindUniqueArgs} args - Arguments to find a UserProfile
+     * Find zero or one CustomerProfile that matches the filter.
+     * @param {CustomerProfileFindUniqueArgs} args - Arguments to find a CustomerProfile
      * @example
-     * // Get one UserProfile
-     * const userProfile = await prisma.userProfile.findUnique({
+     * // Get one CustomerProfile
+     * const customerProfile = await prisma.customerProfile.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends UserProfileFindUniqueArgs>(args: SelectSubset<T, UserProfileFindUniqueArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends CustomerProfileFindUniqueArgs>(args: SelectSubset<T, CustomerProfileFindUniqueArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one UserProfile that matches the filter or throw an error with `error.code='P2025'`
+     * Find one CustomerProfile that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {UserProfileFindUniqueOrThrowArgs} args - Arguments to find a UserProfile
+     * @param {CustomerProfileFindUniqueOrThrowArgs} args - Arguments to find a CustomerProfile
      * @example
-     * // Get one UserProfile
-     * const userProfile = await prisma.userProfile.findUniqueOrThrow({
+     * // Get one CustomerProfile
+     * const customerProfile = await prisma.customerProfile.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends UserProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, UserProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends CustomerProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, CustomerProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first UserProfile that matches the filter.
+     * Find the first CustomerProfile that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserProfileFindFirstArgs} args - Arguments to find a UserProfile
+     * @param {CustomerProfileFindFirstArgs} args - Arguments to find a CustomerProfile
      * @example
-     * // Get one UserProfile
-     * const userProfile = await prisma.userProfile.findFirst({
+     * // Get one CustomerProfile
+     * const customerProfile = await prisma.customerProfile.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends UserProfileFindFirstArgs>(args?: SelectSubset<T, UserProfileFindFirstArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends CustomerProfileFindFirstArgs>(args?: SelectSubset<T, CustomerProfileFindFirstArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first UserProfile that matches the filter or
+     * Find the first CustomerProfile that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserProfileFindFirstOrThrowArgs} args - Arguments to find a UserProfile
+     * @param {CustomerProfileFindFirstOrThrowArgs} args - Arguments to find a CustomerProfile
      * @example
-     * // Get one UserProfile
-     * const userProfile = await prisma.userProfile.findFirstOrThrow({
+     * // Get one CustomerProfile
+     * const customerProfile = await prisma.customerProfile.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends UserProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, UserProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends CustomerProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, CustomerProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more UserProfiles that matches the filter.
+     * Find zero or more CustomerProfiles that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserProfileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {CustomerProfileFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all UserProfiles
-     * const userProfiles = await prisma.userProfile.findMany()
+     * // Get all CustomerProfiles
+     * const customerProfiles = await prisma.customerProfile.findMany()
      * 
-     * // Get first 10 UserProfiles
-     * const userProfiles = await prisma.userProfile.findMany({ take: 10 })
+     * // Get first 10 CustomerProfiles
+     * const customerProfiles = await prisma.customerProfile.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const userProfileWithIdOnly = await prisma.userProfile.findMany({ select: { id: true } })
+     * const customerProfileWithIdOnly = await prisma.customerProfile.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends UserProfileFindManyArgs>(args?: SelectSubset<T, UserProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends CustomerProfileFindManyArgs>(args?: SelectSubset<T, CustomerProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a UserProfile.
-     * @param {UserProfileCreateArgs} args - Arguments to create a UserProfile.
+     * Create a CustomerProfile.
+     * @param {CustomerProfileCreateArgs} args - Arguments to create a CustomerProfile.
      * @example
-     * // Create one UserProfile
-     * const UserProfile = await prisma.userProfile.create({
+     * // Create one CustomerProfile
+     * const CustomerProfile = await prisma.customerProfile.create({
      *   data: {
-     *     // ... data to create a UserProfile
+     *     // ... data to create a CustomerProfile
      *   }
      * })
      * 
      */
-    create<T extends UserProfileCreateArgs>(args: SelectSubset<T, UserProfileCreateArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends CustomerProfileCreateArgs>(args: SelectSubset<T, CustomerProfileCreateArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many UserProfiles.
-     * @param {UserProfileCreateManyArgs} args - Arguments to create many UserProfiles.
+     * Create many CustomerProfiles.
+     * @param {CustomerProfileCreateManyArgs} args - Arguments to create many CustomerProfiles.
      * @example
-     * // Create many UserProfiles
-     * const userProfile = await prisma.userProfile.createMany({
+     * // Create many CustomerProfiles
+     * const customerProfile = await prisma.customerProfile.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends UserProfileCreateManyArgs>(args?: SelectSubset<T, UserProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends CustomerProfileCreateManyArgs>(args?: SelectSubset<T, CustomerProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a UserProfile.
-     * @param {UserProfileDeleteArgs} args - Arguments to delete one UserProfile.
+     * Delete a CustomerProfile.
+     * @param {CustomerProfileDeleteArgs} args - Arguments to delete one CustomerProfile.
      * @example
-     * // Delete one UserProfile
-     * const UserProfile = await prisma.userProfile.delete({
+     * // Delete one CustomerProfile
+     * const CustomerProfile = await prisma.customerProfile.delete({
      *   where: {
-     *     // ... filter to delete one UserProfile
+     *     // ... filter to delete one CustomerProfile
      *   }
      * })
      * 
      */
-    delete<T extends UserProfileDeleteArgs>(args: SelectSubset<T, UserProfileDeleteArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends CustomerProfileDeleteArgs>(args: SelectSubset<T, CustomerProfileDeleteArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one UserProfile.
-     * @param {UserProfileUpdateArgs} args - Arguments to update one UserProfile.
+     * Update one CustomerProfile.
+     * @param {CustomerProfileUpdateArgs} args - Arguments to update one CustomerProfile.
      * @example
-     * // Update one UserProfile
-     * const userProfile = await prisma.userProfile.update({
+     * // Update one CustomerProfile
+     * const customerProfile = await prisma.customerProfile.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8068,30 +8120,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends UserProfileUpdateArgs>(args: SelectSubset<T, UserProfileUpdateArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends CustomerProfileUpdateArgs>(args: SelectSubset<T, CustomerProfileUpdateArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more UserProfiles.
-     * @param {UserProfileDeleteManyArgs} args - Arguments to filter UserProfiles to delete.
+     * Delete zero or more CustomerProfiles.
+     * @param {CustomerProfileDeleteManyArgs} args - Arguments to filter CustomerProfiles to delete.
      * @example
-     * // Delete a few UserProfiles
-     * const { count } = await prisma.userProfile.deleteMany({
+     * // Delete a few CustomerProfiles
+     * const { count } = await prisma.customerProfile.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends UserProfileDeleteManyArgs>(args?: SelectSubset<T, UserProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends CustomerProfileDeleteManyArgs>(args?: SelectSubset<T, CustomerProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more UserProfiles.
+     * Update zero or more CustomerProfiles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {CustomerProfileUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many UserProfiles
-     * const userProfile = await prisma.userProfile.updateMany({
+     * // Update many CustomerProfiles
+     * const customerProfile = await prisma.customerProfile.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8101,79 +8153,79 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends UserProfileUpdateManyArgs>(args: SelectSubset<T, UserProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends CustomerProfileUpdateManyArgs>(args: SelectSubset<T, CustomerProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one UserProfile.
-     * @param {UserProfileUpsertArgs} args - Arguments to update or create a UserProfile.
+     * Create or update one CustomerProfile.
+     * @param {CustomerProfileUpsertArgs} args - Arguments to update or create a CustomerProfile.
      * @example
-     * // Update or create a UserProfile
-     * const userProfile = await prisma.userProfile.upsert({
+     * // Update or create a CustomerProfile
+     * const customerProfile = await prisma.customerProfile.upsert({
      *   create: {
-     *     // ... data to create a UserProfile
+     *     // ... data to create a CustomerProfile
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the UserProfile we want to update
+     *     // ... the filter for the CustomerProfile we want to update
      *   }
      * })
      */
-    upsert<T extends UserProfileUpsertArgs>(args: SelectSubset<T, UserProfileUpsertArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends CustomerProfileUpsertArgs>(args: SelectSubset<T, CustomerProfileUpsertArgs<ExtArgs>>): Prisma__CustomerProfileClient<$Result.GetResult<Prisma.$CustomerProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more UserProfiles that matches the filter.
-     * @param {UserProfileFindRawArgs} args - Select which filters you would like to apply.
+     * Find zero or more CustomerProfiles that matches the filter.
+     * @param {CustomerProfileFindRawArgs} args - Select which filters you would like to apply.
      * @example
-     * const userProfile = await prisma.userProfile.findRaw({
+     * const customerProfile = await prisma.customerProfile.findRaw({
      *   filter: { age: { $gt: 25 } }
      * })
      */
-    findRaw(args?: UserProfileFindRawArgs): Prisma.PrismaPromise<JsonObject>
+    findRaw(args?: CustomerProfileFindRawArgs): Prisma.PrismaPromise<JsonObject>
 
     /**
-     * Perform aggregation operations on a UserProfile.
-     * @param {UserProfileAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * Perform aggregation operations on a CustomerProfile.
+     * @param {CustomerProfileAggregateRawArgs} args - Select which aggregations you would like to apply.
      * @example
-     * const userProfile = await prisma.userProfile.aggregateRaw({
+     * const customerProfile = await prisma.customerProfile.aggregateRaw({
      *   pipeline: [
      *     { $match: { status: "registered" } },
      *     { $group: { _id: "$country", total: { $sum: 1 } } }
      *   ]
      * })
      */
-    aggregateRaw(args?: UserProfileAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+    aggregateRaw(args?: CustomerProfileAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
 
 
     /**
-     * Count the number of UserProfiles.
+     * Count the number of CustomerProfiles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserProfileCountArgs} args - Arguments to filter UserProfiles to count.
+     * @param {CustomerProfileCountArgs} args - Arguments to filter CustomerProfiles to count.
      * @example
-     * // Count the number of UserProfiles
-     * const count = await prisma.userProfile.count({
+     * // Count the number of CustomerProfiles
+     * const count = await prisma.customerProfile.count({
      *   where: {
-     *     // ... the filter for the UserProfiles we want to count
+     *     // ... the filter for the CustomerProfiles we want to count
      *   }
      * })
     **/
-    count<T extends UserProfileCountArgs>(
-      args?: Subset<T, UserProfileCountArgs>,
+    count<T extends CustomerProfileCountArgs>(
+      args?: Subset<T, CustomerProfileCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], UserProfileCountAggregateOutputType>
+          : GetScalarType<T['select'], CustomerProfileCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a UserProfile.
+     * Allows you to perform aggregations operations on a CustomerProfile.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CustomerProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -8193,13 +8245,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends UserProfileAggregateArgs>(args: Subset<T, UserProfileAggregateArgs>): Prisma.PrismaPromise<GetUserProfileAggregateType<T>>
+    aggregate<T extends CustomerProfileAggregateArgs>(args: Subset<T, CustomerProfileAggregateArgs>): Prisma.PrismaPromise<GetCustomerProfileAggregateType<T>>
 
     /**
-     * Group by UserProfile.
+     * Group by CustomerProfile.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserProfileGroupByArgs} args - Group by arguments.
+     * @param {CustomerProfileGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -8214,14 +8266,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends UserProfileGroupByArgs,
+      T extends CustomerProfileGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserProfileGroupByArgs['orderBy'] }
-        : { orderBy?: UserProfileGroupByArgs['orderBy'] },
+        ? { orderBy: CustomerProfileGroupByArgs['orderBy'] }
+        : { orderBy?: CustomerProfileGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -8270,20 +8322,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, UserProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, CustomerProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCustomerProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the UserProfile model
+   * Fields of the CustomerProfile model
    */
-  readonly fields: UserProfileFieldRefs;
+  readonly fields: CustomerProfileFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for UserProfile.
+   * The delegate class that acts as a "Promise-like" for CustomerProfile.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__CustomerProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -8312,365 +8364,367 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the UserProfile model
+   * Fields of the CustomerProfile model
    */
-  interface UserProfileFieldRefs {
-    readonly id: FieldRef<"UserProfile", 'String'>
-    readonly dateOfBirth: FieldRef<"UserProfile", 'DateTime'>
-    readonly address: FieldRef<"UserProfile", 'String'>
-    readonly city: FieldRef<"UserProfile", 'String'>
-    readonly country: FieldRef<"UserProfile", 'String'>
-    readonly zipCode: FieldRef<"UserProfile", 'String'>
-    readonly phone: FieldRef<"UserProfile", 'String'>
-    readonly loyaltyPoints: FieldRef<"UserProfile", 'Int'>
-    readonly userId: FieldRef<"UserProfile", 'String'>
-    readonly createdAt: FieldRef<"UserProfile", 'DateTime'>
-    readonly updatedAt: FieldRef<"UserProfile", 'DateTime'>
+  interface CustomerProfileFieldRefs {
+    readonly id: FieldRef<"CustomerProfile", 'String'>
+    readonly dateOfBirth: FieldRef<"CustomerProfile", 'DateTime'>
+    readonly address: FieldRef<"CustomerProfile", 'String'>
+    readonly city: FieldRef<"CustomerProfile", 'String'>
+    readonly province: FieldRef<"CustomerProfile", 'String'>
+    readonly country: FieldRef<"CustomerProfile", 'String'>
+    readonly zipCode: FieldRef<"CustomerProfile", 'String'>
+    readonly phone: FieldRef<"CustomerProfile", 'String'>
+    readonly loyaltyPoints: FieldRef<"CustomerProfile", 'Int'>
+    readonly isActive: FieldRef<"CustomerProfile", 'Boolean'>
+    readonly userId: FieldRef<"CustomerProfile", 'String'>
+    readonly createdAt: FieldRef<"CustomerProfile", 'DateTime'>
+    readonly updatedAt: FieldRef<"CustomerProfile", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * UserProfile findUnique
+   * CustomerProfile findUnique
    */
-  export type UserProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * Filter, which UserProfile to fetch.
+     * Filter, which CustomerProfile to fetch.
      */
-    where: UserProfileWhereUniqueInput
+    where: CustomerProfileWhereUniqueInput
   }
 
   /**
-   * UserProfile findUniqueOrThrow
+   * CustomerProfile findUniqueOrThrow
    */
-  export type UserProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * Filter, which UserProfile to fetch.
+     * Filter, which CustomerProfile to fetch.
      */
-    where: UserProfileWhereUniqueInput
+    where: CustomerProfileWhereUniqueInput
   }
 
   /**
-   * UserProfile findFirst
+   * CustomerProfile findFirst
    */
-  export type UserProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * Filter, which UserProfile to fetch.
+     * Filter, which CustomerProfile to fetch.
      */
-    where?: UserProfileWhereInput
+    where?: CustomerProfileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserProfiles to fetch.
+     * Determine the order of CustomerProfiles to fetch.
      */
-    orderBy?: UserProfileOrderByWithRelationInput | UserProfileOrderByWithRelationInput[]
+    orderBy?: CustomerProfileOrderByWithRelationInput | CustomerProfileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for UserProfiles.
+     * Sets the position for searching for CustomerProfiles.
      */
-    cursor?: UserProfileWhereUniqueInput
+    cursor?: CustomerProfileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserProfiles from the position of the cursor.
+     * Take `±n` CustomerProfiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserProfiles.
+     * Skip the first `n` CustomerProfiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of UserProfiles.
+     * Filter by unique combinations of CustomerProfiles.
      */
-    distinct?: UserProfileScalarFieldEnum | UserProfileScalarFieldEnum[]
+    distinct?: CustomerProfileScalarFieldEnum | CustomerProfileScalarFieldEnum[]
   }
 
   /**
-   * UserProfile findFirstOrThrow
+   * CustomerProfile findFirstOrThrow
    */
-  export type UserProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * Filter, which UserProfile to fetch.
+     * Filter, which CustomerProfile to fetch.
      */
-    where?: UserProfileWhereInput
+    where?: CustomerProfileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserProfiles to fetch.
+     * Determine the order of CustomerProfiles to fetch.
      */
-    orderBy?: UserProfileOrderByWithRelationInput | UserProfileOrderByWithRelationInput[]
+    orderBy?: CustomerProfileOrderByWithRelationInput | CustomerProfileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for UserProfiles.
+     * Sets the position for searching for CustomerProfiles.
      */
-    cursor?: UserProfileWhereUniqueInput
+    cursor?: CustomerProfileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserProfiles from the position of the cursor.
+     * Take `±n` CustomerProfiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserProfiles.
+     * Skip the first `n` CustomerProfiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of UserProfiles.
+     * Filter by unique combinations of CustomerProfiles.
      */
-    distinct?: UserProfileScalarFieldEnum | UserProfileScalarFieldEnum[]
+    distinct?: CustomerProfileScalarFieldEnum | CustomerProfileScalarFieldEnum[]
   }
 
   /**
-   * UserProfile findMany
+   * CustomerProfile findMany
    */
-  export type UserProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * Filter, which UserProfiles to fetch.
+     * Filter, which CustomerProfiles to fetch.
      */
-    where?: UserProfileWhereInput
+    where?: CustomerProfileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserProfiles to fetch.
+     * Determine the order of CustomerProfiles to fetch.
      */
-    orderBy?: UserProfileOrderByWithRelationInput | UserProfileOrderByWithRelationInput[]
+    orderBy?: CustomerProfileOrderByWithRelationInput | CustomerProfileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing UserProfiles.
+     * Sets the position for listing CustomerProfiles.
      */
-    cursor?: UserProfileWhereUniqueInput
+    cursor?: CustomerProfileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserProfiles from the position of the cursor.
+     * Take `±n` CustomerProfiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserProfiles.
+     * Skip the first `n` CustomerProfiles.
      */
     skip?: number
-    distinct?: UserProfileScalarFieldEnum | UserProfileScalarFieldEnum[]
+    distinct?: CustomerProfileScalarFieldEnum | CustomerProfileScalarFieldEnum[]
   }
 
   /**
-   * UserProfile create
+   * CustomerProfile create
    */
-  export type UserProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * The data needed to create a UserProfile.
+     * The data needed to create a CustomerProfile.
      */
-    data: XOR<UserProfileCreateInput, UserProfileUncheckedCreateInput>
+    data: XOR<CustomerProfileCreateInput, CustomerProfileUncheckedCreateInput>
   }
 
   /**
-   * UserProfile createMany
+   * CustomerProfile createMany
    */
-  export type UserProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many UserProfiles.
+     * The data used to create many CustomerProfiles.
      */
-    data: UserProfileCreateManyInput | UserProfileCreateManyInput[]
+    data: CustomerProfileCreateManyInput | CustomerProfileCreateManyInput[]
   }
 
   /**
-   * UserProfile update
+   * CustomerProfile update
    */
-  export type UserProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * The data needed to update a UserProfile.
+     * The data needed to update a CustomerProfile.
      */
-    data: XOR<UserProfileUpdateInput, UserProfileUncheckedUpdateInput>
+    data: XOR<CustomerProfileUpdateInput, CustomerProfileUncheckedUpdateInput>
     /**
-     * Choose, which UserProfile to update.
+     * Choose, which CustomerProfile to update.
      */
-    where: UserProfileWhereUniqueInput
+    where: CustomerProfileWhereUniqueInput
   }
 
   /**
-   * UserProfile updateMany
+   * CustomerProfile updateMany
    */
-  export type UserProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update UserProfiles.
+     * The data used to update CustomerProfiles.
      */
-    data: XOR<UserProfileUpdateManyMutationInput, UserProfileUncheckedUpdateManyInput>
+    data: XOR<CustomerProfileUpdateManyMutationInput, CustomerProfileUncheckedUpdateManyInput>
     /**
-     * Filter which UserProfiles to update
+     * Filter which CustomerProfiles to update
      */
-    where?: UserProfileWhereInput
+    where?: CustomerProfileWhereInput
     /**
-     * Limit how many UserProfiles to update.
+     * Limit how many CustomerProfiles to update.
      */
     limit?: number
   }
 
   /**
-   * UserProfile upsert
+   * CustomerProfile upsert
    */
-  export type UserProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * The filter to search for the UserProfile to update in case it exists.
+     * The filter to search for the CustomerProfile to update in case it exists.
      */
-    where: UserProfileWhereUniqueInput
+    where: CustomerProfileWhereUniqueInput
     /**
-     * In case the UserProfile found by the `where` argument doesn't exist, create a new UserProfile with this data.
+     * In case the CustomerProfile found by the `where` argument doesn't exist, create a new CustomerProfile with this data.
      */
-    create: XOR<UserProfileCreateInput, UserProfileUncheckedCreateInput>
+    create: XOR<CustomerProfileCreateInput, CustomerProfileUncheckedCreateInput>
     /**
-     * In case the UserProfile was found with the provided `where` argument, update it with this data.
+     * In case the CustomerProfile was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<UserProfileUpdateInput, UserProfileUncheckedUpdateInput>
+    update: XOR<CustomerProfileUpdateInput, CustomerProfileUncheckedUpdateInput>
   }
 
   /**
-   * UserProfile delete
+   * CustomerProfile delete
    */
-  export type UserProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
     /**
-     * Filter which UserProfile to delete.
+     * Filter which CustomerProfile to delete.
      */
-    where: UserProfileWhereUniqueInput
+    where: CustomerProfileWhereUniqueInput
   }
 
   /**
-   * UserProfile deleteMany
+   * CustomerProfile deleteMany
    */
-  export type UserProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which UserProfiles to delete
+     * Filter which CustomerProfiles to delete
      */
-    where?: UserProfileWhereInput
+    where?: CustomerProfileWhereInput
     /**
-     * Limit how many UserProfiles to delete.
+     * Limit how many CustomerProfiles to delete.
      */
     limit?: number
   }
 
   /**
-   * UserProfile findRaw
+   * CustomerProfile findRaw
    */
-  export type UserProfileFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
      */
@@ -8682,9 +8736,9 @@ export namespace Prisma {
   }
 
   /**
-   * UserProfile aggregateRaw
+   * CustomerProfile aggregateRaw
    */
-  export type UserProfileAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
      */
@@ -8696,21 +8750,21 @@ export namespace Prisma {
   }
 
   /**
-   * UserProfile without action
+   * CustomerProfile without action
    */
-  export type UserProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserProfile
+     * Select specific fields to fetch from the CustomerProfile
      */
-    select?: UserProfileSelect<ExtArgs> | null
+    select?: CustomerProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserProfile
+     * Omit specific fields from the CustomerProfile
      */
-    omit?: UserProfileOmit<ExtArgs> | null
+    omit?: CustomerProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserProfileInclude<ExtArgs> | null
+    include?: CustomerProfileInclude<ExtArgs> | null
   }
 
 
@@ -9836,11 +9890,10 @@ export namespace Prisma {
     id: string | null
     codeUser: string | null
     phone: string | null
-    address: string | null
+    streetAddress: string | null
     dob: Date | null
     notes: string | null
     workScope: string | null
-    imageUrl: string | null
     isActive: boolean | null
     userId: string | null
     createdAt: Date | null
@@ -9851,11 +9904,10 @@ export namespace Prisma {
     id: string | null
     codeUser: string | null
     phone: string | null
-    address: string | null
+    streetAddress: string | null
     dob: Date | null
     notes: string | null
     workScope: string | null
-    imageUrl: string | null
     isActive: boolean | null
     userId: string | null
     createdAt: Date | null
@@ -9866,11 +9918,10 @@ export namespace Prisma {
     id: number
     codeUser: number
     phone: number
-    address: number
+    streetAddress: number
     dob: number
     notes: number
     workScope: number
-    imageUrl: number
     isActive: number
     userId: number
     createdAt: number
@@ -9883,11 +9934,10 @@ export namespace Prisma {
     id?: true
     codeUser?: true
     phone?: true
-    address?: true
+    streetAddress?: true
     dob?: true
     notes?: true
     workScope?: true
-    imageUrl?: true
     isActive?: true
     userId?: true
     createdAt?: true
@@ -9898,11 +9948,10 @@ export namespace Prisma {
     id?: true
     codeUser?: true
     phone?: true
-    address?: true
+    streetAddress?: true
     dob?: true
     notes?: true
     workScope?: true
-    imageUrl?: true
     isActive?: true
     userId?: true
     createdAt?: true
@@ -9913,11 +9962,10 @@ export namespace Prisma {
     id?: true
     codeUser?: true
     phone?: true
-    address?: true
+    streetAddress?: true
     dob?: true
     notes?: true
     workScope?: true
-    imageUrl?: true
     isActive?: true
     userId?: true
     createdAt?: true
@@ -10001,11 +10049,10 @@ export namespace Prisma {
     id: string
     codeUser: string
     phone: string
-    address: string | null
+    streetAddress: string | null
     dob: Date | null
     notes: string | null
     workScope: string | null
-    imageUrl: string | null
     isActive: boolean
     userId: string
     createdAt: Date
@@ -10033,11 +10080,10 @@ export namespace Prisma {
     id?: boolean
     codeUser?: boolean
     phone?: boolean
-    address?: boolean
+    streetAddress?: boolean
     dob?: boolean
     notes?: boolean
     workScope?: boolean
-    imageUrl?: boolean
     isActive?: boolean
     userId?: boolean
     createdAt?: boolean
@@ -10051,18 +10097,17 @@ export namespace Prisma {
     id?: boolean
     codeUser?: boolean
     phone?: boolean
-    address?: boolean
+    streetAddress?: boolean
     dob?: boolean
     notes?: boolean
     workScope?: boolean
-    imageUrl?: boolean
     isActive?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StaffProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "codeUser" | "phone" | "address" | "dob" | "notes" | "workScope" | "imageUrl" | "isActive" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["staffProfile"]>
+  export type StaffProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "codeUser" | "phone" | "streetAddress" | "dob" | "notes" | "workScope" | "isActive" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["staffProfile"]>
   export type StaffProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -10076,11 +10121,10 @@ export namespace Prisma {
       id: string
       codeUser: string
       phone: string
-      address: string | null
+      streetAddress: string | null
       dob: Date | null
       notes: string | null
       workScope: string | null
-      imageUrl: string | null
       isActive: boolean
       userId: string
       createdAt: Date
@@ -10481,11 +10525,10 @@ export namespace Prisma {
     readonly id: FieldRef<"StaffProfile", 'String'>
     readonly codeUser: FieldRef<"StaffProfile", 'String'>
     readonly phone: FieldRef<"StaffProfile", 'String'>
-    readonly address: FieldRef<"StaffProfile", 'String'>
+    readonly streetAddress: FieldRef<"StaffProfile", 'String'>
     readonly dob: FieldRef<"StaffProfile", 'DateTime'>
     readonly notes: FieldRef<"StaffProfile", 'String'>
     readonly workScope: FieldRef<"StaffProfile", 'String'>
-    readonly imageUrl: FieldRef<"StaffProfile", 'String'>
     readonly isActive: FieldRef<"StaffProfile", 'Boolean'>
     readonly userId: FieldRef<"StaffProfile", 'String'>
     readonly createdAt: FieldRef<"StaffProfile", 'DateTime'>
@@ -12183,6 +12226,7 @@ export namespace Prisma {
     usageLimit: number | null
     value: number | null
     isActive: boolean | null
+    vendorId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -12195,6 +12239,7 @@ export namespace Prisma {
     usageLimit: number | null
     value: number | null
     isActive: boolean | null
+    vendorId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -12207,6 +12252,7 @@ export namespace Prisma {
     usageLimit: number
     value: number
     isActive: number
+    vendorId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -12231,6 +12277,7 @@ export namespace Prisma {
     usageLimit?: true
     value?: true
     isActive?: true
+    vendorId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -12243,6 +12290,7 @@ export namespace Prisma {
     usageLimit?: true
     value?: true
     isActive?: true
+    vendorId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -12255,6 +12303,7 @@ export namespace Prisma {
     usageLimit?: true
     value?: true
     isActive?: true
+    vendorId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -12354,6 +12403,7 @@ export namespace Prisma {
     usageLimit: number
     value: number
     isActive: boolean
+    vendorId: string | null
     createdAt: Date
     updatedAt: Date
     _count: CouponCountAggregateOutputType | null
@@ -12385,9 +12435,11 @@ export namespace Prisma {
     usageLimit?: boolean
     value?: boolean
     isActive?: boolean
+    vendorId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     orders?: boolean | Coupon$ordersArgs<ExtArgs>
+    user?: boolean | Coupon$userArgs<ExtArgs>
     _count?: boolean | CouponCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["coupon"]>
 
@@ -12401,13 +12453,15 @@ export namespace Prisma {
     usageLimit?: boolean
     value?: boolean
     isActive?: boolean
+    vendorId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CouponOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "couponCode" | "expiryDate" | "usageLimit" | "value" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["coupon"]>
+  export type CouponOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "couponCode" | "expiryDate" | "usageLimit" | "value" | "isActive" | "vendorId" | "createdAt" | "updatedAt", ExtArgs["result"]["coupon"]>
   export type CouponInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orders?: boolean | Coupon$ordersArgs<ExtArgs>
+    user?: boolean | Coupon$userArgs<ExtArgs>
     _count?: boolean | CouponCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -12415,6 +12469,7 @@ export namespace Prisma {
     name: "Coupon"
     objects: {
       orders: Prisma.$OrderPayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12424,6 +12479,7 @@ export namespace Prisma {
       usageLimit: number
       value: number
       isActive: boolean
+      vendorId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["coupon"]>
@@ -12790,6 +12846,7 @@ export namespace Prisma {
   export interface Prisma__CouponClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     orders<T extends Coupon$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Coupon$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends Coupon$userArgs<ExtArgs> = {}>(args?: Subset<T, Coupon$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12826,6 +12883,7 @@ export namespace Prisma {
     readonly usageLimit: FieldRef<"Coupon", 'Int'>
     readonly value: FieldRef<"Coupon", 'Float'>
     readonly isActive: FieldRef<"Coupon", 'Boolean'>
+    readonly vendorId: FieldRef<"Coupon", 'String'>
     readonly createdAt: FieldRef<"Coupon", 'DateTime'>
     readonly updatedAt: FieldRef<"Coupon", 'DateTime'>
   }
@@ -13219,6 +13277,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+  }
+
+  /**
+   * Coupon.user
+   */
+  export type Coupon$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -16883,21 +16960,23 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-  export const UserProfileScalarFieldEnum: {
+  export const CustomerProfileScalarFieldEnum: {
     id: 'id',
     dateOfBirth: 'dateOfBirth',
     address: 'address',
     city: 'city',
+    province: 'province',
     country: 'country',
     zipCode: 'zipCode',
     phone: 'phone',
     loyaltyPoints: 'loyaltyPoints',
+    isActive: 'isActive',
     userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+  export type CustomerProfileScalarFieldEnum = (typeof CustomerProfileScalarFieldEnum)[keyof typeof CustomerProfileScalarFieldEnum]
 
 
   export const SupplierProfileScalarFieldEnum: {
@@ -16924,11 +17003,10 @@ export namespace Prisma {
     id: 'id',
     codeUser: 'codeUser',
     phone: 'phone',
-    address: 'address',
+    streetAddress: 'streetAddress',
     dob: 'dob',
     notes: 'notes',
     workScope: 'workScope',
-    imageUrl: 'imageUrl',
     isActive: 'isActive',
     userId: 'userId',
     createdAt: 'createdAt',
@@ -16971,6 +17049,7 @@ export namespace Prisma {
     usageLimit: 'usageLimit',
     value: 'value',
     isActive: 'isActive',
+    vendorId: 'vendorId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -17511,11 +17590,12 @@ export namespace Prisma {
     passwordChangedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
+    customerProfile?: XOR<CustomerProfileNullableScalarRelationFilter, CustomerProfileWhereInput> | null
     supplierProfile?: XOR<SupplierProfileNullableScalarRelationFilter, SupplierProfileWhereInput> | null
     staffProfile?: XOR<StaffProfileNullableScalarRelationFilter, StaffProfileWhereInput> | null
     orders?: OrderListRelationFilter
     sales?: SaleListRelationFilter
+    coupons?: CouponListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -17535,11 +17615,12 @@ export namespace Prisma {
     passwordChangedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    profile?: UserProfileOrderByWithRelationInput
+    customerProfile?: CustomerProfileOrderByWithRelationInput
     supplierProfile?: SupplierProfileOrderByWithRelationInput
     staffProfile?: StaffProfileOrderByWithRelationInput
     orders?: OrderOrderByRelationAggregateInput
     sales?: SaleOrderByRelationAggregateInput
+    coupons?: CouponOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -17562,11 +17643,12 @@ export namespace Prisma {
     passwordChangedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
+    customerProfile?: XOR<CustomerProfileNullableScalarRelationFilter, CustomerProfileWhereInput> | null
     supplierProfile?: XOR<SupplierProfileNullableScalarRelationFilter, SupplierProfileWhereInput> | null
     staffProfile?: XOR<StaffProfileNullableScalarRelationFilter, StaffProfileWhereInput> | null
     orders?: OrderListRelationFilter
     sales?: SaleListRelationFilter
+    coupons?: CouponListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -17613,91 +17695,101 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
-  export type UserProfileWhereInput = {
-    AND?: UserProfileWhereInput | UserProfileWhereInput[]
-    OR?: UserProfileWhereInput[]
-    NOT?: UserProfileWhereInput | UserProfileWhereInput[]
-    id?: StringFilter<"UserProfile"> | string
-    dateOfBirth?: DateTimeNullableFilter<"UserProfile"> | Date | string | null
-    address?: StringNullableFilter<"UserProfile"> | string | null
-    city?: StringNullableFilter<"UserProfile"> | string | null
-    country?: StringNullableFilter<"UserProfile"> | string | null
-    zipCode?: StringNullableFilter<"UserProfile"> | string | null
-    phone?: StringNullableFilter<"UserProfile"> | string | null
-    loyaltyPoints?: IntFilter<"UserProfile"> | number
-    userId?: StringFilter<"UserProfile"> | string
-    createdAt?: DateTimeFilter<"UserProfile"> | Date | string
-    updatedAt?: DateTimeFilter<"UserProfile"> | Date | string
+  export type CustomerProfileWhereInput = {
+    AND?: CustomerProfileWhereInput | CustomerProfileWhereInput[]
+    OR?: CustomerProfileWhereInput[]
+    NOT?: CustomerProfileWhereInput | CustomerProfileWhereInput[]
+    id?: StringFilter<"CustomerProfile"> | string
+    dateOfBirth?: DateTimeNullableFilter<"CustomerProfile"> | Date | string | null
+    address?: StringNullableFilter<"CustomerProfile"> | string | null
+    city?: StringNullableFilter<"CustomerProfile"> | string | null
+    province?: StringNullableFilter<"CustomerProfile"> | string | null
+    country?: StringNullableFilter<"CustomerProfile"> | string | null
+    zipCode?: StringNullableFilter<"CustomerProfile"> | string | null
+    phone?: StringNullableFilter<"CustomerProfile"> | string | null
+    loyaltyPoints?: IntFilter<"CustomerProfile"> | number
+    isActive?: BoolFilter<"CustomerProfile"> | boolean
+    userId?: StringFilter<"CustomerProfile"> | string
+    createdAt?: DateTimeFilter<"CustomerProfile"> | Date | string
+    updatedAt?: DateTimeFilter<"CustomerProfile"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
-  export type UserProfileOrderByWithRelationInput = {
+  export type CustomerProfileOrderByWithRelationInput = {
     id?: SortOrder
     dateOfBirth?: SortOrder
     address?: SortOrder
     city?: SortOrder
+    province?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
     phone?: SortOrder
     loyaltyPoints?: SortOrder
+    isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
-  export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
+  export type CustomerProfileWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     userId?: string
-    AND?: UserProfileWhereInput | UserProfileWhereInput[]
-    OR?: UserProfileWhereInput[]
-    NOT?: UserProfileWhereInput | UserProfileWhereInput[]
-    dateOfBirth?: DateTimeNullableFilter<"UserProfile"> | Date | string | null
-    address?: StringNullableFilter<"UserProfile"> | string | null
-    city?: StringNullableFilter<"UserProfile"> | string | null
-    country?: StringNullableFilter<"UserProfile"> | string | null
-    zipCode?: StringNullableFilter<"UserProfile"> | string | null
-    phone?: StringNullableFilter<"UserProfile"> | string | null
-    loyaltyPoints?: IntFilter<"UserProfile"> | number
-    createdAt?: DateTimeFilter<"UserProfile"> | Date | string
-    updatedAt?: DateTimeFilter<"UserProfile"> | Date | string
+    AND?: CustomerProfileWhereInput | CustomerProfileWhereInput[]
+    OR?: CustomerProfileWhereInput[]
+    NOT?: CustomerProfileWhereInput | CustomerProfileWhereInput[]
+    dateOfBirth?: DateTimeNullableFilter<"CustomerProfile"> | Date | string | null
+    address?: StringNullableFilter<"CustomerProfile"> | string | null
+    city?: StringNullableFilter<"CustomerProfile"> | string | null
+    province?: StringNullableFilter<"CustomerProfile"> | string | null
+    country?: StringNullableFilter<"CustomerProfile"> | string | null
+    zipCode?: StringNullableFilter<"CustomerProfile"> | string | null
+    phone?: StringNullableFilter<"CustomerProfile"> | string | null
+    loyaltyPoints?: IntFilter<"CustomerProfile"> | number
+    isActive?: BoolFilter<"CustomerProfile"> | boolean
+    createdAt?: DateTimeFilter<"CustomerProfile"> | Date | string
+    updatedAt?: DateTimeFilter<"CustomerProfile"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
 
-  export type UserProfileOrderByWithAggregationInput = {
+  export type CustomerProfileOrderByWithAggregationInput = {
     id?: SortOrder
     dateOfBirth?: SortOrder
     address?: SortOrder
     city?: SortOrder
+    province?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
     phone?: SortOrder
     loyaltyPoints?: SortOrder
+    isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: UserProfileCountOrderByAggregateInput
-    _avg?: UserProfileAvgOrderByAggregateInput
-    _max?: UserProfileMaxOrderByAggregateInput
-    _min?: UserProfileMinOrderByAggregateInput
-    _sum?: UserProfileSumOrderByAggregateInput
+    _count?: CustomerProfileCountOrderByAggregateInput
+    _avg?: CustomerProfileAvgOrderByAggregateInput
+    _max?: CustomerProfileMaxOrderByAggregateInput
+    _min?: CustomerProfileMinOrderByAggregateInput
+    _sum?: CustomerProfileSumOrderByAggregateInput
   }
 
-  export type UserProfileScalarWhereWithAggregatesInput = {
-    AND?: UserProfileScalarWhereWithAggregatesInput | UserProfileScalarWhereWithAggregatesInput[]
-    OR?: UserProfileScalarWhereWithAggregatesInput[]
-    NOT?: UserProfileScalarWhereWithAggregatesInput | UserProfileScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"UserProfile"> | string
-    dateOfBirth?: DateTimeNullableWithAggregatesFilter<"UserProfile"> | Date | string | null
-    address?: StringNullableWithAggregatesFilter<"UserProfile"> | string | null
-    city?: StringNullableWithAggregatesFilter<"UserProfile"> | string | null
-    country?: StringNullableWithAggregatesFilter<"UserProfile"> | string | null
-    zipCode?: StringNullableWithAggregatesFilter<"UserProfile"> | string | null
-    phone?: StringNullableWithAggregatesFilter<"UserProfile"> | string | null
-    loyaltyPoints?: IntWithAggregatesFilter<"UserProfile"> | number
-    userId?: StringWithAggregatesFilter<"UserProfile"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
+  export type CustomerProfileScalarWhereWithAggregatesInput = {
+    AND?: CustomerProfileScalarWhereWithAggregatesInput | CustomerProfileScalarWhereWithAggregatesInput[]
+    OR?: CustomerProfileScalarWhereWithAggregatesInput[]
+    NOT?: CustomerProfileScalarWhereWithAggregatesInput | CustomerProfileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CustomerProfile"> | string
+    dateOfBirth?: DateTimeNullableWithAggregatesFilter<"CustomerProfile"> | Date | string | null
+    address?: StringNullableWithAggregatesFilter<"CustomerProfile"> | string | null
+    city?: StringNullableWithAggregatesFilter<"CustomerProfile"> | string | null
+    province?: StringNullableWithAggregatesFilter<"CustomerProfile"> | string | null
+    country?: StringNullableWithAggregatesFilter<"CustomerProfile"> | string | null
+    zipCode?: StringNullableWithAggregatesFilter<"CustomerProfile"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"CustomerProfile"> | string | null
+    loyaltyPoints?: IntWithAggregatesFilter<"CustomerProfile"> | number
+    isActive?: BoolWithAggregatesFilter<"CustomerProfile"> | boolean
+    userId?: StringWithAggregatesFilter<"CustomerProfile"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CustomerProfile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CustomerProfile"> | Date | string
   }
 
   export type SupplierProfileWhereInput = {
@@ -17810,11 +17902,10 @@ export namespace Prisma {
     id?: StringFilter<"StaffProfile"> | string
     codeUser?: StringFilter<"StaffProfile"> | string
     phone?: StringFilter<"StaffProfile"> | string
-    address?: StringNullableFilter<"StaffProfile"> | string | null
+    streetAddress?: StringNullableFilter<"StaffProfile"> | string | null
     dob?: DateTimeNullableFilter<"StaffProfile"> | Date | string | null
     notes?: StringNullableFilter<"StaffProfile"> | string | null
     workScope?: StringNullableFilter<"StaffProfile"> | string | null
-    imageUrl?: StringNullableFilter<"StaffProfile"> | string | null
     isActive?: BoolFilter<"StaffProfile"> | boolean
     userId?: StringFilter<"StaffProfile"> | string
     createdAt?: DateTimeFilter<"StaffProfile"> | Date | string
@@ -17826,11 +17917,10 @@ export namespace Prisma {
     id?: SortOrder
     codeUser?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    streetAddress?: SortOrder
     dob?: SortOrder
     notes?: SortOrder
     workScope?: SortOrder
-    imageUrl?: SortOrder
     isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -17846,11 +17936,10 @@ export namespace Prisma {
     OR?: StaffProfileWhereInput[]
     NOT?: StaffProfileWhereInput | StaffProfileWhereInput[]
     phone?: StringFilter<"StaffProfile"> | string
-    address?: StringNullableFilter<"StaffProfile"> | string | null
+    streetAddress?: StringNullableFilter<"StaffProfile"> | string | null
     dob?: DateTimeNullableFilter<"StaffProfile"> | Date | string | null
     notes?: StringNullableFilter<"StaffProfile"> | string | null
     workScope?: StringNullableFilter<"StaffProfile"> | string | null
-    imageUrl?: StringNullableFilter<"StaffProfile"> | string | null
     isActive?: BoolFilter<"StaffProfile"> | boolean
     createdAt?: DateTimeFilter<"StaffProfile"> | Date | string
     updatedAt?: DateTimeFilter<"StaffProfile"> | Date | string
@@ -17861,11 +17950,10 @@ export namespace Prisma {
     id?: SortOrder
     codeUser?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    streetAddress?: SortOrder
     dob?: SortOrder
     notes?: SortOrder
     workScope?: SortOrder
-    imageUrl?: SortOrder
     isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -17882,11 +17970,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"StaffProfile"> | string
     codeUser?: StringWithAggregatesFilter<"StaffProfile"> | string
     phone?: StringWithAggregatesFilter<"StaffProfile"> | string
-    address?: StringNullableWithAggregatesFilter<"StaffProfile"> | string | null
+    streetAddress?: StringNullableWithAggregatesFilter<"StaffProfile"> | string | null
     dob?: DateTimeNullableWithAggregatesFilter<"StaffProfile"> | Date | string | null
     notes?: StringNullableWithAggregatesFilter<"StaffProfile"> | string | null
     workScope?: StringNullableWithAggregatesFilter<"StaffProfile"> | string | null
-    imageUrl?: StringNullableWithAggregatesFilter<"StaffProfile"> | string | null
     isActive?: BoolWithAggregatesFilter<"StaffProfile"> | boolean
     userId?: StringWithAggregatesFilter<"StaffProfile"> | string
     createdAt?: DateTimeWithAggregatesFilter<"StaffProfile"> | Date | string
@@ -18040,9 +18127,11 @@ export namespace Prisma {
     usageLimit?: IntFilter<"Coupon"> | number
     value?: FloatFilter<"Coupon"> | number
     isActive?: BoolFilter<"Coupon"> | boolean
+    vendorId?: StringNullableFilter<"Coupon"> | string | null
     createdAt?: DateTimeFilter<"Coupon"> | Date | string
     updatedAt?: DateTimeFilter<"Coupon"> | Date | string
     orders?: OrderListRelationFilter
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type CouponOrderByWithRelationInput = {
@@ -18053,9 +18142,11 @@ export namespace Prisma {
     usageLimit?: SortOrder
     value?: SortOrder
     isActive?: SortOrder
+    vendorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     orders?: OrderOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type CouponWhereUniqueInput = Prisma.AtLeast<{
@@ -18069,9 +18160,11 @@ export namespace Prisma {
     usageLimit?: IntFilter<"Coupon"> | number
     value?: FloatFilter<"Coupon"> | number
     isActive?: BoolFilter<"Coupon"> | boolean
+    vendorId?: StringNullableFilter<"Coupon"> | string | null
     createdAt?: DateTimeFilter<"Coupon"> | Date | string
     updatedAt?: DateTimeFilter<"Coupon"> | Date | string
     orders?: OrderListRelationFilter
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type CouponOrderByWithAggregationInput = {
@@ -18082,6 +18175,7 @@ export namespace Prisma {
     usageLimit?: SortOrder
     value?: SortOrder
     isActive?: SortOrder
+    vendorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CouponCountOrderByAggregateInput
@@ -18102,6 +18196,7 @@ export namespace Prisma {
     usageLimit?: IntWithAggregatesFilter<"Coupon"> | number
     value?: FloatWithAggregatesFilter<"Coupon"> | number
     isActive?: BoolWithAggregatesFilter<"Coupon"> | boolean
+    vendorId?: StringNullableWithAggregatesFilter<"Coupon"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Coupon"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Coupon"> | Date | string
   }
@@ -18811,11 +18906,12 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileCreateNestedOneWithoutUserInput
     supplierProfile?: SupplierProfileCreateNestedOneWithoutUserInput
     staffProfile?: StaffProfileCreateNestedOneWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
     sales?: SaleCreateNestedManyWithoutVendorInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -18835,11 +18931,12 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileUncheckedCreateNestedOneWithoutUserInput
     supplierProfile?: SupplierProfileUncheckedCreateNestedOneWithoutUserInput
     staffProfile?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     sales?: SaleUncheckedCreateNestedManyWithoutVendorInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -18858,11 +18955,12 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUpdateOneWithoutUserNestedInput
     supplierProfile?: SupplierProfileUpdateOneWithoutUserNestedInput
     staffProfile?: StaffProfileUpdateOneWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     sales?: SaleUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -18881,11 +18979,12 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
     supplierProfile?: SupplierProfileUncheckedUpdateOneWithoutUserNestedInput
     staffProfile?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     sales?: SaleUncheckedUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -18943,94 +19042,108 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserProfileCreateInput = {
+  export type CustomerProfileCreateInput = {
     id?: string
     dateOfBirth?: Date | string | null
     address?: string | null
     city?: string | null
+    province?: string | null
     country?: string | null
     zipCode?: string | null
     phone?: string | null
     loyaltyPoints?: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutProfileInput
+    user: UserCreateNestedOneWithoutCustomerProfileInput
   }
 
-  export type UserProfileUncheckedCreateInput = {
+  export type CustomerProfileUncheckedCreateInput = {
     id?: string
     dateOfBirth?: Date | string | null
     address?: string | null
     city?: string | null
+    province?: string | null
     country?: string | null
     zipCode?: string | null
     phone?: string | null
     loyaltyPoints?: number
+    isActive?: boolean
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type UserProfileUpdateInput = {
+  export type CustomerProfileUpdateInput = {
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
+    province?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     zipCode?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     loyaltyPoints?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutProfileNestedInput
+    user?: UserUpdateOneRequiredWithoutCustomerProfileNestedInput
   }
 
-  export type UserProfileUncheckedUpdateInput = {
+  export type CustomerProfileUncheckedUpdateInput = {
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
+    province?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     zipCode?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     loyaltyPoints?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserProfileCreateManyInput = {
+  export type CustomerProfileCreateManyInput = {
     id?: string
     dateOfBirth?: Date | string | null
     address?: string | null
     city?: string | null
+    province?: string | null
     country?: string | null
     zipCode?: string | null
     phone?: string | null
     loyaltyPoints?: number
+    isActive?: boolean
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type UserProfileUpdateManyMutationInput = {
+  export type CustomerProfileUpdateManyMutationInput = {
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
+    province?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     zipCode?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     loyaltyPoints?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserProfileUncheckedUpdateManyInput = {
+  export type CustomerProfileUncheckedUpdateManyInput = {
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
+    province?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     zipCode?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     loyaltyPoints?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19158,11 +19271,10 @@ export namespace Prisma {
     id?: string
     codeUser: string
     phone: string
-    address?: string | null
+    streetAddress?: string | null
     dob?: Date | string | null
     notes?: string | null
     workScope?: string | null
-    imageUrl?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19173,11 +19285,10 @@ export namespace Prisma {
     id?: string
     codeUser: string
     phone: string
-    address?: string | null
+    streetAddress?: string | null
     dob?: Date | string | null
     notes?: string | null
     workScope?: string | null
-    imageUrl?: string | null
     isActive?: boolean
     userId: string
     createdAt?: Date | string
@@ -19187,11 +19298,10 @@ export namespace Prisma {
   export type StaffProfileUpdateInput = {
     codeUser?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    streetAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     workScope?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19201,11 +19311,10 @@ export namespace Prisma {
   export type StaffProfileUncheckedUpdateInput = {
     codeUser?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    streetAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     workScope?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19216,11 +19325,10 @@ export namespace Prisma {
     id?: string
     codeUser: string
     phone: string
-    address?: string | null
+    streetAddress?: string | null
     dob?: Date | string | null
     notes?: string | null
     workScope?: string | null
-    imageUrl?: string | null
     isActive?: boolean
     userId: string
     createdAt?: Date | string
@@ -19230,11 +19338,10 @@ export namespace Prisma {
   export type StaffProfileUpdateManyMutationInput = {
     codeUser?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    streetAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     workScope?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19243,11 +19350,10 @@ export namespace Prisma {
   export type StaffProfileUncheckedUpdateManyInput = {
     codeUser?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    streetAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     workScope?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19421,6 +19527,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orders?: OrderCreateNestedManyWithoutCouponInput
+    user?: UserCreateNestedOneWithoutCouponsInput
   }
 
   export type CouponUncheckedCreateInput = {
@@ -19431,6 +19538,7 @@ export namespace Prisma {
     usageLimit?: number
     value?: number
     isActive?: boolean
+    vendorId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     orders?: OrderUncheckedCreateNestedManyWithoutCouponInput
@@ -19446,6 +19554,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orders?: OrderUpdateManyWithoutCouponNestedInput
+    user?: UserUpdateOneWithoutCouponsNestedInput
   }
 
   export type CouponUncheckedUpdateInput = {
@@ -19455,6 +19564,7 @@ export namespace Prisma {
     usageLimit?: IntFieldUpdateOperationsInput | number
     value?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orders?: OrderUncheckedUpdateManyWithoutCouponNestedInput
@@ -19468,6 +19578,7 @@ export namespace Prisma {
     usageLimit?: number
     value?: number
     isActive?: boolean
+    vendorId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19490,6 +19601,7 @@ export namespace Prisma {
     usageLimit?: IntFieldUpdateOperationsInput | number
     value?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20207,9 +20319,9 @@ export namespace Prisma {
     isSet?: boolean
   }
 
-  export type UserProfileNullableScalarRelationFilter = {
-    is?: UserProfileWhereInput | null
-    isNot?: UserProfileWhereInput | null
+  export type CustomerProfileNullableScalarRelationFilter = {
+    is?: CustomerProfileWhereInput | null
+    isNot?: CustomerProfileWhereInput | null
   }
 
   export type SupplierProfileNullableScalarRelationFilter = {
@@ -20234,11 +20346,21 @@ export namespace Prisma {
     none?: SaleWhereInput
   }
 
+  export type CouponListRelationFilter = {
+    every?: CouponWhereInput
+    some?: CouponWhereInput
+    none?: CouponWhereInput
+  }
+
   export type OrderOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type SaleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CouponOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20340,53 +20462,59 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type UserProfileCountOrderByAggregateInput = {
+  export type CustomerProfileCountOrderByAggregateInput = {
     id?: SortOrder
     dateOfBirth?: SortOrder
     address?: SortOrder
     city?: SortOrder
+    province?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
     phone?: SortOrder
     loyaltyPoints?: SortOrder
+    isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type UserProfileAvgOrderByAggregateInput = {
+  export type CustomerProfileAvgOrderByAggregateInput = {
     loyaltyPoints?: SortOrder
   }
 
-  export type UserProfileMaxOrderByAggregateInput = {
+  export type CustomerProfileMaxOrderByAggregateInput = {
     id?: SortOrder
     dateOfBirth?: SortOrder
     address?: SortOrder
     city?: SortOrder
+    province?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
     phone?: SortOrder
     loyaltyPoints?: SortOrder
+    isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type UserProfileMinOrderByAggregateInput = {
+  export type CustomerProfileMinOrderByAggregateInput = {
     id?: SortOrder
     dateOfBirth?: SortOrder
     address?: SortOrder
     city?: SortOrder
+    province?: SortOrder
     country?: SortOrder
     zipCode?: SortOrder
     phone?: SortOrder
     loyaltyPoints?: SortOrder
+    isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type UserProfileSumOrderByAggregateInput = {
+  export type CustomerProfileSumOrderByAggregateInput = {
     loyaltyPoints?: SortOrder
   }
 
@@ -20461,11 +20589,10 @@ export namespace Prisma {
     id?: SortOrder
     codeUser?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    streetAddress?: SortOrder
     dob?: SortOrder
     notes?: SortOrder
     workScope?: SortOrder
-    imageUrl?: SortOrder
     isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -20476,11 +20603,10 @@ export namespace Prisma {
     id?: SortOrder
     codeUser?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    streetAddress?: SortOrder
     dob?: SortOrder
     notes?: SortOrder
     workScope?: SortOrder
-    imageUrl?: SortOrder
     isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -20491,11 +20617,10 @@ export namespace Prisma {
     id?: SortOrder
     codeUser?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    streetAddress?: SortOrder
     dob?: SortOrder
     notes?: SortOrder
     workScope?: SortOrder
-    imageUrl?: SortOrder
     isActive?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -20646,6 +20771,11 @@ export namespace Prisma {
     isSet?: boolean
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type CouponCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -20654,6 +20784,7 @@ export namespace Prisma {
     usageLimit?: SortOrder
     value?: SortOrder
     isActive?: SortOrder
+    vendorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -20671,6 +20802,7 @@ export namespace Prisma {
     usageLimit?: SortOrder
     value?: SortOrder
     isActive?: SortOrder
+    vendorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -20683,6 +20815,7 @@ export namespace Prisma {
     usageLimit?: SortOrder
     value?: SortOrder
     isActive?: SortOrder
+    vendorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -20717,11 +20850,6 @@ export namespace Prisma {
   export type CouponNullableScalarRelationFilter = {
     is?: CouponWhereInput | null
     isNot?: CouponWhereInput | null
-  }
-
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
   }
 
   export type OrderCountOrderByAggregateInput = {
@@ -21190,10 +21318,10 @@ export namespace Prisma {
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutTrainingsInput, CategoryUpdateWithoutTrainingsInput>, CategoryUncheckedUpdateWithoutTrainingsInput>
   }
 
-  export type UserProfileCreateNestedOneWithoutUserInput = {
-    create?: XOR<UserProfileCreateWithoutUserInput, UserProfileUncheckedCreateWithoutUserInput>
-    connectOrCreate?: UserProfileCreateOrConnectWithoutUserInput
-    connect?: UserProfileWhereUniqueInput
+  export type CustomerProfileCreateNestedOneWithoutUserInput = {
+    create?: XOR<CustomerProfileCreateWithoutUserInput, CustomerProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CustomerProfileCreateOrConnectWithoutUserInput
+    connect?: CustomerProfileWhereUniqueInput
   }
 
   export type SupplierProfileCreateNestedOneWithoutUserInput = {
@@ -21222,10 +21350,17 @@ export namespace Prisma {
     connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
   }
 
-  export type UserProfileUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<UserProfileCreateWithoutUserInput, UserProfileUncheckedCreateWithoutUserInput>
-    connectOrCreate?: UserProfileCreateOrConnectWithoutUserInput
-    connect?: UserProfileWhereUniqueInput
+  export type CouponCreateNestedManyWithoutUserInput = {
+    create?: XOR<CouponCreateWithoutUserInput, CouponUncheckedCreateWithoutUserInput> | CouponCreateWithoutUserInput[] | CouponUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CouponCreateOrConnectWithoutUserInput | CouponCreateOrConnectWithoutUserInput[]
+    createMany?: CouponCreateManyUserInputEnvelope
+    connect?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+  }
+
+  export type CustomerProfileUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<CustomerProfileCreateWithoutUserInput, CustomerProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CustomerProfileCreateOrConnectWithoutUserInput
+    connect?: CustomerProfileWhereUniqueInput
   }
 
   export type SupplierProfileUncheckedCreateNestedOneWithoutUserInput = {
@@ -21254,6 +21389,13 @@ export namespace Prisma {
     connect?: SaleWhereUniqueInput | SaleWhereUniqueInput[]
   }
 
+  export type CouponUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CouponCreateWithoutUserInput, CouponUncheckedCreateWithoutUserInput> | CouponCreateWithoutUserInput[] | CouponUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CouponCreateOrConnectWithoutUserInput | CouponCreateOrConnectWithoutUserInput[]
+    createMany?: CouponCreateManyUserInputEnvelope
+    connect?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+  }
+
   export type EnumUserRoleFieldUpdateOperationsInput = {
     set?: $Enums.UserRole
   }
@@ -21263,14 +21405,14 @@ export namespace Prisma {
     unset?: boolean
   }
 
-  export type UserProfileUpdateOneWithoutUserNestedInput = {
-    create?: XOR<UserProfileCreateWithoutUserInput, UserProfileUncheckedCreateWithoutUserInput>
-    connectOrCreate?: UserProfileCreateOrConnectWithoutUserInput
-    upsert?: UserProfileUpsertWithoutUserInput
-    disconnect?: UserProfileWhereInput | boolean
-    delete?: UserProfileWhereInput | boolean
-    connect?: UserProfileWhereUniqueInput
-    update?: XOR<XOR<UserProfileUpdateToOneWithWhereWithoutUserInput, UserProfileUpdateWithoutUserInput>, UserProfileUncheckedUpdateWithoutUserInput>
+  export type CustomerProfileUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CustomerProfileCreateWithoutUserInput, CustomerProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CustomerProfileCreateOrConnectWithoutUserInput
+    upsert?: CustomerProfileUpsertWithoutUserInput
+    disconnect?: CustomerProfileWhereInput | boolean
+    delete?: CustomerProfileWhereInput | boolean
+    connect?: CustomerProfileWhereUniqueInput
+    update?: XOR<XOR<CustomerProfileUpdateToOneWithWhereWithoutUserInput, CustomerProfileUpdateWithoutUserInput>, CustomerProfileUncheckedUpdateWithoutUserInput>
   }
 
   export type SupplierProfileUpdateOneWithoutUserNestedInput = {
@@ -21321,14 +21463,28 @@ export namespace Prisma {
     deleteMany?: SaleScalarWhereInput | SaleScalarWhereInput[]
   }
 
-  export type UserProfileUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<UserProfileCreateWithoutUserInput, UserProfileUncheckedCreateWithoutUserInput>
-    connectOrCreate?: UserProfileCreateOrConnectWithoutUserInput
-    upsert?: UserProfileUpsertWithoutUserInput
-    disconnect?: UserProfileWhereInput | boolean
-    delete?: UserProfileWhereInput | boolean
-    connect?: UserProfileWhereUniqueInput
-    update?: XOR<XOR<UserProfileUpdateToOneWithWhereWithoutUserInput, UserProfileUpdateWithoutUserInput>, UserProfileUncheckedUpdateWithoutUserInput>
+  export type CouponUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CouponCreateWithoutUserInput, CouponUncheckedCreateWithoutUserInput> | CouponCreateWithoutUserInput[] | CouponUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CouponCreateOrConnectWithoutUserInput | CouponCreateOrConnectWithoutUserInput[]
+    upsert?: CouponUpsertWithWhereUniqueWithoutUserInput | CouponUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CouponCreateManyUserInputEnvelope
+    set?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+    disconnect?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+    delete?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+    connect?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+    update?: CouponUpdateWithWhereUniqueWithoutUserInput | CouponUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CouponUpdateManyWithWhereWithoutUserInput | CouponUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CouponScalarWhereInput | CouponScalarWhereInput[]
+  }
+
+  export type CustomerProfileUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CustomerProfileCreateWithoutUserInput, CustomerProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CustomerProfileCreateOrConnectWithoutUserInput
+    upsert?: CustomerProfileUpsertWithoutUserInput
+    disconnect?: CustomerProfileWhereInput | boolean
+    delete?: CustomerProfileWhereInput | boolean
+    connect?: CustomerProfileWhereUniqueInput
+    update?: XOR<XOR<CustomerProfileUpdateToOneWithWhereWithoutUserInput, CustomerProfileUpdateWithoutUserInput>, CustomerProfileUncheckedUpdateWithoutUserInput>
   }
 
   export type SupplierProfileUncheckedUpdateOneWithoutUserNestedInput = {
@@ -21379,9 +21535,23 @@ export namespace Prisma {
     deleteMany?: SaleScalarWhereInput | SaleScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutProfileInput = {
-    create?: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProfileInput
+  export type CouponUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CouponCreateWithoutUserInput, CouponUncheckedCreateWithoutUserInput> | CouponCreateWithoutUserInput[] | CouponUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CouponCreateOrConnectWithoutUserInput | CouponCreateOrConnectWithoutUserInput[]
+    upsert?: CouponUpsertWithWhereUniqueWithoutUserInput | CouponUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CouponCreateManyUserInputEnvelope
+    set?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+    disconnect?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+    delete?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+    connect?: CouponWhereUniqueInput | CouponWhereUniqueInput[]
+    update?: CouponUpdateWithWhereUniqueWithoutUserInput | CouponUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CouponUpdateManyWithWhereWithoutUserInput | CouponUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CouponScalarWhereInput | CouponScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutCustomerProfileInput = {
+    create?: XOR<UserCreateWithoutCustomerProfileInput, UserUncheckedCreateWithoutCustomerProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCustomerProfileInput
     connect?: UserWhereUniqueInput
   }
 
@@ -21393,12 +21563,12 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UserUpdateOneRequiredWithoutProfileNestedInput = {
-    create?: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProfileInput
-    upsert?: UserUpsertWithoutProfileInput
+  export type UserUpdateOneRequiredWithoutCustomerProfileNestedInput = {
+    create?: XOR<UserCreateWithoutCustomerProfileInput, UserUncheckedCreateWithoutCustomerProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCustomerProfileInput
+    upsert?: UserUpsertWithoutCustomerProfileInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProfileInput, UserUpdateWithoutProfileInput>, UserUncheckedUpdateWithoutProfileInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCustomerProfileInput, UserUpdateWithoutCustomerProfileInput>, UserUncheckedUpdateWithoutCustomerProfileInput>
   }
 
   export type ProductCreateNestedManyWithoutUserInput = {
@@ -21620,6 +21790,12 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutCouponsInput = {
+    create?: XOR<UserCreateWithoutCouponsInput, UserUncheckedCreateWithoutCouponsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCouponsInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type OrderUncheckedCreateNestedManyWithoutCouponInput = {
     create?: XOR<OrderCreateWithoutCouponInput, OrderUncheckedCreateWithoutCouponInput> | OrderCreateWithoutCouponInput[] | OrderUncheckedCreateWithoutCouponInput[]
     connectOrCreate?: OrderCreateOrConnectWithoutCouponInput | OrderCreateOrConnectWithoutCouponInput[]
@@ -21639,6 +21815,16 @@ export namespace Prisma {
     update?: OrderUpdateWithWhereUniqueWithoutCouponInput | OrderUpdateWithWhereUniqueWithoutCouponInput[]
     updateMany?: OrderUpdateManyWithWhereWithoutCouponInput | OrderUpdateManyWithWhereWithoutCouponInput[]
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutCouponsNestedInput = {
+    create?: XOR<UserCreateWithoutCouponsInput, UserUncheckedCreateWithoutCouponsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCouponsInput
+    upsert?: UserUpsertWithoutCouponsInput
+    disconnect?: boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCouponsInput, UserUpdateWithoutCouponsInput>, UserUncheckedUpdateWithoutCouponsInput>
   }
 
   export type OrderUncheckedUpdateManyWithoutCouponNestedInput = {
@@ -22502,35 +22688,39 @@ export namespace Prisma {
     markets?: MarketUncheckedUpdateManyWithoutCategoriesNestedInput
   }
 
-  export type UserProfileCreateWithoutUserInput = {
+  export type CustomerProfileCreateWithoutUserInput = {
     id?: string
     dateOfBirth?: Date | string | null
     address?: string | null
     city?: string | null
+    province?: string | null
     country?: string | null
     zipCode?: string | null
     phone?: string | null
     loyaltyPoints?: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type UserProfileUncheckedCreateWithoutUserInput = {
+  export type CustomerProfileUncheckedCreateWithoutUserInput = {
     id?: string
     dateOfBirth?: Date | string | null
     address?: string | null
     city?: string | null
+    province?: string | null
     country?: string | null
     zipCode?: string | null
     phone?: string | null
     loyaltyPoints?: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type UserProfileCreateOrConnectWithoutUserInput = {
-    where: UserProfileWhereUniqueInput
-    create: XOR<UserProfileCreateWithoutUserInput, UserProfileUncheckedCreateWithoutUserInput>
+  export type CustomerProfileCreateOrConnectWithoutUserInput = {
+    where: CustomerProfileWhereUniqueInput
+    create: XOR<CustomerProfileCreateWithoutUserInput, CustomerProfileUncheckedCreateWithoutUserInput>
   }
 
   export type SupplierProfileCreateWithoutUserInput = {
@@ -22576,11 +22766,10 @@ export namespace Prisma {
     id?: string
     codeUser: string
     phone: string
-    address?: string | null
+    streetAddress?: string | null
     dob?: Date | string | null
     notes?: string | null
     workScope?: string | null
-    imageUrl?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22590,11 +22779,10 @@ export namespace Prisma {
     id?: string
     codeUser: string
     phone: string
-    address?: string | null
+    streetAddress?: string | null
     dob?: Date | string | null
     notes?: string | null
     workScope?: string | null
-    imageUrl?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22707,37 +22895,76 @@ export namespace Prisma {
     data: SaleCreateManyVendorInput | SaleCreateManyVendorInput[]
   }
 
-  export type UserProfileUpsertWithoutUserInput = {
-    update: XOR<UserProfileUpdateWithoutUserInput, UserProfileUncheckedUpdateWithoutUserInput>
-    create: XOR<UserProfileCreateWithoutUserInput, UserProfileUncheckedCreateWithoutUserInput>
-    where?: UserProfileWhereInput
+  export type CouponCreateWithoutUserInput = {
+    id?: string
+    title: string
+    couponCode: string
+    expiryDate: Date | string
+    usageLimit?: number
+    value?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orders?: OrderCreateNestedManyWithoutCouponInput
   }
 
-  export type UserProfileUpdateToOneWithWhereWithoutUserInput = {
-    where?: UserProfileWhereInput
-    data: XOR<UserProfileUpdateWithoutUserInput, UserProfileUncheckedUpdateWithoutUserInput>
+  export type CouponUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    couponCode: string
+    expiryDate: Date | string
+    usageLimit?: number
+    value?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    orders?: OrderUncheckedCreateNestedManyWithoutCouponInput
   }
 
-  export type UserProfileUpdateWithoutUserInput = {
+  export type CouponCreateOrConnectWithoutUserInput = {
+    where: CouponWhereUniqueInput
+    create: XOR<CouponCreateWithoutUserInput, CouponUncheckedCreateWithoutUserInput>
+  }
+
+  export type CouponCreateManyUserInputEnvelope = {
+    data: CouponCreateManyUserInput | CouponCreateManyUserInput[]
+  }
+
+  export type CustomerProfileUpsertWithoutUserInput = {
+    update: XOR<CustomerProfileUpdateWithoutUserInput, CustomerProfileUncheckedUpdateWithoutUserInput>
+    create: XOR<CustomerProfileCreateWithoutUserInput, CustomerProfileUncheckedCreateWithoutUserInput>
+    where?: CustomerProfileWhereInput
+  }
+
+  export type CustomerProfileUpdateToOneWithWhereWithoutUserInput = {
+    where?: CustomerProfileWhereInput
+    data: XOR<CustomerProfileUpdateWithoutUserInput, CustomerProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CustomerProfileUpdateWithoutUserInput = {
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
+    province?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     zipCode?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     loyaltyPoints?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserProfileUncheckedUpdateWithoutUserInput = {
+  export type CustomerProfileUncheckedUpdateWithoutUserInput = {
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
+    province?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     zipCode?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     loyaltyPoints?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22799,11 +23026,10 @@ export namespace Prisma {
   export type StaffProfileUpdateWithoutUserInput = {
     codeUser?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    streetAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     workScope?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22812,11 +23038,10 @@ export namespace Prisma {
   export type StaffProfileUncheckedUpdateWithoutUserInput = {
     codeUser?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
+    streetAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     workScope?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22902,7 +23127,39 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Sale"> | Date | string
   }
 
-  export type UserCreateWithoutProfileInput = {
+  export type CouponUpsertWithWhereUniqueWithoutUserInput = {
+    where: CouponWhereUniqueInput
+    update: XOR<CouponUpdateWithoutUserInput, CouponUncheckedUpdateWithoutUserInput>
+    create: XOR<CouponCreateWithoutUserInput, CouponUncheckedCreateWithoutUserInput>
+  }
+
+  export type CouponUpdateWithWhereUniqueWithoutUserInput = {
+    where: CouponWhereUniqueInput
+    data: XOR<CouponUpdateWithoutUserInput, CouponUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CouponUpdateManyWithWhereWithoutUserInput = {
+    where: CouponScalarWhereInput
+    data: XOR<CouponUpdateManyMutationInput, CouponUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CouponScalarWhereInput = {
+    AND?: CouponScalarWhereInput | CouponScalarWhereInput[]
+    OR?: CouponScalarWhereInput[]
+    NOT?: CouponScalarWhereInput | CouponScalarWhereInput[]
+    id?: StringFilter<"Coupon"> | string
+    title?: StringFilter<"Coupon"> | string
+    couponCode?: StringFilter<"Coupon"> | string
+    expiryDate?: DateTimeFilter<"Coupon"> | Date | string
+    usageLimit?: IntFilter<"Coupon"> | number
+    value?: FloatFilter<"Coupon"> | number
+    isActive?: BoolFilter<"Coupon"> | boolean
+    vendorId?: StringNullableFilter<"Coupon"> | string | null
+    createdAt?: DateTimeFilter<"Coupon"> | Date | string
+    updatedAt?: DateTimeFilter<"Coupon"> | Date | string
+  }
+
+  export type UserCreateWithoutCustomerProfileInput = {
     id?: string
     email: string
     password: string
@@ -22923,9 +23180,10 @@ export namespace Prisma {
     staffProfile?: StaffProfileCreateNestedOneWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
     sales?: SaleCreateNestedManyWithoutVendorInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutProfileInput = {
+  export type UserUncheckedCreateWithoutCustomerProfileInput = {
     id?: string
     email: string
     password: string
@@ -22946,25 +23204,26 @@ export namespace Prisma {
     staffProfile?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     sales?: SaleUncheckedCreateNestedManyWithoutVendorInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutProfileInput = {
+  export type UserCreateOrConnectWithoutCustomerProfileInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
+    create: XOR<UserCreateWithoutCustomerProfileInput, UserUncheckedCreateWithoutCustomerProfileInput>
   }
 
-  export type UserUpsertWithoutProfileInput = {
-    update: XOR<UserUpdateWithoutProfileInput, UserUncheckedUpdateWithoutProfileInput>
-    create: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
+  export type UserUpsertWithoutCustomerProfileInput = {
+    update: XOR<UserUpdateWithoutCustomerProfileInput, UserUncheckedUpdateWithoutCustomerProfileInput>
+    create: XOR<UserCreateWithoutCustomerProfileInput, UserUncheckedCreateWithoutCustomerProfileInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutProfileInput = {
+  export type UserUpdateToOneWithWhereWithoutCustomerProfileInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutProfileInput, UserUncheckedUpdateWithoutProfileInput>
+    data: XOR<UserUpdateWithoutCustomerProfileInput, UserUncheckedUpdateWithoutCustomerProfileInput>
   }
 
-  export type UserUpdateWithoutProfileInput = {
+  export type UserUpdateWithoutCustomerProfileInput = {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22984,9 +23243,10 @@ export namespace Prisma {
     staffProfile?: StaffProfileUpdateOneWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     sales?: SaleUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutProfileInput = {
+  export type UserUncheckedUpdateWithoutCustomerProfileInput = {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23006,6 +23266,7 @@ export namespace Prisma {
     staffProfile?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     sales?: SaleUncheckedUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductCreateWithoutUserInput = {
@@ -23080,10 +23341,11 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileCreateNestedOneWithoutUserInput
     staffProfile?: StaffProfileCreateNestedOneWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
     sales?: SaleCreateNestedManyWithoutVendorInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSupplierProfileInput = {
@@ -23103,10 +23365,11 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileUncheckedCreateNestedOneWithoutUserInput
     staffProfile?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     sales?: SaleUncheckedCreateNestedManyWithoutVendorInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSupplierProfileInput = {
@@ -23157,10 +23420,11 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUpdateOneWithoutUserNestedInput
     staffProfile?: StaffProfileUpdateOneWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     sales?: SaleUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSupplierProfileInput = {
@@ -23179,10 +23443,11 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
     staffProfile?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     sales?: SaleUncheckedUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStaffProfileInput = {
@@ -23202,10 +23467,11 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileCreateNestedOneWithoutUserInput
     supplierProfile?: SupplierProfileCreateNestedOneWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
     sales?: SaleCreateNestedManyWithoutVendorInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStaffProfileInput = {
@@ -23225,10 +23491,11 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileUncheckedCreateNestedOneWithoutUserInput
     supplierProfile?: SupplierProfileUncheckedCreateNestedOneWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     sales?: SaleUncheckedCreateNestedManyWithoutVendorInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStaffProfileInput = {
@@ -23263,10 +23530,11 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUpdateOneWithoutUserNestedInput
     supplierProfile?: SupplierProfileUpdateOneWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     sales?: SaleUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStaffProfileInput = {
@@ -23285,10 +23553,11 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
     supplierProfile?: SupplierProfileUncheckedUpdateOneWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     sales?: SaleUncheckedUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderItemCreateWithoutProductInput = {
@@ -23633,6 +23902,59 @@ export namespace Prisma {
     data: OrderCreateManyCouponInput | OrderCreateManyCouponInput[]
   }
 
+  export type UserCreateWithoutCouponsInput = {
+    id?: string
+    email: string
+    password: string
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    idDocument?: string | null
+    role?: $Enums.UserRole
+    emailVerified?: boolean
+    verificationToken?: string | null
+    verificationTokenExpires?: Date | string | null
+    passwordResetToken?: string | null
+    passwordResetTokenExpires?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    customerProfile?: CustomerProfileCreateNestedOneWithoutUserInput
+    supplierProfile?: SupplierProfileCreateNestedOneWithoutUserInput
+    staffProfile?: StaffProfileCreateNestedOneWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    sales?: SaleCreateNestedManyWithoutVendorInput
+  }
+
+  export type UserUncheckedCreateWithoutCouponsInput = {
+    id?: string
+    email: string
+    password: string
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    idDocument?: string | null
+    role?: $Enums.UserRole
+    emailVerified?: boolean
+    verificationToken?: string | null
+    verificationTokenExpires?: Date | string | null
+    passwordResetToken?: string | null
+    passwordResetTokenExpires?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    customerProfile?: CustomerProfileUncheckedCreateNestedOneWithoutUserInput
+    supplierProfile?: SupplierProfileUncheckedCreateNestedOneWithoutUserInput
+    staffProfile?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    sales?: SaleUncheckedCreateNestedManyWithoutVendorInput
+  }
+
+  export type UserCreateOrConnectWithoutCouponsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCouponsInput, UserUncheckedCreateWithoutCouponsInput>
+  }
+
   export type OrderUpsertWithWhereUniqueWithoutCouponInput = {
     where: OrderWhereUniqueInput
     update: XOR<OrderUpdateWithoutCouponInput, OrderUncheckedUpdateWithoutCouponInput>
@@ -23647,6 +23969,63 @@ export namespace Prisma {
   export type OrderUpdateManyWithWhereWithoutCouponInput = {
     where: OrderScalarWhereInput
     data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutCouponInput>
+  }
+
+  export type UserUpsertWithoutCouponsInput = {
+    update: XOR<UserUpdateWithoutCouponsInput, UserUncheckedUpdateWithoutCouponsInput>
+    create: XOR<UserCreateWithoutCouponsInput, UserUncheckedCreateWithoutCouponsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCouponsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCouponsInput, UserUncheckedUpdateWithoutCouponsInput>
+  }
+
+  export type UserUpdateWithoutCouponsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocument?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerProfile?: CustomerProfileUpdateOneWithoutUserNestedInput
+    supplierProfile?: SupplierProfileUpdateOneWithoutUserNestedInput
+    staffProfile?: StaffProfileUpdateOneWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    sales?: SaleUpdateManyWithoutVendorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCouponsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    idDocument?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerProfile?: CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
+    supplierProfile?: SupplierProfileUncheckedUpdateOneWithoutUserNestedInput
+    staffProfile?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    sales?: SaleUncheckedUpdateManyWithoutVendorNestedInput
   }
 
   export type OrderItemCreateWithoutOrderInput = {
@@ -23733,6 +24112,7 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    user?: UserCreateNestedOneWithoutCouponsInput
   }
 
   export type CouponUncheckedCreateWithoutOrdersInput = {
@@ -23743,6 +24123,7 @@ export namespace Prisma {
     usageLimit?: number
     value?: number
     isActive?: boolean
+    vendorId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23769,10 +24150,11 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileCreateNestedOneWithoutUserInput
     supplierProfile?: SupplierProfileCreateNestedOneWithoutUserInput
     staffProfile?: StaffProfileCreateNestedOneWithoutUserInput
     sales?: SaleCreateNestedManyWithoutVendorInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -23792,10 +24174,11 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileUncheckedCreateNestedOneWithoutUserInput
     supplierProfile?: SupplierProfileUncheckedCreateNestedOneWithoutUserInput
     staffProfile?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     sales?: SaleUncheckedCreateNestedManyWithoutVendorInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -23855,6 +24238,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutCouponsNestedInput
   }
 
   export type CouponUncheckedUpdateWithoutOrdersInput = {
@@ -23864,6 +24248,7 @@ export namespace Prisma {
     usageLimit?: IntFieldUpdateOperationsInput | number
     value?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23895,10 +24280,11 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUpdateOneWithoutUserNestedInput
     supplierProfile?: SupplierProfileUpdateOneWithoutUserNestedInput
     staffProfile?: StaffProfileUpdateOneWithoutUserNestedInput
     sales?: SaleUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -23917,10 +24303,11 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
     supplierProfile?: SupplierProfileUncheckedUpdateOneWithoutUserNestedInput
     staffProfile?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     sales?: SaleUncheckedUpdateManyWithoutVendorNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderCreateWithoutOrderItemsInput = {
@@ -24290,10 +24677,11 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileCreateNestedOneWithoutUserInput
     supplierProfile?: SupplierProfileCreateNestedOneWithoutUserInput
     staffProfile?: StaffProfileCreateNestedOneWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
+    coupons?: CouponCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSalesInput = {
@@ -24313,10 +24701,11 @@ export namespace Prisma {
     passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    customerProfile?: CustomerProfileUncheckedCreateNestedOneWithoutUserInput
     supplierProfile?: SupplierProfileUncheckedCreateNestedOneWithoutUserInput
     staffProfile?: StaffProfileUncheckedCreateNestedOneWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSalesInput = {
@@ -24473,10 +24862,11 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUpdateOneWithoutUserNestedInput
     supplierProfile?: SupplierProfileUpdateOneWithoutUserNestedInput
     staffProfile?: StaffProfileUpdateOneWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
+    coupons?: CouponUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSalesInput = {
@@ -24495,10 +24885,11 @@ export namespace Prisma {
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    customerProfile?: CustomerProfileUncheckedUpdateOneWithoutUserNestedInput
     supplierProfile?: SupplierProfileUncheckedUpdateOneWithoutUserNestedInput
     staffProfile?: StaffProfileUncheckedUpdateOneWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductCreateManyCategoryInput = {
@@ -24742,6 +25133,18 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type CouponCreateManyUserInput = {
+    id?: string
+    title: string
+    couponCode: string
+    expiryDate: Date | string
+    usageLimit?: number
+    value?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type OrderUpdateWithoutUserInput = {
     orderNumber?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
@@ -24856,6 +25259,41 @@ export namespace Prisma {
     total?: FloatFieldUpdateOperationsInput | number
     orderId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CouponUpdateWithoutUserInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    couponCode?: StringFieldUpdateOperationsInput | string
+    expiryDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    usageLimit?: IntFieldUpdateOperationsInput | number
+    value?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUpdateManyWithoutCouponNestedInput
+  }
+
+  export type CouponUncheckedUpdateWithoutUserInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    couponCode?: StringFieldUpdateOperationsInput | string
+    expiryDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    usageLimit?: IntFieldUpdateOperationsInput | number
+    value?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUncheckedUpdateManyWithoutCouponNestedInput
+  }
+
+  export type CouponUncheckedUpdateManyWithoutUserInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    couponCode?: StringFieldUpdateOperationsInput | string
+    expiryDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    usageLimit?: IntFieldUpdateOperationsInput | number
+    value?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

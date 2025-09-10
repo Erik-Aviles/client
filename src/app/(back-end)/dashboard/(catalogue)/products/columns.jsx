@@ -36,6 +36,13 @@ export const columns = [
     enableHiding: false,
   },
   {
+    accessorKey: "imageUrl",
+    header: "Imagen",
+    cell: ({ row }) => (
+      <ImageColumns row={row} imageUrl={row.original.imageUrl} title="title" />
+    ),
+  },
+  {
     accessorKey: "title",
     header: ({ column }) => <SortableColumn column={column} title="Nombre" />,
     cell: ({ row }) => <TitleColumn row={row} column="title" />,
@@ -54,13 +61,6 @@ export const columns = [
     accessorKey: "sku",
     header: () => <div className="whitespace-nowrap">cod. unico</div>,
     cell: ({ row }) => <TextShortColumn row={row} column="sku" />,
-  },
-  {
-    accessorKey: "imageUrl",
-    header: "Imagen",
-    cell: ({ row }) => (
-      <ImageColumns row={row} imageUrl={row.original.imageUrl}title="title" />
-    ),
   },
   {
     accessorKey: "price",
@@ -136,3 +136,12 @@ export const columns = [
     ),
   },
 ];
+
+export const initialColumnVisibility = {
+  description: false,
+  barcode: false,
+  categoryId: false,
+  sku: false,
+};
+
+export const fieldsToSearch = ["title", "code", "id"];

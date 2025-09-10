@@ -1,7 +1,7 @@
 import React from "react";
 import { getData } from "@/lib/getData";
 import FormHeader from "@/components/backoffice/FormHeader";
-import NewTrainingForm from "@/components/backoffice/forms/NewTrainingForm";
+import TrainingForm from "@/components/backoffice/forms/TrainingForm";
 
 export default async function NewTraining() {
   const categoriesData = await getData("categories");
@@ -15,7 +15,7 @@ export default async function NewTraining() {
     <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
       <FormHeader title="Nueva Capacitación" />
       <div className="flex-1 overflow-auto">
-        <NewTrainingForm categories={categories} />
+        <TrainingForm categories={categories} />
       </div>
     </div>
   );

@@ -1,34 +1,43 @@
-import ButtonActions from "@/components/backoffice/ButtonActions";
-import SearchForm from "@/components/backoffice/SearchForm";
-import Heading from "@/components/backoffice/styledComponent/Heading";
-import SubTitle2 from "@/components/backoffice/styledComponent/SubTitle2";
 import React from "react";
+import { getStaff } from "./actions";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import Heading from "@/components/backoffice/styledComponent/Heading";
+import { columns, fieldsToSearch, initialColumnVisibility } from "./columns";
+import { DataTable } from "@/components/backoffice/date-table-components/DataTable";
 
-export default function Staff() {
+export default async function StaffPage() {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return <p className="text-center text-gray-500">No autorizado</p>;
+  }
+
+  let staff = [];
+
+  try {
+    const allStaff = await getStaff();
+    staff = allStaff;
+    console.log("Personal cargado:", staff);
+  } catch (error) {
+    console.error("Error cargando personal:", error);
+    return <p className="text-center text-red-500">Error cargando personal</p>;
+  }
+
   return (
-    <div className="flex flex-col gap-4">
-      <Heading title="Nuestro personal" />
-      <ButtonActions title="colaborador" href="/dashboard/staff/new" />
-      <SearchForm placeholder="Buscar colaborador por nombre..." />
-      <div className="overflow-hidden border border-border dark:bg-slate-700 rounded-lg p-4">
-        <SubTitle2 title="Tabla" />
-
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Nombre
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Descripcion
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+    <div className="h-[calc(100vh-40px)] flex flex-col gap-3">
+      <div className="px-4 md:px-6">
+        <Heading title="Personal" />
+      </div>
+      <div className="flex-1">
+        <DataTable
+          columns={columns}
+          data={staff}
+          initialColumnVisibility={initialColumnVisibility}
+          fieldsToSearch={fieldsToSearch}
+          inputPlaceholder="Buscar personal por nombre, cédula, email, código de usuario."
+          endpoint="staff"
+          title="personal"
+        />
       </div>
     </div>
   );

@@ -81,10 +81,10 @@ export function DataTable({
       />
 
       {/* TABLA */}
-      <div className="overflow-auto">
+      <div className="overflow-auto rounded-lg">
         <div className="h-[calc(100vh-292.67px)] md:h-[calc(100vh-224.67px)]">
           <div className="min-w-max overflow-x-auto pb-2">
-            <Table className="border dark:bg-slate-900 rounded-lg">
+            <Table className="border bg-white dark:bg-slate-800 ">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
@@ -92,7 +92,7 @@ export function DataTable({
                       return (
                         <TableHead
                           key={header.id}
-                          className="bg-white dark:bg-slate-700 uppercase text-amber-600 dark:text-amber-500"
+                          className="bg-slate-400 dark:bg-slate-700 uppercase text-amber-600 dark:text-amber-500"
                         >
                           {header.isPlaceholder
                             ? null

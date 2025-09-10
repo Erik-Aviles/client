@@ -10,13 +10,17 @@ export function AllDatesColumn({ row }) {
         <p className="text-xs font-semibold text-slate-700 dark:text-slate-500">
           Creación:
         </p>
-        <small>{createdAt}</small>
+        <small className="text-slate-700 dark:text-slate-50">
+          {createdAt}
+        </small>
       </div>
       <div className="leading-none">
         <p className="text-xs font-semibold text-slate-700 dark:text-slate-500">
           Actualización:
         </p>
-        <small>{updatedAt}</small>
+        <small className="text-slate-700 dark:text-slate-50">
+          {updatedAt}
+        </small>
       </div>
     </div>
   );

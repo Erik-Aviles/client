@@ -8,13 +8,13 @@ import TextInput from "@/components/FormInputs/TextInput";
 import ToggleInput from "@/components/FormInputs/ToggleInput";
 import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
 import { generateSlug } from "@/lib/generateSlug";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import SelectInput from "@/components/FormInputs/SelectInput";
 import CancelButton from "@/components/FormInputs/CancelButton";
 
-export default function NewProductForm({
+export default function ProductForm({
   initialData = {},
   categories,
   suppliers,
@@ -34,7 +34,6 @@ export default function NewProductForm({
     defaultValues: {
       ...(initialData || {}),
       tags: initialData?.tags ?? [],
-      suppliers: initialData?.userId,
     },
   });
 
@@ -136,7 +135,7 @@ export default function NewProductForm({
 
         <SelectInput
           label="selecciona un proveedor"
-          name="supplierId"
+          name="userId"
           register={register}
           errors={errors}
           className="w-full"

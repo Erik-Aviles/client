@@ -10,9 +10,13 @@ import { useForm } from "react-hook-form";
 import CancelButton from "@/components/FormInputs/CancelButton";
 import { generateCouponCode } from "@/lib/generateCode";
 import { parseISODate } from "@/lib/parseISODate";
+import { useSession } from "next-auth/react";
 
-export default function NewCouponForm({ initialData = {} }) {
+export default function CouponForm({ initialData = {} }) {
+  const { data: session, status } = useSession();
+  const vendorId = session?.user?.id;
   const router = useRouter();
+
   const datapath = "coupons";
   const id = initialData?.id ?? "";
   const [loading, setLoading] = useState(false);
@@ -30,8 +34,6 @@ export default function NewCouponForm({ initialData = {} }) {
   } = useForm({
     defaultValues: {
       ...(initialData || {}),
-      isActive: initialData?.isActive ?? true,
-      couponCode: initialData?.couponCode ?? "",
       expiryDate: initialData?.expiryDate
         ? new Date(initialData.expiryDate).toISOString().split("T")[0]
         : "",
@@ -68,6 +70,8 @@ export default function NewCouponForm({ initialData = {} }) {
   async function onSubmit(data) {
     /* {id, title, couponCode, expiryDate, isActive} */
     data.expiryDate = parseISODate(expiryDate);
+    data.vendorId = vendorId;
+    console.log("Datos del cupón:", data);
 
     const isUpdating = !!data.id;
     const requestFn = isUpdating ? makePutRequest : makePostRequest;
@@ -79,10 +83,14 @@ export default function NewCouponForm({ initialData = {} }) {
       setLoading,
       endpoint,
       data,
-      "Categoría",
+      "Cupón",
       redirect,
       isUpdating ? null : reset
     );
+  }
+
+  if (status === "loading") {
+    return <p>Cargando...</p>;
   }
 
   return (

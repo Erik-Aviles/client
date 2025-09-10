@@ -10,7 +10,7 @@ import {
   TextShortColumn,
 } from "@/components/backoffice/data-table-columns/TextColumn";
 
-export const columns = [
+const columns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -189,3 +189,14 @@ export const columns = [
     ),
   },
 ];
+
+  const initialColumnVisibility = {
+    logoUrl: false,
+    address: false,
+    paymentTerms: false,
+    notes: false,
+    products: false,
+  };
+  const fieldsToSearch = ["firstName", "idDocument", "email", "id"];
+  
+  export { columns, initialColumnVisibility, fieldsToSearch };

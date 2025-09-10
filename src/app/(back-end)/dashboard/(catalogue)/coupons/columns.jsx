@@ -48,6 +48,14 @@ export const columns = [
     },
   },
   {
+    accessorKey: "vendorId",
+    header: () => <div className="whitespace-nowrap">Id Proveedor</div>,
+    cell: ({ row }) => {
+      const vendorId = row.getValue("vendorId");
+      return <small>{vendorId}</small>;
+    },
+  },
+  {
     accessorKey: "value",
     header: () => <div className="whitespace-nowrap">Valor</div>,
     cell: ({ row }) => {
@@ -82,3 +90,9 @@ export const columns = [
     ),
   },
 ];
+
+export const fieldsToSearch = ["title", "id", "vendorId"];
+
+export const initialColumnVisibility = {
+  vendorId: false,
+};

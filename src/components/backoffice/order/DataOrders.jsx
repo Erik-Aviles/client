@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import SubTitle2 from "../styledComponent/SubTitle2";
 import { columnTableRecentOrder } from "@/utils/general/columnTables";
 import { orders, orderStatus } from "@/utils/order/data";
-import ShowModalOrder from "./ShowModalOrder";
 import Pagination from "../Pagination";
 
 export default function DataOrders() {
@@ -171,7 +170,7 @@ export default function DataOrders() {
                         : "Cancelado"}
                     </td>
                     <td className="px-6 py-4 ">
-                      <ShowModalOrder order={item} />
+                      {/* <ShowModalOrder order={item} /> */}
                     </td>
                   </tr>
                 );

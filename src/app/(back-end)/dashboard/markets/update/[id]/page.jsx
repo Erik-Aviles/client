@@ -1,7 +1,7 @@
 import React from "react";
 import { getData } from "@/lib/getData";
 import FormHeader from "@/components/backoffice/FormHeader";
-import NewMarketForm from "@/components/backoffice/forms/NewMarketForm";
+import MarketForm from "@/components/backoffice/forms/MarketForm";
 
 export default async function UpdateMarket({ params }) {
   const { id } = await params;
@@ -17,7 +17,7 @@ export default async function UpdateMarket({ params }) {
     <div className="h-[calc(100vh-40px)] flex flex-col pb-4">
       <FormHeader title="Editar mercado" />
       <div className="flex-1 overflow-auto">
-        <NewMarketForm initialData={market} categories={categories} />
+        <MarketForm initialData={market} categories={categories} />
       </div>
     </div>
   );

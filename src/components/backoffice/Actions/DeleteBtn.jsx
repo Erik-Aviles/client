@@ -13,6 +13,12 @@ export default function DeleteBtn({ id, endpoint, title }) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const router = useRouter();
 
+  const normalizedEndpoint = ["staff", "customers", "suppliers"].includes(
+    endpoint
+  )
+    ? "users"
+    : endpoint;
+
   async function handleDelete() {
     setLoading(true);
     Swal.fire({
@@ -26,7 +32,7 @@ export default function DeleteBtn({ id, endpoint, title }) {
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await fetch(`${baseUrl}/api/${endpoint}/${id}`, {
+        const res = await fetch(`${baseUrl}/api/${normalizedEndpoint}/${id}`, {
           method: "DELETE",
         });
         if (res.ok) {
